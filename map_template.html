@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="origin">
+  <title>Storm map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    :root { color-scheme: dark; font-family: ui-sans-serif, system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; color: #eee; }
+    #map { position: fixed; inset: 0; background: #161616; }
+    .leaflet-tile { filter: grayscale(1) invert(1) brightness(0.74) contrast(0.9); }
+    .panel { position: absolute; z-index: 900; top: 14px; left: 14px; width: 280px; max-height: calc(100vh - 28px); overflow-y: auto; padding: 14px 16px; background: rgb(20 20 20 / 94%); border: 1px solid #444; border-radius: 10px; box-shadow: 0 8px 24px rgb(0 0 0 / 24%); }
+    h1 { margin: 0 0 6px; font-size: 1.08rem; font-weight: 650; letter-spacing: -0.02em; }
+    .meta { margin: 0 0 5px; color: #aaa; font-size: 0.7rem; line-height: 1.4; }
+    .status { margin-top: 9px; color: #ddd; font-size: 0.72rem; }
+    .status i { display: inline-block; width: 7px; height: 7px; margin-right: 5px; background: #eee; border-radius: 50%; }
+    details { border-top: 1px solid #3a3a3a; margin-top: 12px; padding-top: 9px; }
+    summary { color: #ccc; font-size: 0.76rem; font-weight: 600; cursor: pointer; }
+    .legend-heading { margin: 13px 0 6px; color: #888; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .legend-row { display: flex; align-items: center; gap: 8px; margin: 6px 0; color: #bbb; font-size: 0.71rem; }
+    .swatch { width: 15px; height: 12px; border-radius: 2px; flex: none; }
+    .outline-swatch { width: 21px; border-top-style: solid; border-radius: 3px; flex: none; }
+    .circle-swatch { width: 21px; border-top: 2px dashed #ddd; flex: none; }
+    .dot { width: 9px; height: 9px; border: 1px solid #eee; border-radius: 50%; flex: none; }
+    .ranked-storms { list-style: none; padding: 0; margin: 9px 0 0; }
+    .ranked-storms button { display: flex; justify-content: space-between; width: 100%; padding: 7px 0; border: 0; border-bottom: 1px solid #343434; background: transparent; color: #ddd; text-align: left; font: inherit; font-size: 0.74rem; cursor: pointer; }
+    .ranked-storms button:hover { color: #fff; }
+    .score { color: #999; }
+    .fine-print { color: #999; font-size: 0.69rem; line-height: 1.45; }
+    a { color: #ddd; }
+    .leaflet-control-layers, .leaflet-bar a { background: #242424; color: #eee; }
+    .leaflet-control-layers { border-color: #555; }
+    .leaflet-control-layers-expanded { color: #eee; }
+    .leaflet-control-attribution { background: rgb(20 20 20 / 75%) !important; color: #bbb; }
+    .leaflet-control-attribution a { color: #eee; }
+    .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: #202020; color: #eee; }
+    .leaflet-popup-content { min-width: 205px; line-height: 1.45; }
+    .leaflet-popup-content h3 { margin: 0 0 8px; font-size: 0.96rem; }
+    .leaflet-popup-content p { margin: 5px 0; color: #ccc; font-size: 0.78rem; }
+    .leaflet-popup-content a { display: inline-block; margin-top: 7px; }
+    .leaflet-container a.leaflet-popup-close-button { color: #ccc; }
+    @media (max-width: 740px) {
+      .panel { top: 8px; left: 8px; width: min(280px, calc(100vw - 72px)); max-height: min(45vh, 310px); padding: 10px 12px; }
+      h1 { font-size: 0.97rem; }
+      details { margin-top: 8px; padding-top: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <main id="map" aria-label="Map of US storm events and candidate webcam views"></main>
+  <section class="panel" aria-label="Storm map information">
+    <h1>Storm map</h1>
+    <p class="meta">Valid <span id="valid-time"></span></p>
+    <p class="meta"><span id="storm-count"></span> storms · <span id="camera-count"></span> cameras</p>
+    <div class="status"><i></i><span id="matched-count"></span> possible views · other cameras dimmed</div>
+    <details>
+      <summary>Top events</summary>
+      <ol id="ranked-storms" class="ranked-storms"></ol>
+    </details>
+    <details>
+      <summary>Map key</summary>
+      <div class="legend-heading">Event area</div>
+      <div class="legend-row"><i class="circle-swatch"></i>Search circle around each storm</div>
+      <div class="legend-heading">Severe risk, next hour · polygon fill</div>
+      <div id="risk-legend"></div>
+      <div class="legend-heading">Outline complexity / 100 · polygon edge</div>
+      <div id="complexity-legend"></div>
+      <div class="legend-heading">Matched camera network · dot color</div>
+      <div id="camera-legend"></div>
+      <p class="fine-print">Bright colored dots are nearby cameras whose recorded heading intersects an event circle. Dim gray dots have no directional match, including cameras without a known heading. A match is not visual confirmation.</p>
+      <p class="fine-print">Interestingness is the mean of severe-hazard probability and outline complexity. ProbSevere probabilities are forecasts, not observed intensity.</p>
+      <p class="fine-print">Generated <span id="generated-time"></span>.</p>
+      <p class="fine-print"><a id="source-link" target="_blank" rel="noopener noreferrer">NOAA source file</a></p>
+    </details>
+  </section>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const storms = __STORMS__;
+    const cameras = __CAMERAS__;
+    const metadata = __METADATA__;
+    const cameraColors = {
+      'ALERTWest': '#0891b2',
+      'FAA WeatherCams': '#2563eb',
+      'USGS HIVIS': '#ec4899',
+      'Iowa Mesonet': '#64748b'
+    };
+    const riskLevels = [
+      { minimum: 0, label: '0–9%', color: '#39a96b' },
+      { minimum: 10, label: '10–29%', color: '#d5c83d' },
+      { minimum: 30, label: '30–49%', color: '#ee9b3b' },
+      { minimum: 50, label: '50–69%', color: '#df584e' },
+      { minimum: 70, label: '70–100%', color: '#8f3fb0' }
+    ];
+    const outlineLevels = [
+      { minimum: 0, label: '0–<5', color: '#64748b', weight: 2 },
+      { minimum: 5, label: '5–<10', color: '#0891b2', weight: 3 },
+      { minimum: 10, label: '10–<15', color: '#4f46e5', weight: 4 },
+      { minimum: 15, label: '15–<20', color: '#a21caf', weight: 5 },
+      { minimum: 20, label: '20+', color: '#e11d48', weight: 6 }
+    ];
+
+    function levelFor(value, levels) {
+      for (let index = levels.length - 1; index >= 0; index -= 1) {
+        if (value >= levels[index].minimum) return levels[index];
+      }
+      throw new Error(`Invalid map score: ${value}`);
+    }
+
+    function detailLine(label, value) {
+      const line = document.createElement('p');
+      const bold = document.createElement('strong');
+      bold.textContent = `${label}: `;
+      line.append(bold, document.createTextNode(value));
+      return line;
+    }
+
+    function eventPopup(properties, viewCount) {
+      const popup = document.createElement('div');
+      const title = document.createElement('h3');
+      title.textContent = `Storm ${properties.id}`;
+      popup.append(title);
+      popup.append(detailLine('Interestingness', `${properties.interestingness.score}/100`));
+      popup.append(detailLine('Severe risk, next hour', `${properties.probability}%`));
+      popup.append(detailLine('Outline complexity', `${properties.outline_shape.score}/100`));
+      popup.append(detailLine('Candidate camera views', `${viewCount}`));
+      popup.append(detailLine('Event circle radius', `${properties.circle.radius_km} km`));
+      popup.append(detailLine('Hail / wind / tornado', `${properties.hail_probability}% / ${properties.wind_probability}% / ${properties.tornado_probability}%`));
+      popup.append(detailLine('GOES lightning, past 5 min', `${properties.flashes_5min} flashes`));
+      popup.append(detailLine('Peak radar reflectivity', `${properties.reflectivity_dbz} dBZ`));
+      return popup;
+    }
+
+    const map = L.map('map', { preferCanvas: true, zoomControl: false });
+    map.fitBounds([[24, -125], [50, -66]]);
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      referrerPolicy: 'origin',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    document.getElementById('valid-time').textContent = metadata.valid_time;
+    document.getElementById('generated-time').textContent = metadata.generated_time;
+    document.getElementById('storm-count').textContent = storms.features.length.toLocaleString();
+    document.getElementById('camera-count').textContent = cameras.length.toLocaleString();
+    document.getElementById('matched-count').textContent = cameras.filter(camera => camera.event_ids.length > 0).length.toLocaleString();
+    document.getElementById('source-link').href = metadata.source_url;
+
+    for (const level of riskLevels) {
+      const row = document.createElement('div');
+      row.className = 'legend-row';
+      const swatch = document.createElement('i');
+      swatch.className = 'swatch';
+      swatch.style.backgroundColor = level.color;
+      row.append(swatch, document.createTextNode(level.label));
+      document.getElementById('risk-legend').append(row);
+    }
+    for (const level of outlineLevels) {
+      const row = document.createElement('div');
+      row.className = 'legend-row';
+      const swatch = document.createElement('i');
+      swatch.className = 'outline-swatch';
+      swatch.style.borderTopColor = level.color;
+      swatch.style.borderTopWidth = `${level.weight}px`;
+      row.append(swatch, document.createTextNode(level.label));
+      document.getElementById('complexity-legend').append(row);
+    }
+
+    const viewCounts = new Map(storms.features.map(feature => [feature.properties.id, 0]));
+    for (const camera of cameras) {
+      for (const eventId of camera.event_ids) {
+        if (!viewCounts.has(eventId)) throw new Error(`Unknown storm match: ${eventId}`);
+        viewCounts.set(eventId, viewCounts.get(eventId) + 1);
+      }
+    }
+
+    const stormLayer = L.geoJSON(storms, {
+      style(feature) {
+        const outline = levelFor(feature.properties.outline_shape.score, outlineLevels);
+        return {
+          color: outline.color,
+          weight: outline.weight,
+          fillColor: levelFor(feature.properties.probability, riskLevels).color,
+          fillOpacity: 0.42
+        };
+      },
+      onEachFeature(feature, layer) {
+        const properties = feature.properties;
+        layer.bindPopup(eventPopup(properties, viewCounts.get(properties.id)));
+      }
+    }).addTo(map);
+
+    const circleLayer = L.layerGroup().addTo(map);
+    const eventCircles = new Map();
+    for (const feature of storms.features) {
+      const properties = feature.properties;
+      const circle = L.circle(
+        [properties.circle.center_latitude, properties.circle.center_longitude],
+        {
+          radius: properties.circle.radius_km * 1000,
+          color: '#f2f2f2',
+          weight: 1.5,
+          opacity: 0.7,
+          dashArray: '5 5',
+          fillOpacity: 0.015
+        }
+      ).bindPopup(eventPopup(properties, viewCounts.get(properties.id))).addTo(circleLayer);
+      eventCircles.set(properties.id, circle);
+    }
+
+    const rankedStorms = [...storms.features]
+      .sort((first, second) => second.properties.interestingness.score - first.properties.interestingness.score)
+      .slice(0, 8);
+    for (const feature of rankedStorms) {
+      const properties = feature.properties;
+      const item = document.createElement('li');
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      name.textContent = `Storm ${properties.id}`;
+      const score = document.createElement('span');
+      score.className = 'score';
+      score.textContent = `${properties.interestingness.score}/100`;
+      button.append(name, score);
+      button.addEventListener('click', () => {
+        const circle = eventCircles.get(properties.id);
+        map.fitBounds(circle.getBounds(), { maxZoom: 9 });
+        circle.openPopup();
+      });
+      item.append(button);
+      document.getElementById('ranked-storms').append(item);
+    }
+
+    const cameraLayers = {};
+    function addCameraMarker(camera) {
+      if (!Object.hasOwn(cameraColors, camera.network)) throw new Error(`Unknown camera network: ${camera.network}`);
+      if (!cameraLayers[camera.network]) cameraLayers[camera.network] = L.layerGroup().addTo(map);
+      const candidateView = camera.event_ids.length > 0;
+      const marker = L.circleMarker([camera.latitude, camera.longitude], {
+        radius: candidateView ? 4 : 2,
+        color: '#ffffff',
+        weight: candidateView ? 1 : 0,
+        opacity: candidateView ? 1 : 0,
+        fillColor: candidateView ? cameraColors[camera.network] : '#aaaaaa',
+        fillOpacity: candidateView ? 1 : 0.045
+      });
+      const popup = document.createElement('div');
+      const title = document.createElement('h3');
+      title.textContent = camera.name;
+      popup.append(title, detailLine('Network', camera.network));
+      if (camera.direction) popup.append(detailLine('Facing', camera.direction));
+      if (camera.view_time) popup.append(detailLine('Last frame', camera.view_time));
+      if (candidateView) popup.append(detailLine('Candidate view of', camera.event_ids.map(id => `storm ${id}`).join(', ')));
+      const link = document.createElement('a');
+      link.href = camera.url;
+      link.textContent = 'Open camera feed ↗';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      popup.append(link);
+      marker.bindPopup(popup).addTo(cameraLayers[camera.network]);
+    }
+    for (const camera of cameras) {
+      if (camera.event_ids.length === 0) addCameraMarker(camera);
+    }
+    for (const camera of cameras) {
+      if (camera.event_ids.length > 0) addCameraMarker(camera);
+    }
+
+    for (const network of Object.keys(cameraLayers)) {
+      const row = document.createElement('div');
+      row.className = 'legend-row';
+      const dot = document.createElement('i');
+      dot.className = 'dot';
+      dot.style.backgroundColor = cameraColors[network];
+      row.append(dot, document.createTextNode(network));
+      document.getElementById('camera-legend').append(row);
+    }
+
+    const overlays = { 'Storm footprints': stormLayer, 'Event circles': circleLayer };
+    for (const [network, layer] of Object.entries(cameraLayers)) overlays[network] = layer;
+    L.control.layers(null, overlays, { collapsed: true }).addTo(map);
+  </script>
+</body>
+</html>
