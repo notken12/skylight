@@ -1,0 +1,99 @@
+{
+  "curated_at": "2026-09-24T01:59:23.233014+00:00",
+  "samples": [
+    {
+      "label": "good",
+      "filename": "01-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/739/24/12641-1790213375009.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/739/24/12641-1790213375009.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "02-good.jpg",
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/927/details/camera/13400/full",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/927/24/13400-1790214806537.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "03-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/801/24/12926-1790213571533.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/801/24/12926-1790213571533.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "04-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/1096/24/14052-1790213616722.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1096/24/14052-1790213616722.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "05-good.jpg",
+      "source_url": "https://usgs-nims-images.s3.amazonaws.com/720/AZ_Colorado_River_at_Lees_Ferry/AZ_Colorado_River_at_Lees_Ferry_newest.jpg",
+      "image_url": "https://usgs-nims-images.s3.amazonaws.com/720/AZ_Colorado_River_at_Lees_Ferry/AZ_Colorado_River_at_Lees_Ferry_newest.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "06-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/1073/24/13986-1790213569866.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1073/24/13986-1790213569866.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "07-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/1105/24/14090-1790213577479.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1105/24/14090-1790213577479.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "08-bad.jpg",
+      "source_url": "https://usgs-nims-images.s3.amazonaws.com/720/WA_Pend_Oreille_River_at_Newport/WA_Pend_Oreille_River_at_Newport_newest.jpg",
+      "image_url": "https://usgs-nims-images.s3.amazonaws.com/720/WA_Pend_Oreille_River_at_Newport/WA_Pend_Oreille_River_at_Newport_newest.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "09-bad.jpg",
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/581/details/camera/12123",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/581/24/12123-1790214841593.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "10-bad.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/682/24/12393-1790213659357.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/682/24/12393-1790213659357.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "11-bad.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/806/24/12945-1790211696155.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/806/24/12945-1790211696155.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "12-bad.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/803/24/12935-1790213592561.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/803/24/12935-1790213592561.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "13-bad.jpg",
+      "source_url": "https://usgs-nims-images.s3.amazonaws.com/720/ID_Clearwater_River_at_Spalding/ID_Clearwater_River_at_Spalding_newest.jpg",
+      "image_url": "https://usgs-nims-images.s3.amazonaws.com/720/ID_Clearwater_River_at_Spalding/ID_Clearwater_River_at_Spalding_newest.jpg"
+    },
+    {
+      "label": "bad",
+      "filename": "14-bad.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/692/24/12435-1790213632585.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/692/24/12435-1790213632585.jpg"
+    },
+    {
+      "label": "good",
+      "filename": "15-good.jpg",
+      "source_url": "https://alertwest.live/cam-console/23604",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/23604/2026/09/24/McClure_Mtn_1790216152_2261.jpg",
+      "camera_name": "Axis-McClureMtn",
+      "captured_at": "2026-09-24T02:15:52Z",
+      "forecast_score_at_selection": 12,
+      "added_at": "2026-09-24T02:27:06.920143+00:00"
+    }
+  ]
+}

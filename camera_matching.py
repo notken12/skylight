@@ -56,7 +56,7 @@ def match_cameras(storms: dict[str, Any], cameras: list[Camera]) -> list[Matched
         )
 
     for feature in storms["features"]:
-        circle = feature["properties"]["circle"]
+        circle = feature["properties"]["view_circle"]
         latitude_span = (
             degrees((circle["radius_km"] + MAX_VIEW_DISTANCE_KM) / EARTH_RADIUS_KM) + 1
         )

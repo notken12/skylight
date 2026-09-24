@@ -1,0 +1,5 @@
+# Sunset camera view samples
+
+The fifteen JPEGs in this directory are fixed copies of eight good and seven bad camera views selected for the sunset filter. The eighth good view is the McClure Mountain sunset, whose experimental GFS forecast score was only 12/100. `manifest.json` records each original link and the image URL downloaded for it. FAA camera-page links were resolved to their latest frame when the sample was collected; USGS `_newest.jpg` links were copied at collection time. Keeping the JPEGs here prevents later live-frame changes from silently changing the reference set.
+
+The sunset scorer uses these eight good images as positive references. Its negative references are the seven bad images here plus all thirteen negative references from `data/camera_view_samples/manifest.json`. It adds a camera's warm-tone prevalence across the entire frame to its OpenCLIP good-minus-rejected similarity margin. The combined cutoff is calibrated on leave-one-out scores from these examples. Labels are user judgments about useful sunset views, not verified meteorological observations.

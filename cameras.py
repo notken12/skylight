@@ -29,6 +29,9 @@ class Camera:
     view_time: str | None = None
     azimuth_degrees: float | None = None
     bearing_tolerance_degrees: float | None = None
+    camera_id: int | None = None
+    snapshot_url: str | None = None
+    operated_by: str | None = None
 
 
 def arcgis_url(base_url: str, parameters: dict[str, str]) -> str:
@@ -61,6 +64,7 @@ def alertwest_cameras(fetch_json: FetchJson) -> list[Camera]:
                 view_time=image["time"],
                 azimuth_degrees=float(pan) if pan is not None else None,
                 bearing_tolerance_degrees=20.0 if pan is not None else None,
+                snapshot_url=image["url"],
             )
         )
     return cameras
@@ -84,6 +88,7 @@ def usgs_cameras(fetch_json: FetchJson) -> list[Camera]:
                 longitude=float(record["lng"]),
                 url=f"https://apps.usgs.gov/hivis/camera/{quote(record['camId'], safe='')}",
                 view_time=record["newestImageDT"],
+                snapshot_url=f"{record['smallDir']}{record['camId']}_newest.jpg",
             )
         )
     return cameras
@@ -93,9 +98,15 @@ def faa_cameras(fetch_json: FetchJson) -> list[Camera]:
     cutoff = recent_image_cutoff()
     cameras = []
     for site in fetch_json(FAA_CAMERAS_URL)["payload"]:
-        if site["country"] != "US" or not site["siteActive"]:
+        if site["country"] not in ("US", "CA") or not site["siteActive"]:
             continue
-        if site["siteInMaintenance"] or not site["validated"]:
+        if site["siteInMaintenance"]:
+            continue
+        if not site["validated"] and not (
+            site["country"] == "CA"
+            and site["thirdParty"]
+            and site["operatedBy"] == "NAV CANADA"
+        ):
             continue
         for camera in site["cameras"]:
             image_time = camera["cameraLastSuccess"]
@@ -114,6 +125,8 @@ def faa_cameras(fetch_json: FetchJson) -> list[Camera]:
                     view_time=image_time,
                     azimuth_degrees=camera["cameraBearing"],
                     bearing_tolerance_degrees=camera["mapWedgeAngle"] / 2,
+                    camera_id=camera["cameraId"],
+                    operated_by=site["operatedBy"],
                 )
             )
     return cameras

@@ -6,6 +6,7 @@ from gzip import decompress
 from math import ceil, cos, degrees, floor, radians
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import Protocol
 from urllib.parse import urlencode, urljoin
 from xml.etree import ElementTree
 
@@ -52,6 +53,32 @@ class CloudGrid:
     source_url: str
 
 
+@dataclass(frozen=True)
+class CloudPropertyGrid:
+    values: NDArray[np.float64]
+    valid: NDArray[np.bool_]
+    x_axis: NDArray[np.float32]
+    y_axis: NDArray[np.float32]
+    transformer: Transformer
+    perspective_height: float
+    valid_time: datetime
+    source_url: str
+
+
+class GoesPixelGrid(Protocol):
+    @property
+    def x_axis(self) -> NDArray[np.float32]: ...
+
+    @property
+    def y_axis(self) -> NDArray[np.float32]: ...
+
+    @property
+    def transformer(self) -> Transformer: ...
+
+    @property
+    def perspective_height(self) -> float: ...
+
+
 def mrms_source(at: datetime | None, fetch_text: FetchText) -> str:
     if at is None:
         return MRMS_LATEST
@@ -70,12 +97,14 @@ def mrms_source(at: datetime | None, fetch_text: FetchText) -> str:
     )
 
 
-def goes_source(at: datetime, longitude: float, fetch_text: FetchText) -> str:
+def goes_source(
+    at: datetime, longitude: float, fetch_text: FetchText, product: str = "ACMC"
+) -> str:
     satellite = 18 if longitude < -110 else 19
     bucket = f"https://noaa-goes{satellite}.s3.amazonaws.com/"
     keys = []
     for hour in (at - timedelta(hours=1), at):
-        prefix = f"ABI-L2-ACMC/{hour:%Y}/{hour:%j}/{hour:%H}/"
+        prefix = f"ABI-L2-{product}/{hour:%Y}/{hour:%j}/{hour:%H}/"
         listing_url = f"{bucket}?{urlencode({'list-type': '2', 'prefix': prefix, 'max-keys': '1000'})}"
         root = ElementTree.fromstring(fetch_text(listing_url))
         if root.findtext("s:IsTruncated", namespaces=S3_NAMESPACE) != "false":
@@ -93,7 +122,7 @@ def goes_source(at: datetime, longitude: float, fetch_text: FetchText) -> str:
             if scan_time <= at:
                 keys.append((scan_time, key))
     if not keys:
-        raise ValueError(f"No GOES-{satellite} cloud mask found at or before {at}")
+        raise ValueError(f"No GOES-{satellite} {product} found at or before {at}")
     return urljoin(bucket, max(keys)[1])
 
 
@@ -184,13 +213,41 @@ def read_goes_grid(payload: bytes, source_url: str) -> CloudGrid:
             )
 
 
-def goes_cloud_mask(
-    grid: CloudGrid,
-    latitude: float,
-    longitude: float,
-    radius_km: float,
-) -> NDArray[np.bool_]:
-    south, north, west, east = local_bounds(latitude, longitude, radius_km)
+def read_goes_property(payload: bytes, source_url: str, name: str) -> CloudPropertyGrid:
+    if name not in {"HT", "COD"}:
+        raise ValueError(f"Unsupported GOES cloud property: {name}")
+    with TemporaryDirectory(prefix="skylight-goes-property-") as directory:
+        path = Path(directory) / "cloud.nc"
+        path.write_bytes(payload)
+        with Dataset(path) as data:
+            data.set_auto_mask(False)
+            projection = data.variables["goes_imager_projection"]
+            crs = CRS.from_cf(
+                {
+                    attribute: projection.getncattr(attribute)
+                    for attribute in projection.ncattrs()
+                }
+            )
+            variable = data.variables[name]
+            variable.set_auto_maskandscale(False)
+            raw = variable[:]
+            quality = data.variables["DQF"][:]
+            good_quality = quality == 0 if name == "HT" else (quality & 4) == 0
+            return CloudPropertyGrid(
+                values=raw * variable.scale_factor + variable.add_offset,
+                valid=(raw != variable._FillValue) & good_quality,
+                x_axis=data.variables["x"][:],
+                y_axis=data.variables["y"][:],
+                transformer=Transformer.from_crs("EPSG:4326", crs, always_xy=True),
+                perspective_height=projection.perspective_point_height,
+                valid_time=datetime.fromisoformat(data.time_coverage_start),
+                source_url=source_url,
+            )
+
+
+def goes_pixel_bounds(
+    grid: GoesPixelGrid, south: float, north: float, west: float, east: float
+) -> tuple[slice, slice]:
     x_metres, y_metres = grid.transformer.transform(
         [west, east, west, east], [south, south, north, north]
     )
@@ -211,7 +268,17 @@ def goes_cloud_mask(
         raise ValueError("Requested longitude window is outside GOES coverage")
     if not (0 <= row_start < row_end <= len(grid.y_axis)):
         raise ValueError("Requested latitude window is outside GOES coverage")
+    return slice(row_start, row_end), slice(column_start, column_end)
 
-    cloud_level = grid.cloud_level[row_start:row_end, column_start:column_end]
-    quality = grid.quality[row_start:row_end, column_start:column_end]
+
+def goes_cloud_mask(
+    grid: CloudGrid,
+    latitude: float,
+    longitude: float,
+    radius_km: float,
+) -> NDArray[np.bool_]:
+    south, north, west, east = local_bounds(latitude, longitude, radius_km)
+    rows, columns = goes_pixel_bounds(grid, south, north, west, east)
+    cloud_level = grid.cloud_level[rows, columns]
+    quality = grid.quality[rows, columns]
     return (cloud_level >= 2) & (cloud_level <= 3) & (quality == 0)

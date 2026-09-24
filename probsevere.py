@@ -2,7 +2,7 @@ from collections.abc import Callable
 from dataclasses import asdict
 from typing import Any
 
-from event_geometry import EventCircle
+from event_geometry import EventCircle, visual_search_circle
 from shape_complexity import ShapeComplexity
 
 
@@ -20,6 +20,7 @@ def classify_storms(
         properties = feature["properties"]
         severe_probability = int(models["probsevere"]["PROB"])
         outline_shape = score_geometry(feature["geometry"])
+        event_circle = extract_circle(feature["geometry"])
         features.append(
             {
                 "type": "Feature",
@@ -27,7 +28,8 @@ def classify_storms(
                 "properties": {
                     "id": properties["ID"],
                     "valid_time": data["validTime"],
-                    "circle": asdict(extract_circle(feature["geometry"])),
+                    "circle": asdict(event_circle),
+                    "view_circle": asdict(visual_search_circle(event_circle)),
                     "interestingness": {
                         "score": round(
                             (severe_probability + outline_shape.score) / 2, 1

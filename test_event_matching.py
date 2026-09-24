@@ -5,7 +5,7 @@ from pyproj import Geod
 
 from camera_matching import match_cameras
 from cameras import Camera, faa_cameras
-from event_geometry import enclosing_circle
+from event_geometry import VISUAL_CLOUD_BUFFER_KM, enclosing_circle
 from probsevere import classify_storms
 from shape_complexity import score_shape
 
@@ -45,6 +45,11 @@ class EventMatchingTests(unittest.TestCase):
                             "center_longitude": -100.0,
                             "radius_km": 10.0,
                         },
+                        "view_circle": {
+                            "center_latitude": 40.0,
+                            "center_longitude": -100.0,
+                            "radius_km": 50.0,
+                        },
                     }
                 }
             ]
@@ -63,7 +68,7 @@ class EventMatchingTests(unittest.TestCase):
                 "Test",
                 "Away",
                 40.0,
-                -100.5,
+                -101.5,
                 "https://example.com/2",
                 azimuth_degrees=270,
                 bearing_tolerance_degrees=10,
@@ -85,6 +90,46 @@ class EventMatchingTests(unittest.TestCase):
         self.assertEqual(
             [match.event_ids for match in matches], [("storm-a",), (), (), ()]
         )
+
+    def test_nearby_views_match_from_opposite_directions(self) -> None:
+        storms = {
+            "features": [
+                {
+                    "properties": {
+                        "id": "storm-a",
+                        "view_circle": {
+                            "center_latitude": 40.0,
+                            "center_longitude": -100.0,
+                            "radius_km": 50.0,
+                        },
+                    }
+                }
+            ]
+        }
+        cameras = [
+            Camera(
+                "FAA WeatherCams",
+                "East view",
+                40.0,
+                -100.5,
+                "https://example.com/east",
+                azimuth_degrees=90,
+                bearing_tolerance_degrees=22.5,
+            ),
+            Camera(
+                "FAA WeatherCams",
+                "West view",
+                40.0,
+                -100.5,
+                "https://example.com/west",
+                azimuth_degrees=270,
+                bearing_tolerance_degrees=22.5,
+            ),
+        ]
+
+        matches = match_cameras(storms, cameras)
+
+        self.assertEqual([match.event_ids for match in matches], [("storm-a",)] * 2)
 
     def test_storm_instance_preserves_score_inputs(self) -> None:
         ring = [
@@ -115,6 +160,10 @@ class EventMatchingTests(unittest.TestCase):
         properties = instance["properties"]
 
         self.assertEqual(properties["valid_time"], data["validTime"])
+        self.assertEqual(
+            properties["view_circle"]["radius_km"],
+            round(properties["circle"]["radius_km"] + VISUAL_CLOUD_BUFFER_KM, 1),
+        )
         self.assertEqual(properties["interestingness"]["severe_probability"], 60)
         self.assertEqual(
             properties["interestingness"]["outline_complexity"],
@@ -133,6 +182,8 @@ class EventMatchingTests(unittest.TestCase):
             "siteActive": True,
             "siteInMaintenance": False,
             "validated": True,
+            "thirdParty": False,
+            "operatedBy": "FAA",
             "siteId": 47,
             "siteName": "Summit",
             "cameras": [
@@ -167,6 +218,45 @@ class EventMatchingTests(unittest.TestCase):
         self.assertEqual(cameras[0].azimuth_degrees, 320)
         self.assertEqual(cameras[0].bearing_tolerance_degrees, 22.5)
         self.assertTrue(cameras[0].url.endswith("/details/camera/10758"))
+
+    def test_faa_imports_recent_nav_canada_views(self) -> None:
+        now = datetime.now(UTC).isoformat()
+        site = {
+            "country": "CA",
+            "siteActive": True,
+            "siteInMaintenance": False,
+            "validated": False,
+            "thirdParty": True,
+            "operatedBy": "NAV CANADA",
+            "siteId": 306,
+            "siteName": "Merritt",
+            "cameras": [
+                {
+                    "cameraId": 11036,
+                    "cameraDirection": "SouthWest",
+                    "cameraBearing": 243,
+                    "cameraLastSuccess": now,
+                    "cameraInMaintenance": False,
+                    "cameraOutOfOrder": False,
+                    "mapWedgeAngle": 45,
+                    "latitude": 50.12278,
+                    "longitude": -120.74722,
+                }
+            ],
+        }
+
+        cameras = faa_cameras(lambda _url: {"payload": [site]})
+
+        self.assertEqual(len(cameras), 1)
+        self.assertEqual(cameras[0].operated_by, "NAV CANADA")
+        self.assertEqual(cameras[0].azimuth_degrees, 243)
+        self.assertEqual(cameras[0].bearing_tolerance_degrees, 22.5)
+        self.assertEqual(cameras[0].camera_id, 11036)
+
+        unvalidated_us = site | {"country": "US"}
+        self.assertEqual(faa_cameras(lambda _url: {"payload": [unvalidated_us]}), [])
+        other_operator = site | {"operatedBy": "Other"}
+        self.assertEqual(faa_cameras(lambda _url: {"payload": [other_operator]}), [])
 
 
 if __name__ == "__main__":

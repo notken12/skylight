@@ -7,6 +7,7 @@ from pyproj import CRS, Transformer
 from geojson_polygons import polygons_of
 
 CIRCLE_BUFFER_KM = 5.0
+VISUAL_CLOUD_BUFFER_KM = 40.0
 
 type Point = tuple[float, float]
 
@@ -16,6 +17,14 @@ class EventCircle:
     center_latitude: float
     center_longitude: float
     radius_km: float
+
+
+def visual_search_circle(event_circle: EventCircle) -> EventCircle:
+    return EventCircle(
+        center_latitude=event_circle.center_latitude,
+        center_longitude=event_circle.center_longitude,
+        radius_km=round(event_circle.radius_km + VISUAL_CLOUD_BUFFER_KM, 1),
+    )
 
 
 def ring_area_centroid(ring: list[Point]) -> tuple[float, float, float]:
