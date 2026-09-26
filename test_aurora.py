@@ -38,6 +38,7 @@ class AuroraTests(unittest.TestCase):
                 "https://example.com/clear",
                 azimuth_degrees=0,
                 bearing_tolerance_degrees=20,
+                night_sky_capable=True,
             ),
             Camera(
                 "Test",
@@ -47,6 +48,7 @@ class AuroraTests(unittest.TestCase):
                 "https://example.com/cloudy",
                 azimuth_degrees=0,
                 bearing_tolerance_degrees=20,
+                night_sky_capable=True,
             ),
             Camera(
                 "Test",
@@ -56,6 +58,27 @@ class AuroraTests(unittest.TestCase):
                 "https://example.com/far",
                 azimuth_degrees=270,
                 bearing_tolerance_degrees=20,
+                night_sky_capable=True,
+            ),
+            Camera(
+                "FAA WeatherCams",
+                "night-insensitive",
+                60,
+                -150,
+                "https://example.com/aviation",
+                azimuth_degrees=0,
+                bearing_tolerance_degrees=20,
+            ),
+            Camera(
+                "Athabasca AuroraCam",
+                "unverified",
+                60,
+                -150,
+                "https://example.com/unverified",
+                sky_facing=True,
+                night_sky_capable=True,
+                link_only=True,
+                feed_verified=False,
             ),
         ]
 
@@ -70,6 +93,8 @@ class AuroraTests(unittest.TestCase):
         self.assertEqual(result.cameras[1].event_ids, ())
         self.assertEqual(result.cameras[1].cloud_cover_percent, 75)
         self.assertEqual(result.cameras[2].event_ids, ())
+        self.assertEqual(result.cameras[3].event_ids, ())
+        self.assertEqual(result.cameras[4].event_ids, ())
 
     def test_daylight_cells_do_not_form_regions(self) -> None:
         forecast_time = datetime(2026, 9, 23, 22, tzinfo=UTC)

@@ -17,25 +17,32 @@ def image_bytes(
 
 
 class CameraImageScoreTests(unittest.TestCase):
-    def test_warm_pixels_count_across_the_whole_frame(self) -> None:
+    def test_warm_color_strength_uses_the_whole_frame(self) -> None:
         orange = (255, 120, 0)
         blue = (0, 100, 255)
 
         warm_upper = score_camera_image(image_bytes(orange, blue))
         warm_lower = score_camera_image(image_bytes(blue, orange))
 
-        self.assertAlmostEqual(warm_upper.warm_tone_prevalence, 0.7)
-        self.assertAlmostEqual(warm_lower.warm_tone_prevalence, 0.3)
+        self.assertAlmostEqual(
+            warm_upper.warm_tone_strength**2 / warm_lower.warm_tone_strength**2,
+            0.7 / 0.3,
+        )
 
-    def test_warm_pixels_at_the_frame_edge_count(self) -> None:
+    def test_vivid_color_at_the_frame_edge_has_more_weight_than_its_area(self) -> None:
         image = Image.new("RGB", (320, 240), (0, 100, 255))
-        image.paste((255, 120, 0), (0, 0, 16, 240))
+        image.paste((255, 0, 0), (0, 0, 16, 240))
         output = BytesIO()
         image.save(output, format="PNG")
 
         score = score_camera_image(output.getvalue())
 
-        self.assertAlmostEqual(score.warm_tone_prevalence, 0.05)
+        self.assertGreater(score.warm_tone_strength, 0.2)
+
+    def test_pale_pink_contributes_without_a_saturation_cutoff(self) -> None:
+        score = score_camera_image(image_bytes((255, 225, 235), (0, 100, 255)))
+
+        self.assertGreater(score.warm_tone_strength, 0)
 
 
 if __name__ == "__main__":

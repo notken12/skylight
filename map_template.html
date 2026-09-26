@@ -62,23 +62,28 @@
   </style>
 </head>
 <body>
-  <main id="map" aria-label="Map of storms, unusual cloud patches, auroras, sunset quality, and webcam views"></main>
+  <main id="map" aria-label="Map of storms, 3D cloud variation, auroras, sunset quality, and webcam views"></main>
   <section class="panel" aria-label="Weather map information">
     <h1>Weather phenomena and webcams</h1>
     <p class="meta">Valid <span id="valid-time"></span></p>
     <p class="meta"><span id="storm-count"></span> storms · <span id="camera-count"></span> cameras</p>
-    <div class="status"><i></i><span id="accepted-count"></span> storm image matches · <span id="rejected-count"></span> rejected</div>
+    <div class="status"><i></i><span id="accepted-count"></span> storm image matches · <span id="rejected-count"></span> candidates with no visible phenomena</div>
     <div class="status"><i style="background:#f5b541"></i><span id="sunset-camera-count"></span> in sunset band · <span id="sunset-eligible-count"></span> forecast score ≥<span id="sunset-minimum-score"></span></div>
-    <div class="status"><i style="background:#f5b541"></i><span id="sunset-accepted-count"></span> sunset image matches · <span id="sunset-rejected-count"></span> rejected</div>
+    <div class="status"><i style="background:#f5b541"></i><span id="sunset-accepted-count"></span> sunset image matches · <span id="sunset-rejected-count"></span> candidates with no visible phenomena</div>
     <div class="status"><i style="background:#a78bfa"></i><span id="aurora-count"></span> aurora regions · <span id="aurora-camera-count"></span> camera candidates</div>
     <div class="status"><i style="background:#d946ef"></i><span id="cloud-count"></span> cloud patches scored · <span id="cloud-high-count"></span> above 90</div>
     <div class="status"><i style="background:#aaa"></i><span id="blur-count"></span> blurry views rejected before OpenCLIP</div>
+    <details>
+      <summary>Top cameras</summary>
+      <ol id="ranked-cameras" class="ranked-storms"></ol>
+      <p class="fine-print">Each visible phenomenon contributes 48% camera-view strength and 32% its strongest matched event score. Laplacian sharpness contributes 20% once per camera, ranked among sharp candidate frames on this map; blurry frames receive zero. Storm and sunset view strengths are percentiles among accepted camera images. Aurora view strength uses forecast cloud cover; aurora entries are candidates, not confirmed sightings. Phenomenon contributions add when one camera has several.</p>
+    </details>
     <details>
       <summary>Top events</summary>
       <ol id="ranked-storms" class="ranked-storms"></ol>
     </details>
     <details>
-      <summary>Top sunset cameras</summary>
+      <summary>Sunset candidates with visible phenomena</summary>
       <ol id="ranked-sunset-cameras" class="ranked-storms"></ol>
     </details>
     <details>
@@ -86,7 +91,7 @@
       <ol id="ranked-auroras" class="ranked-storms"></ol>
     </details>
     <details>
-      <summary>Most distinctive cloud patches</summary>
+      <summary>Most varied 3D cloud patches</summary>
       <ol id="ranked-clouds" class="ranked-storms"></ol>
     </details>
     <details>
@@ -95,26 +100,26 @@
       <div class="legend-row"><i class="sunset-dot"></i>Network color with yellow outline: sunset image match</div>
       <div class="sunset-gradient"></div>
       <div class="sunset-scale"><span>0 · muted</span><span>50</span><span>100 · vivid</span></div>
-      <p class="fine-print">Gold band: sun 2° above to 6° below the horizon after solar noon. Color shows an experimental forecast estimate over the continental US; cloud forecast valid <span id="sunset-forecast-time"></span>. Cameras below the displayed cutoff are muted; remaining cameras are scored from their recent frames. Thin high clouds can look vivid even where this forecast scores low. <a id="sunset-source-link" target="_blank" rel="noopener noreferrer">NOAA GFS source</a>.</p>
-      <p class="fine-print">Sunset image score = OpenCLIP good-minus-rejected similarity + warm-tone prevalence across the entire frame. Warm tones use an HSV color threshold; foreground, overlays, and camera exposure can affect it. <span id="sunset-reference-count"></span> good and <span id="sunset-rejected-reference-count"></span> rejected views set cutoff <span id="sunset-threshold"></span>; leave-one-out check: <span id="sunset-validation"></span>. This small sample is provisional.</p>
+      <p class="fine-print">Gold band: sun 2° above to 6° below the horizon after solar noon. Color shows an experimental forecast estimate over the continental US; DWD ICON cloud forecast valid <span id="sunset-forecast-time"></span>. Cameras below the displayed cutoff are muted; remaining cameras are scored from their recent frames. Thin high clouds can look vivid even where this forecast scores low. <a id="sunset-source-link" target="_blank" rel="noopener noreferrer">DWD ICON source</a>.</p>
+      <p class="fine-print">Sunset image score = OpenCLIP good-minus-rejected similarity + warm-color strength across the entire frame. The color score weights red, orange, pink, and yellow by saturation and brightness, and gives vivid patches more influence. Foreground, overlays, and camera exposure can affect it. <span id="sunset-reference-count"></span> good and <span id="sunset-rejected-reference-count"></span> rejected views set cutoff <span id="sunset-threshold"></span>; leave-one-out check: <span id="sunset-validation"></span>. This small sample is provisional.</p>
       <div class="legend-heading">Event area</div>
       <div class="legend-row"><i class="circle-swatch"></i>Estimated visual search area</div>
       <div class="legend-row"><i class="swatch" style="background:#8b5cf6"></i>OVATION aurora region with low cloud cover and darkness</div>
-      <p class="fine-print">Aurora regions use NOAA OVATION probability ≥<span id="aurora-probability-minimum"></span>% and GFS total cloud cover ≤<span id="aurora-cloud-limit"></span>%. Purple camera outlines mark direction-matched candidates under dark skies. Cloud cover is a forecast, not a camera observation; a highlighted camera is not a confirmed aurora view. OVATION forecast <span id="aurora-forecast-time"></span>; cloud forecast <span id="aurora-cloud-time"></span>. <a id="aurora-source-link" href="https://services.swpc.noaa.gov/json/ovation_aurora_latest.json" target="_blank" rel="noopener noreferrer">OVATION data</a> · <a id="aurora-cloud-source-link" target="_blank" rel="noopener noreferrer">GFS cloud data</a>.</p>
-      <div class="legend-heading">Cloud distinctiveness within this scene</div>
+      <p class="fine-print">Aurora regions use NOAA OVATION probability ≥<span id="aurora-probability-minimum"></span>% and GFS total cloud cover ≤<span id="aurora-cloud-limit"></span>%. Purple camera outlines mark geometrically matched night-sky cameras under dark skies; aviation cameras are excluded. Cloud cover is a forecast, not a camera observation; a highlighted camera is not a confirmed aurora view. OVATION forecast <span id="aurora-forecast-time"></span>; cloud forecast <span id="aurora-cloud-time"></span>. <a id="aurora-source-link" href="https://services.swpc.noaa.gov/json/ovation_aurora_latest.json" target="_blank" rel="noopener noreferrer">OVATION data</a> · <a id="aurora-cloud-source-link" target="_blank" rel="noopener noreferrer">GFS cloud data</a>.</p>
+      <div class="legend-heading">ICON 3D cloud variation</div>
       <div class="sunset-gradient" style="background:linear-gradient(90deg, #155e75, #0d9488 35%, #6366f1 70%, #d946ef 90%, #f43f5e)"></div>
-      <div class="sunset-scale"><span>0 · typical</span><span>50</span><span>100 · unusual</span></div>
-      <p class="fine-print">Colored tiles compare cloud coverage, outline shape, directional alignment, enclosed clear gaps, cloud-top height, and optical depth across <span id="cloud-tile-size"></span>° patches with at least 10% cloud cover. The score is a percentile among other scored US patches from the same GOES satellite scan. It does not measure historical rarity or identify a cloud type. Cloud-top height spread is not cloud thickness; nighttime optical depth can cap at 16. GOES-18 observed <span id="cloud-west-time"></span>; GOES-19 observed <span id="cloud-east-time"></span>. Click a tile for the measurements and data sources.</p>
+      <div class="sunset-scale"><span>0 · uniform</span><span>50</span><span>100 · varied</span></div>
+      <p class="fine-print">Colored <span id="cloud-tile-size"></span>° tiles rank the mean change in ICON forecast cloud fraction between neighboring cells, horizontally and vertically. The two directions contribute equally; clear or uniform volumes score zero. Scores are percentiles among varying US tiles in this forecast, not historical rarity or a cloud-type label. The 0.25° horizontal grid and 0.5 km altitude steps describe broad cloud structure, not individual cloud shapes. ICON forecast valid <span id="cloud-forecast-time"></span>. Click a tile for both variation components and the <a id="cloud-source-link" target="_blank" rel="noopener noreferrer">DWD source</a>.</p>
       <div class="legend-heading">Severe risk, next hour · polygon fill</div>
       <div id="risk-legend"></div>
       <div class="legend-heading">Outline complexity / 100 · polygon edge</div>
       <div id="complexity-legend"></div>
       <div class="legend-heading">Matched camera network · dot color</div>
       <div id="camera-legend"></div>
-      <div class="legend-row"><i class="rejected-swatch">×</i>Storm or sunset candidate rejected by blur or image filter</div>
+      <div class="legend-row"><i class="rejected-swatch">×</i>Storm or sunset candidate with no visible phenomena</div>
       <p class="fine-print">The blur check uses variance of a Laplacian filter on a standardized central crop. Frames below <span id="blur-threshold"></span> are rejected before OpenCLIP; smooth skies and noisy images can still fool this simple sharpness measure.</p>
       <p class="fine-print">Search circles extend 40 km beyond each ProbSevere core circle to include possible peripheral clouds. This is a heuristic, not a measured cloud boundary. Cameras inside the search circle can face any direction.</p>
-      <p class="fine-print">Hover over a camera dot or X for a frame preview. Click an FAA site with several cameras to choose its direction. Bright dots pass an image filter or meet the aurora forecast criteria; X marks rejected storm or sunset candidates. Dim gray dots have no qualifying view.</p>
+      <p class="fine-print">Hover near a camera dot or X for a frame preview when a recent still is available. Click a marker to open its source feed; video-only aurora cameras have no scored still preview. Click an FAA site with several cameras to choose its direction. Bright dots have at least one visible phenomenon or meet the aurora forecast criteria; X marks storm or sunset candidates with none. Translucent network-colored dots have no qualifying view and brighten on hover.</p>
       <p class="fine-print">Visual score = mean cosine similarity to <span id="storm-reference-count"></span> storm views minus mean similarity to <span id="rejected-reference-count"></span> rejected views. Cutoff <span id="visual-threshold"></span>; leave-one-out check: <span id="visual-validation"></span>. Small sample; results are provisional.</p>
       <p class="fine-print" id="visual-model"></p>
       <p class="fine-print">Interestingness is the mean of severe-hazard probability and outline complexity. ProbSevere probabilities are forecasts, not observed intensity.</p>
@@ -138,7 +143,23 @@
       'ALERTWest': '#0891b2',
       'FAA WeatherCams': '#2563eb',
       'USGS HIVIS': '#ec4899',
-      'Iowa Mesonet': '#64748b'
+      'Iowa Mesonet': '#64748b',
+      'UCalgary TREx RGB': '#a855f7',
+      'AuroraMAX': '#c084fc',
+      'Explore.org': '#fb7185',
+      'UAF Allsky': '#2dd4bf',
+      'Athabasca AuroraCam': '#fbbf24'
+    };
+    const cameraHoverColors = {
+      'ALERTWest': '#22b8d6',
+      'FAA WeatherCams': '#4b82f5',
+      'USGS HIVIS': '#f472b6',
+      'Iowa Mesonet': '#94a3b8',
+      'UCalgary TREx RGB': '#c084fc',
+      'AuroraMAX': '#d8b4fe',
+      'Explore.org': '#fda4af',
+      'UAF Allsky': '#5eead4',
+      'Athabasca AuroraCam': '#fcd34d'
     };
     const riskLevels = [
       { minimum: 0, label: '0–9%', color: '#39a96b' },
@@ -178,7 +199,7 @@
       popup.append(detailLine('Interestingness', `${properties.interestingness.score}/100`));
       popup.append(detailLine('Severe risk, next hour', `${properties.probability}%`));
       popup.append(detailLine('Outline complexity', `${properties.outline_shape.score}/100`));
-      popup.append(detailLine('Image-matched camera views', `${viewCount}`));
+      popup.append(detailLine('Camera views with a visible phenomenon', `${viewCount}`));
       popup.append(detailLine('Core / visual search radius', `${properties.circle.radius_km} / ${properties.view_circle.radius_km} km`));
       popup.append(detailLine('Hail / wind / tornado', `${properties.hail_probability}% / ${properties.wind_probability}% / ${properties.tornado_probability}%`));
       popup.append(detailLine('GOES lightning, past 5 min', `${properties.flashes_5min} flashes`));
@@ -203,25 +224,19 @@
     function cloudPopup(properties) {
       const popup = document.createElement('div');
       const title = document.createElement('h3');
-      title.textContent = `GOES-${properties.satellite} cloud patch`;
+      title.textContent = 'ICON 3D cloud patch';
       popup.append(title);
-      popup.append(detailLine('Scene distinctiveness', `${properties.score}/100`));
-      popup.append(detailLine('Cloud coverage', `${properties.cloud_fraction}%`));
-      popup.append(detailLine('Outline complexity', `${properties.shape_complexity}/100`));
-      popup.append(detailLine('Directional alignment', properties.alignment.toFixed(3)));
-      popup.append(detailLine('Enclosed clear area', `${properties.hole_fraction}%`));
-      popup.append(detailLine('Median cloud-top height', `${properties.height_km} km`));
-      popup.append(detailLine('Cloud-top height variation (IQR)', `${properties.height_spread_km} km`));
-      popup.append(detailLine('Median optical depth', properties.optical_depth.toFixed(1)));
-      popup.append(detailLine('Valid cloud-mask pixels', `${properties.valid_fraction}%`));
-      for (const [label, name] of [['Cloud mask', 'cloud mask'], ['Top height', 'cloud top height'], ['Optical depth', 'optical depth']]) {
-        const source = document.createElement('a');
-        source.href = clouds.sources[`GOES-${properties.satellite} ${name}`];
-        source.textContent = `${label} ↗`;
-        source.target = '_blank';
-        source.rel = 'noopener noreferrer';
-        popup.append(source, document.createElement('br'));
-      }
+      popup.append(detailLine('3D variation rank', `${properties.score}/100`));
+      popup.append(detailLine('Horizontal change per grid step', `${properties.horizontal_variation} percentage points`));
+      popup.append(detailLine('Vertical change per grid step', `${properties.vertical_variation} percentage points`));
+      popup.append(detailLine('Mean peak cloud fraction by column', `${properties.peak_cloud_fraction}%`));
+      popup.append(detailLine('Forecast valid', clouds.forecast_time));
+      const source = document.createElement('a');
+      source.href = clouds.source_url;
+      source.textContent = 'DWD ICON cloud fraction ↗';
+      source.target = '_blank';
+      source.rel = 'noopener noreferrer';
+      popup.append(source);
       return popup;
     }
 
@@ -246,10 +261,10 @@
     const cloudLayer = L.geoJSON(clouds.features, {
       style(feature) {
         const score = feature.properties.score;
-        return { color: 'transparent', weight: 0, fillColor: levelFor(score, cloudLevels).color, fillOpacity: 0.08 + 0.45 * (score / 100) ** 2 };
+        return { color: 'transparent', weight: 0, fillColor: levelFor(score, cloudLevels).color, fillOpacity: score === 0 ? 0 : 0.08 + 0.45 * (score / 100) ** 2 };
       },
       onEachFeature(feature, layer) {
-        layer.bindTooltip(`Cloud distinctiveness ${feature.properties.score}/100`);
+        layer.bindTooltip(`ICON 3D variation ${feature.properties.score}/100`);
         layer.bindPopup(cloudPopup(feature.properties));
         cloudTargets.set(feature.properties.id, layer);
       }
@@ -263,22 +278,22 @@
     document.getElementById('cloud-count').textContent = clouds.features.features.length.toLocaleString();
     document.getElementById('cloud-high-count').textContent = clouds.features.features.filter(feature => feature.properties.score >= 90).length.toLocaleString();
     document.getElementById('cloud-tile-size').textContent = clouds.tile_degrees;
-    document.getElementById('cloud-west-time').textContent = clouds.observations['GOES-18'];
-    document.getElementById('cloud-east-time').textContent = clouds.observations['GOES-19'];
+    document.getElementById('cloud-forecast-time').textContent = clouds.forecast_time;
+    document.getElementById('cloud-source-link').href = clouds.source_url;
     document.getElementById('aurora-cloud-limit').textContent = auroraCloudLimit;
     document.getElementById('aurora-probability-minimum').textContent = metadata.aurora_probability_minimum;
     document.getElementById('aurora-forecast-time').textContent = auroras?.forecast_time ?? 'unavailable for historical maps';
     document.getElementById('aurora-cloud-time').textContent = auroras?.cloud_time ?? 'unavailable';
     if (auroras) document.getElementById('aurora-cloud-source-link').href = auroras.cloud_source_url;
     document.getElementById('camera-count').textContent = cameras.length.toLocaleString();
-    document.getElementById('accepted-count').textContent = cameras.filter(camera => camera.view_score?.accepted).length.toLocaleString();
-    document.getElementById('rejected-count').textContent = cameras.filter(camera => camera.event_ids.length > 0 && (isBlurry(camera) || !camera.view_score?.accepted)).length.toLocaleString();
+    document.getElementById('accepted-count').textContent = cameras.filter(camera => hasVisiblePhenomenon(camera, 'storm')).length.toLocaleString();
+    document.getElementById('rejected-count').textContent = cameras.filter(camera => camera.event_ids.length > 0 && !hasVisiblePhenomena(camera)).length.toLocaleString();
     document.getElementById('sunset-camera-count').textContent = cameras.filter(camera => camera.sunset_band).length.toLocaleString();
     document.getElementById('sunset-eligible-count').textContent = cameras.filter(camera => camera.sunset_score >= sunsetMinimumScore).length.toLocaleString();
     document.getElementById('sunset-minimum-score').textContent = metadata.sunset_minimum_score;
-    document.getElementById('sunset-accepted-count').textContent = cameras.filter(camera => camera.sunset_view_score?.accepted).length.toLocaleString();
-    document.getElementById('sunset-rejected-count').textContent = cameras.filter(camera => camera.sunset_score >= sunsetMinimumScore && (isBlurry(camera) || !camera.sunset_view_score?.accepted)).length.toLocaleString();
-    document.getElementById('blur-count').textContent = cameras.filter(isBlurry).length.toLocaleString();
+    document.getElementById('sunset-accepted-count').textContent = cameras.filter(camera => hasVisiblePhenomenon(camera, 'sunset')).length.toLocaleString();
+    document.getElementById('sunset-rejected-count').textContent = cameras.filter(camera => camera.sunset_score >= sunsetMinimumScore && !hasVisiblePhenomena(camera)).length.toLocaleString();
+    document.getElementById('blur-count').textContent = cameras.filter(camera => isBlurry(camera) && (camera.event_ids.length > 0 || camera.sunset_score >= sunsetMinimumScore)).length.toLocaleString();
     document.getElementById('blur-threshold').textContent = metadata.blur_threshold;
     document.getElementById('sunset-map-time').textContent = sunset.map_time;
     document.getElementById('sunset-forecast-time').textContent = sunset.forecast_time;
@@ -318,7 +333,7 @@
     for (const camera of cameras) {
       for (const eventId of camera.event_ids) {
         if (!viewCounts.has(eventId)) throw new Error(`Unknown storm match: ${eventId}`);
-        if (camera.view_score?.accepted) viewCounts.set(eventId, viewCounts.get(eventId) + 1);
+        if (hasVisiblePhenomena(camera)) viewCounts.set(eventId, viewCounts.get(eventId) + 1);
       }
     }
 
@@ -450,6 +465,18 @@
 
     const cameraLayers = {};
     const sunsetCameraLayer = L.layerGroup().addTo(map);
+    function phenomenon(camera, type) {
+      return camera.phenomena[type];
+    }
+
+    function hasVisiblePhenomenon(camera, type) {
+      return phenomenon(camera, type)?.visible ?? false;
+    }
+
+    function hasVisiblePhenomena(camera) {
+      return Object.values(camera.phenomena).some(result => result.visible);
+    }
+
     function scoreDetails(score) {
       const details = document.createElement('div');
       details.append(detailLine('Storm image filter', score.accepted ? 'accepted' : 'rejected'));
@@ -477,7 +504,6 @@
       frame.className = 'camera-frame';
       frame.src = frameData.image_url;
       frame.alt = `Recent frame from ${camera.name}`;
-      frame.loading = 'lazy';
       frame.decoding = 'async';
       return frame;
     }
@@ -488,15 +514,28 @@
           icon: L.divIcon({ className: `rejected-camera-icon ${markerClass}`, html: '×', iconSize: [16, 16], iconAnchor: [8, 8] })
         });
       }
-      return L.circleMarker([camera.latitude, camera.longitude], {
+      const marker = L.circleMarker([camera.latitude, camera.longitude], {
         className: markerClass,
-        radius: highlighted ? 4 : 2,
+        radius: highlighted ? 4 : 3,
         color: outlineColor,
-        weight: highlighted ? 1 : 0,
+        weight: highlighted ? 1 : 10,
         opacity: highlighted ? 1 : 0,
-        fillColor: highlighted ? cameraColors[camera.network] : '#aaaaaa',
-        fillOpacity: highlighted ? 1 : 0.045
+        fillColor: cameraColors[camera.network],
+        fillOpacity: highlighted ? 1 : 0.32
       });
+      if (!highlighted) {
+        marker.on('mouseover', () => marker.setStyle({
+          fillColor: cameraHoverColors[camera.network],
+          fillOpacity: 0.88,
+          opacity: 0.18
+        }));
+        marker.on('mouseout', () => marker.setStyle({
+          fillColor: cameraColors[camera.network],
+          fillOpacity: 0.32,
+          opacity: 0
+        }));
+      }
+      return marker;
     }
 
     function cameraContent({ camera, frame, children, showLinks }) {
@@ -505,6 +544,9 @@
       title.textContent = camera.name;
       content.append(title, detailLine('Network', camera.network));
       if (camera.operated_by) content.append(detailLine('Operated by', camera.operated_by));
+      if (camera.sky_facing) content.append(detailLine('View', 'Sky-facing'));
+      if (camera.link_only) content.append(detailLine('Preview', 'Open external feed; no scored still frame'));
+      if (!camera.feed_verified) content.append(detailLine('Feed status', 'Unverified; source was unreachable when added'));
       if (camera.direction) content.append(detailLine('Facing', camera.direction));
       if (frame || camera.view_time) content.append(detailLine('Last frame', frame?.captured_at ?? camera.view_time));
       if (frame) content.append(cameraFrame(camera, frame));
@@ -530,11 +572,21 @@
 
     function cameraChildren(camera) {
       const children = [];
+      if (camera.rank) {
+        children.push(detailLine('Camera rank', camera.rank.score.toFixed(1)));
+        for (const [type, component] of Object.entries(camera.rank.components)) {
+          children.push(detailLine(`${type} rank contribution`, `${component.weighted_score.toFixed(1)} (view ${component.view_score.toFixed(1)}, event ${component.event_score.toFixed(1)})`));
+        }
+        children.push(detailLine('Sharpness rank contribution', `${camera.rank.sharpness_contribution.toFixed(1)} (percentile ${camera.rank.sharpness_score.toFixed(1)}/100)`));
+      }
+      for (const [type, result] of Object.entries(camera.phenomena)) {
+        children.push(detailLine(`${type} visible`, `${result.visible ? 'yes' : 'no'} · score ${result.score.toFixed(4)}`));
+      }
       if (camera.sharpness !== null) {
         children.push(detailLine('Laplacian sharpness', `${camera.sharpness.toFixed(2)} / minimum ${metadata.blur_threshold}`));
-        if (isBlurry(camera)) children.push(detailLine('Blur filter', 'rejected; OpenCLIP skipped'));
+        if (isBlurry(camera) && (camera.event_ids.length > 0 || camera.sunset_score >= sunsetMinimumScore)) children.push(detailLine('Blur filter', 'rejected; OpenCLIP skipped'));
       }
-      if (camera.image_scores) children.push(detailLine('Warm tones in frame', `${(100 * camera.image_scores.warm_tone_prevalence).toFixed(1)}%`));
+      if (camera.image_scores) children.push(detailLine('Warm-color strength', `${(100 * camera.image_scores.warm_tone_strength).toFixed(1)}/100`));
       if (camera.sunset_band) {
         children.push(detailLine('Sunset forecast', `${camera.sunset_score}/100`));
         if (camera.sunset_score < sunsetMinimumScore) children.push(detailLine('Sunset image filter', `Skipped below forecast score ${sunsetMinimumScore}`));
@@ -554,15 +606,15 @@
       const stormCandidate = camera.event_ids.length > 0;
       const sunsetCandidate = camera.sunset_score >= sunsetMinimumScore;
       const auroraCandidate = camera.aurora_event_ids.length > 0;
-      const candidate = stormCandidate || sunsetCandidate;
+      const candidate = stormCandidate || sunsetCandidate || auroraCandidate;
       const blurry = isBlurry(camera);
-      if (candidate !== (camera.sharpness !== null)) throw new Error(`Missing or unexpected sharpness for ${camera.name}`);
-      if ((stormCandidate && !blurry) !== (camera.view_score !== null)) throw new Error(`Missing or unexpected storm score for ${camera.name}`);
-      if ((sunsetCandidate && !blurry) !== (camera.sunset_view_score !== null)) throw new Error(`Missing or unexpected sunset score for ${camera.name}`);
-      const highlighted = camera.view_score?.accepted || camera.sunset_view_score?.accepted || auroraCandidate || false;
+      if ((candidate && !camera.link_only) !== (camera.sharpness !== null)) throw new Error(`Missing or unexpected sharpness for ${camera.name}`);
+      if ((stormCandidate && !blurry && !camera.link_only) !== (camera.view_score !== null)) throw new Error(`Missing or unexpected storm score for ${camera.name}`);
+      if ((sunsetCandidate && !blurry && !camera.link_only) !== (camera.sunset_view_score !== null)) throw new Error(`Missing or unexpected sunset score for ${camera.name}`);
+      const highlighted = hasVisiblePhenomena(camera) || auroraCandidate;
       return {
         highlighted,
-        outlineColor: auroraCandidate ? '#c4b5fd' : camera.sunset_view_score?.accepted ? '#f5b541' : '#ffffff',
+        outlineColor: auroraCandidate ? '#c4b5fd' : hasVisiblePhenomenon(camera, 'sunset') ? '#f5b541' : '#ffffff',
         rejected: !highlighted && candidate
       };
     }
@@ -591,7 +643,7 @@
       return 0;
     }
 
-    function cameraSiteContent(siteCameras, selectedCamera) {
+    function cameraSiteContent(siteCameras, selectedCamera, onSelect) {
       const content = document.createElement('div');
       const title = document.createElement('h3');
       title.textContent = `${siteCameras[0].name.split(' · ')[0]} · ${siteCameras.length} cameras`;
@@ -603,6 +655,7 @@
         button.type = 'button';
         button.textContent = camera.direction ?? camera.name;
         button.addEventListener('click', () => {
+          onSelect(camera);
           for (const choice of buttons) choice.setAttribute('aria-pressed', String(choice === button));
           selectedContent.replaceChildren(cameraContent({ camera, frame: camera.frame, children: cameraChildren(camera), showLinks: true }));
         });
@@ -621,17 +674,17 @@
       const marker = cameraMarker({
         camera,
         highlighted: presentations.some(presentation => presentation.highlighted),
-        outlineColor: siteCameras.some(siteCamera => siteCamera.aurora_event_ids.length > 0) ? '#c4b5fd' : siteCameras.some(siteCamera => siteCamera.sunset_view_score?.accepted) ? '#f5b541' : '#ffffff',
+        outlineColor: siteCameras.some(siteCamera => siteCamera.aurora_event_ids.length > 0) ? '#c4b5fd' : siteCameras.some(siteCamera => hasVisiblePhenomenon(siteCamera, 'sunset')) ? '#f5b541' : '#ffffff',
         rejected: !presentations.some(presentation => presentation.highlighted) && presentations.some(presentation => presentation.rejected),
         markerClass: 'camera-site-marker'
       });
       marker.bindTooltip(() => cameraContent({
-        camera,
-        frame: camera.frame,
-        children: [detailLine('At this site', `${siteCameras.length} cameras; click to choose a direction`), ...cameraChildren(camera)],
+        camera: selectedCamera,
+        frame: selectedCamera.frame,
+        children: [detailLine('At this site', `${siteCameras.length} cameras; click to choose a direction`), ...cameraChildren(selectedCamera)],
         showLinks: false
       }), { className: 'camera-tooltip', direction: 'auto', opacity: 0.98 });
-      marker.bindPopup(() => cameraSiteContent(siteCameras, selectedCamera));
+      marker.bindPopup(() => cameraSiteContent(siteCameras, selectedCamera, camera => { selectedCamera = camera; }));
       marker.addTo(cameraLayer(camera));
       for (const siteCamera of siteCameras) {
         cameraTargets.set(siteCamera, { marker, select() { selectedCamera = siteCamera; } });
@@ -661,9 +714,34 @@
       if (siteCameras.length > 1) addCameraSite(siteCameras);
     }
 
+    function openCamera(camera) {
+      const target = cameraTargets.get(camera);
+      target.select();
+      map.setView([camera.latitude, camera.longitude], Math.max(map.getZoom(), 8));
+      target.marker.openPopup();
+    }
+
+    const rankedCameras = cameras
+      .filter(camera => camera.rank !== null)
+      .sort((first, second) => second.rank.score - first.rank.score)
+      .slice(0, 8);
+    for (const camera of rankedCameras) {
+      const item = document.createElement('li');
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      name.textContent = camera.name;
+      const score = document.createElement('span');
+      score.className = 'score';
+      score.textContent = camera.rank.score.toFixed(1);
+      button.append(name, score);
+      button.addEventListener('click', () => openCamera(camera));
+      item.append(button);
+      document.getElementById('ranked-cameras').append(item);
+    }
+
     const rankedSunsetCameras = cameras
-      .filter(camera => camera.sunset_view_score?.accepted)
-      .sort((first, second) => second.sunset_view_score.combined_score - first.sunset_view_score.combined_score)
+      .filter(camera => camera.sunset_view_score !== null && hasVisiblePhenomena(camera))
+      .sort((first, second) => phenomenon(second, 'sunset').score - phenomenon(first, 'sunset').score)
       .slice(0, 8);
     for (const camera of rankedSunsetCameras) {
       const item = document.createElement('li');
@@ -672,14 +750,9 @@
       name.textContent = camera.name;
       const score = document.createElement('span');
       score.className = 'score';
-      score.textContent = camera.sunset_view_score.combined_score.toFixed(3);
+      score.textContent = phenomenon(camera, 'sunset').score.toFixed(3);
       button.append(name, score);
-      button.addEventListener('click', () => {
-        const target = cameraTargets.get(camera);
-        target.select();
-        map.setView([camera.latitude, camera.longitude], Math.max(map.getZoom(), 8));
-        target.marker.openPopup();
-      });
+      button.addEventListener('click', () => openCamera(camera));
       item.append(button);
       document.getElementById('ranked-sunset-cameras').append(item);
     }
@@ -697,7 +770,7 @@
     const overlays = {
       'Sunset band': sunsetBandLayer,
       'Sunset quality': sunsetQualityLayer,
-      'Cloud distinctiveness': cloudLayer,
+      'ICON 3D cloud variation': cloudLayer,
       'Sunset cameras': sunsetCameraLayer,
       'Aurora regions': auroraLayer,
       'Aurora search circles': auroraCircleLayer,

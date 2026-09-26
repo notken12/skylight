@@ -5,6 +5,7 @@ requires-python = ">=3.12"
 dependencies = [
     "eccodes>=2.48.0",
     "eccodeslib>=2.49.0.30",
+    "fastapi>=0.141.1",
     "netcdf4>=1.7.4",
     "numpy>=2.5.3",
     "open-clip-torch>=3.3.0",
@@ -12,6 +13,7 @@ dependencies = [
     "pyproj>=3.8.0",
     "scikit-image>=0.26.0",
     "scipy>=1.18.1",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]

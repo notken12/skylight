@@ -159,7 +159,9 @@ def classify_auroras(
         )
 
     collection = {"type": "FeatureCollection", "features": features}
-    matches: list[MatchedCamera] = match_cameras(collection, cameras)
+    matches: list[MatchedCamera] = match_cameras(
+        collection, cameras, include_sky_facing=True
+    )
     camera_latitudes = np.asarray(
         [camera.latitude for camera in cameras], dtype=np.float64
     )
@@ -171,7 +173,9 @@ def classify_auroras(
     camera_results = tuple(
         AuroraCamera(
             event_ids=match.event_ids
-            if dark
+            if match.camera.night_sky_capable
+            and match.camera.feed_verified
+            and dark
             and np.isfinite(cover_percent)
             and cover_percent <= MAXIMUM_CLOUD_PERCENT
             else (),

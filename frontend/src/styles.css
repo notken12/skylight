@@ -1,0 +1,51 @@
+:root { color-scheme: dark; font: 14px/1.45 system-ui, sans-serif; background: #111; color: #eee; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, select { font: inherit; }
+button { cursor: pointer; }
+a { color: #ddd; }
+.app-shell { min-height: 100vh; }
+.map { position: fixed; inset: 0; background: #171717; }
+.leaflet-tile { filter: grayscale(1) invert(1) brightness(.74) contrast(.9); }
+.panel { position: fixed; top: 12px; left: 12px; z-index: 950; width: min(285px, calc(100vw - 70px)); max-height: calc(100vh - 24px); overflow: auto; padding: 12px 14px; background: rgb(20 20 20 / 94%); border: 1px solid #444; border-radius: 10px; box-shadow: 0 8px 30px #0006; }
+.panel-header { display: flex; justify-content: space-between; align-items: center; }
+.panel h1 { margin: 0 0 7px; font-size: 1rem; font-weight: 600; }
+.live-indicator { width: 7px; height: 7px; border-radius: 50%; background: #ddd; }
+.run-label { display: block; margin: 5px 0 3px; color: #aaa; font-size: .69rem; text-transform: uppercase; letter-spacing: .06em; }
+select { width: 100%; padding: 5px 6px; color: #eee; background: #282828; border: 1px solid #555; border-radius: 5px; font-size: .77rem; }
+.text-button { display: block; padding: 4px 0; background: none; border: 0; color: #bbb; font-size: .72rem; text-decoration: none; }
+.small-meta { margin-top: 6px; color: #aaa; font-size: .72rem; line-height: 1.6; }
+details { border-top: 1px solid #3a3a3a; margin-top: 9px; padding-top: 7px; }
+summary { cursor: pointer; color: #ddd; font-size: .76rem; font-weight: 600; }
+.rank-list { padding: 0; margin: 6px 0 0; list-style: none; }
+.rank-list button, .rank-list a { display: flex; justify-content: space-between; gap: 6px; width: 100%; padding: 6px 0; border: 0; border-bottom: 1px solid #333; background: none; color: #ddd; text-align: left; text-decoration: none; font-size: .73rem; }
+.rank-list b { color: #aaa; font-weight: 500; }
+.fine-print { font-size: .69rem; color: #aaa; }
+.legend-item { display: flex; align-items: center; gap: 7px; margin: 6px 0; color: #bbb; font-size: .72rem; }
+.legend-line { width: 18px; border-top: 2px dashed #eee; }
+.legend-dot { width: 9px; height: 9px; border-radius: 50%; background: #2563eb; }
+.legend-x { width: 14px; font-size: 17px; line-height: 12px; }
+.leaflet-control-layers, .leaflet-bar a { background: #252525; color: #eee; }
+.leaflet-control-layers { border-color: #555; }
+.leaflet-control-attribution { background: #141414bd !important; color: #aaa; }
+.leaflet-control-attribution a { color: #ddd; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip, .leaflet-tooltip { background: #202020; color: #eee; }
+.leaflet-popup-content { min-width: 220px; max-width: 300px; max-height: min(65vh, 500px); overflow-y: auto; }
+.leaflet-popup-content h3 { margin: 0 0 6px; font-size: .95rem; }
+.leaflet-popup-content p, .leaflet-tooltip p { margin: 4px 0; color: #ccc; font-size: .77rem; }
+.camera-tooltip { width: min(252px, calc(100vw - 32px)); max-height: calc(100vh - 24px); overflow-y: auto; white-space: normal; border: 1px solid #555; padding: 9px; }
+.camera-frame { display: block; width: 100%; max-height: 190px; object-fit: contain; margin: 6px 0; background: #111; }
+.camera-choices { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+.camera-choices button { border: 1px solid #666; border-radius: 4px; background: #303030; color: #eee; padding: 3px 6px; font-size: .72rem; }
+.rejected-icon { color: #eee; font: bold 18px/1 system-ui; text-align: center; text-shadow: 0 1px 2px #000; }
+.history-page, .error-page { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+.history-page h1 { text-transform: capitalize; }
+.history-chart { margin: 25px 0; border: 1px solid #444; padding: 12px; }
+.history-chart svg { width: 100%; height: 120px; }
+table { width: 100%; border-collapse: collapse; }
+td, th { padding: 8px; border-bottom: 1px solid #333; text-align: left; }
+.camera-history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.camera-history-card { padding: 12px; border: 1px solid #3e3e3e; border-radius: 6px; background: #1c1c1c; }
+.camera-history-card img { display: block; width: 100%; max-height: 180px; object-fit: contain; margin: 8px 0; }
+.camera-history-card p { margin: 3px 0; color: #bbb; font-size: .75rem; }
+@media (max-width: 740px) { .panel { top: 8px; left: 8px; max-height: 43vh; padding: 9px 11px; } }

@@ -22,8 +22,6 @@ def cell(latitude: float, longitude: float) -> tuple[int, int]:
 
 
 def faces_circle(camera: Camera, circle: dict[str, float]) -> bool:
-    if camera.azimuth_degrees is None or camera.bearing_tolerance_degrees is None:
-        raise ValueError("Camera direction and tolerance are required for matching")
     bearing, _, distance_m = GEOD.inv(
         camera.longitude,
         camera.latitude,
@@ -34,6 +32,10 @@ def faces_circle(camera: Camera, circle: dict[str, float]) -> bool:
     radius_km = circle["radius_km"]
     if distance_km > radius_km + MAX_VIEW_DISTANCE_KM:
         return False
+    if camera.sky_facing:
+        return True
+    if camera.azimuth_degrees is None or camera.bearing_tolerance_degrees is None:
+        raise ValueError("Camera direction and tolerance are required for matching")
     if distance_km <= radius_km:
         return True
     target_half_width = degrees(asin(radius_km / distance_km))
@@ -41,7 +43,9 @@ def faces_circle(camera: Camera, circle: dict[str, float]) -> bool:
     return heading_difference <= camera.bearing_tolerance_degrees + target_half_width
 
 
-def match_cameras(storms: dict[str, Any], cameras: list[Camera]) -> list[MatchedCamera]:
+def match_cameras(
+    storms: dict[str, Any], cameras: list[Camera], include_sky_facing: bool = False
+) -> list[MatchedCamera]:
     matches: list[list[str]] = [[] for _ in cameras]
     camera_cells: dict[tuple[int, int], list[int]] = {}
     for index, camera in enumerate(cameras):
@@ -49,7 +53,9 @@ def match_cameras(storms: dict[str, Any], cameras: list[Camera]) -> list[Matched
             camera.bearing_tolerance_degrees is None
         ):
             raise ValueError("Camera direction and tolerance must be provided together")
-        if camera.azimuth_degrees is None:
+        if camera.azimuth_degrees is None and not (
+            include_sky_facing and camera.sky_facing
+        ):
             continue
         camera_cells.setdefault(cell(camera.latitude, camera.longitude), []).append(
             index

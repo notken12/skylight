@@ -1,59 +1,62 @@
 import unittest
+from datetime import UTC, datetime
 
 import numpy as np
 
-from cloud_unusualness import CloudPatch, boundary_alignment, score_patches
-from shape_complexity import ShapeComplexity
+from cloud_unusualness import (
+    classify_patches,
+    describe_patch,
+    load_cloud_unusualness,
+    score_patches,
+)
+from cloud_volume import CloudVolume
 
 
 class CloudUnusualnessTests(unittest.TestCase):
-    def test_large_opaque_sheet_ranks_above_ordinary_patches(self) -> None:
-        ordinary_shape = ShapeComplexity(15, 0.1, 0.1, 0.25, 4)
-        ordinary = [
-            CloudPatch(
-                south=30,
-                north=31.5,
-                west=-100 + index,
-                east=-98.5 + index,
-                satellite=19,
-                cloud_fraction=0.35 + index / 1000,
-                valid_fraction=1,
-                shape=ordinary_shape,
-                alignment=0.2,
-                hole_fraction=0.01,
-                height_km=2 + index / 100,
-                height_spread_km=0.3,
-                optical_depth=4 + index / 100,
-            )
-            for index in range(30)
-        ]
-        sheet = CloudPatch(
-            south=40,
-            north=41.5,
-            west=-90,
-            east=-88.5,
-            satellite=19,
-            cloud_fraction=0.98,
-            valid_fraction=1,
-            shape=ShapeComplexity(0, 0, 0, 0, 1),
-            alignment=0.9,
-            hole_fraction=0,
-            height_km=6,
-            height_spread_km=0.1,
-            optical_depth=25,
+    def test_variation_responds_to_vertical_and_horizontal_structure(self) -> None:
+        clear = np.zeros((3, 6, 6), dtype=np.float32)
+        sheet = clear.copy()
+        sheet[1] = 0.5
+        textured = sheet.copy()
+        textured[1, :, ::2] = 1
+        bounds = (30.0, 31.5, -100.0, -98.5)
+
+        patches = [describe_patch(field, bounds) for field in (clear, sheet, textured)]
+        scores = score_patches(patches)
+
+        self.assertEqual(scores[0], 0)
+        self.assertEqual(patches[1].horizontal_variation, 0)
+        self.assertGreater(patches[1].vertical_variation, 0)
+        self.assertGreater(patches[2].horizontal_variation, 0)
+        self.assertGreater(patches[2].variation, patches[1].variation)
+        self.assertGreater(scores[2], scores[1])
+
+    def test_icon_volume_ranks_its_cloudy_tile(self) -> None:
+        latitudes = np.arange(55, 19.75, -0.25)
+        longitudes = np.arange(220, 310.25, 0.25)
+        cloud_fraction = np.zeros(
+            (3, len(latitudes), len(longitudes)), dtype=np.float32
+        )
+        rows = (latitudes >= 24.75) & (latitudes < 26.25)
+        columns = (longitudes >= 234.75) & (longitudes < 236.25)
+        cloud_fraction[1][np.ix_(rows, columns)] = 0.8
+        volume = CloudVolume(
+            cloud_fraction=cloud_fraction,
+            latitudes=latitudes,
+            longitudes=longitudes,
+            altitudes_km=np.array([0.5, 1.0, 1.5]),
+            valid_time=datetime(2026, 9, 24, 12, tzinfo=UTC),
+            source_url="https://example.com/icon/clc/",
         )
 
-        scores = score_patches([*ordinary, sheet])
+        result = load_cloud_unusualness(volume)
+        features = classify_patches(volume)["features"]
+        highest = max(features, key=lambda feature: feature["properties"]["score"])
 
-        self.assertEqual(int(np.argmax(scores)), len(ordinary))
-        self.assertTrue(np.all(np.isfinite(scores)))
-
-    def test_parallel_cloud_bands_have_high_alignment(self) -> None:
-        bands = np.zeros((64, 64), dtype=bool)
-        bands[::8, :] = True
-
-        self.assertGreater(boundary_alignment(bands), 0.9)
-        self.assertEqual(boundary_alignment(np.ones((64, 64), dtype=bool)), 0)
+        self.assertEqual(len(features), 680)
+        self.assertEqual(highest["properties"]["id"], "24.75:-125.25")
+        self.assertGreater(highest["properties"]["vertical_variation"], 0)
+        self.assertEqual(result.forecast_time, "2026-09-24T12:00+00:00")
 
 
 if __name__ == "__main__":

@@ -1,9 +1,14 @@
 from collections.abc import Callable
 from dataclasses import asdict
+from datetime import UTC, datetime
 from typing import Any
 
 from event_geometry import EventCircle, visual_search_circle
 from shape_complexity import ShapeComplexity
+
+
+def parse_probsevere_time(value: str) -> datetime:
+    return datetime.strptime(value, "%Y%m%d_%H%M%S UTC").replace(tzinfo=UTC)
 
 
 def classify_storms(
@@ -14,6 +19,7 @@ def classify_storms(
     if data["product"] != "ProbSevere 3.0":
         raise ValueError(f"Expected ProbSevere 3.0, received {data['product']}")
 
+    valid_time = parse_probsevere_time(data["validTime"]).isoformat(timespec="seconds")
     features = []
     for feature in data["features"]:
         models = feature["models"]
@@ -27,7 +33,7 @@ def classify_storms(
                 "geometry": feature["geometry"],
                 "properties": {
                     "id": properties["ID"],
-                    "valid_time": data["validTime"],
+                    "valid_time": valid_time,
                     "circle": asdict(event_circle),
                     "view_circle": asdict(visual_search_circle(event_circle)),
                     "interestingness": {

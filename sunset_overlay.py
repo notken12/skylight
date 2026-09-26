@@ -7,8 +7,8 @@ from PIL import Image
 from scipy.ndimage import map_coordinates
 
 from cameras import Camera
+from cloud_volume import CloudVolume
 from sunset_scoring import quality_grid, sunset_band
-from sunset_weather import CloudVolume
 
 PALETTE = np.array(
     [
@@ -85,12 +85,15 @@ def render_sunset_overlay(
         cval=0,
     )
     camera_scores[~camera_in_band] = 0
+    camera_scores[
+        np.array([camera.link_only for camera in cameras], dtype=np.bool_)
+    ] = 0
     return SunsetOverlay(
         map_time=at.isoformat(timespec="minutes"),
         forecast_time=cloud.valid_time.isoformat(timespec="minutes"),
         source_url=cloud.source_url,
-        band_url=band_path.name,
-        quality_url=quality_path.name,
+        band_url=f"/assets/{band_path.name}",
+        quality_url=f"/assets/{quality_path.name}",
         camera_in_band=tuple(bool(value) for value in camera_in_band),
         camera_scores=tuple(int(value) for value in np.rint(camera_scores)),
     )

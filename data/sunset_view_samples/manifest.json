@@ -1,5 +1,5 @@
 {
-  "curated_at": "2026-09-24T01:59:23.233014+00:00",
+  "curated_at": "2026-09-26T03:15:33+00:00",
   "samples": [
     {
       "label": "good",
@@ -94,6 +94,104 @@
       "captured_at": "2026-09-24T02:15:52Z",
       "forecast_score_at_selection": 12,
       "added_at": "2026-09-24T02:27:06.920143+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "16-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/23720/2026/09/25/McCullough_Range_Mini_1_1790301524_1587.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/23720/2026/09/25/McCullough_Range_Mini_1_1790301524_1587.jpg",
+      "camera_name": "axis-mcculloughrange1",
+      "captured_at": "2026-09-25T01:58:44Z",
+      "added_at": "2026-09-25T02:05:49+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "17-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/12236/2026/09/25/Zephyr_1790301968_7184.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/12236/2026/09/25/Zephyr_1790301968_7184.jpg",
+      "camera_name": "Zephyr",
+      "captured_at": "2026-09-25T02:06:08Z",
+      "added_at": "2026-09-25T02:12:48+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "18-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/2380/2026/09/25/Sierra_at_Tahoe_1790301964_1908.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/2380/2026/09/25/Sierra_at_Tahoe_1790301964_1908.jpg",
+      "camera_name": "Sierra at Tahoe",
+      "captured_at": "2026-09-25T02:06:04Z",
+      "added_at": "2026-09-25T02:12:48+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "19-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/12219/2026/09/25/NOAA_Reno_NV_1790301963_4595.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/12219/2026/09/25/NOAA_Reno_NV_1790301963_4595.jpg",
+      "camera_name": "NOAA Reno NV",
+      "captured_at": "2026-09-25T02:06:03Z",
+      "added_at": "2026-09-25T02:12:48+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "20-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/12203/2026/09/25/Hillside_NV_1790301963_5000.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/12203/2026/09/25/Hillside_NV_1790301963_5000.jpg",
+      "camera_name": "Hillside NV",
+      "captured_at": "2026-09-25T02:06:03Z",
+      "added_at": "2026-09-25T02:12:48+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "21-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/1828/2026/09/25/Big_Hill_1790301967_4611.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/1828/2026/09/25/Big_Hill_1790301967_4611.jpg",
+      "camera_name": "Big Hill",
+      "captured_at": "2026-09-25T02:06:07Z",
+      "added_at": "2026-09-25T02:14:56+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "22-good.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/2519/2026/09/25/Yosemite_Lakes_1790301963_1404.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/2519/2026/09/25/Yosemite_Lakes_1790301963_1404.jpg",
+      "camera_name": "Yosemite Lakes",
+      "captured_at": "2026-09-25T02:06:03Z",
+      "added_at": "2026-09-25T02:31:01+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "23-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/854/26/13122-1790387657724.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/854/26/13122-1790387657724.jpg",
+      "camera_name": "Queen Bee · South",
+      "captured_at": "2026-09-26T01:54:17Z",
+      "added_at": "2026-09-26T02:06:58+00:00"
+    },
+    {
+      "label": "good",
+      "filename": "24-good.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/712/26/12568-1790387804173.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/712/26/12568-1790387804173.jpg",
+      "camera_name": "Mammoth Mountain · North",
+      "captured_at": "2026-09-26T01:56:44Z",
+      "added_at": "2026-09-26T02:06:58+00:00"
+    },
+    {
+      "label": "bad",
+      "filename": "25-bad.jpg",
+      "source_url": "https://img.cdn.prod.alertwest.com/data/img/16405/2026/09/26/Two_Rivers_1790388486_2564.jpg",
+      "image_url": "https://img.cdn.prod.alertwest.com/data/img/16405/2026/09/26/Two_Rivers_1790388486_2564.jpg",
+      "camera_name": "Two Rivers",
+      "captured_at": "2026-09-26T02:08:06Z",
+      "added_at": "2026-09-26T03:15:33+00:00"
+    },
+    {
+      "label": "bad",
+      "filename": "26-bad.jpg",
+      "source_url": "https://images.wcams-static.faa.gov/webimages/313/26/11052-1790388308362.jpg",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/313/26/11052-1790388308362.jpg",
+      "captured_at": "2026-09-26T02:05:08Z",
+      "added_at": "2026-09-26T03:15:33+00:00"
     }
   ]
 }

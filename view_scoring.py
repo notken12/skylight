@@ -1,11 +1,13 @@
+import hashlib
 import json
+from collections import defaultdict
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from io import BytesIO
 from itertools import pairwise
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import open_clip
 import torch
@@ -26,6 +28,18 @@ SUNSET_REFERENCE_MANIFEST = (
     Path(__file__).parent / "data/sunset_view_samples/manifest.json"
 )
 SUNSET_MINIMUM_SCORE = 10
+type PhenomenonType = Literal["storm", "sunset"]
+
+
+def reference_digest() -> str:
+    digest = hashlib.sha256()
+    for manifest in (REFERENCE_MANIFEST, SUNSET_REFERENCE_MANIFEST):
+        manifest_bytes = manifest.read_bytes()
+        digest.update(manifest_bytes)
+        for sample in json.loads(manifest_bytes)["samples"]:
+            image = (manifest.parent / sample["filename"]).read_bytes()
+            digest.update(hashlib.sha256(image).digest())
+    return digest.hexdigest()[:16]
 
 
 @dataclass(frozen=True)
@@ -61,6 +75,12 @@ class SunsetViewScore:
 
 
 @dataclass(frozen=True)
+class PhenomenonResult:
+    score: float
+    visible: bool
+
+
+@dataclass(frozen=True)
 class ScoredCamera:
     camera: Camera
     event_ids: tuple[str, ...]
@@ -69,6 +89,20 @@ class ScoredCamera:
     frame: CameraFrame | None
     sharpness: float | None
     image_scores: CameraImageScores | None
+
+    @property
+    def phenomena(self) -> dict[PhenomenonType, PhenomenonResult]:
+        phenomena = {}
+        if self.view_score is not None:
+            phenomena["storm"] = PhenomenonResult(
+                self.view_score.margin, self.view_score.accepted
+            )
+        if self.sunset_view_score is not None:
+            phenomena["sunset"] = PhenomenonResult(
+                self.sunset_view_score.combined_score,
+                self.sunset_view_score.accepted,
+            )
+        return phenomena
 
 
 @dataclass(frozen=True)
@@ -248,7 +282,7 @@ class SunsetViewScorer:
         self.bad_count = reference_scorer.bad_count
         margins = leave_one_out_margins(reference_vectors, list(range(self.good_count)))
         warm_tones = [
-            score_camera_image(image).warm_tone_prevalence for image in reference_images
+            score_camera_image(image).warm_tone_strength for image in reference_images
         ]
         self.calibration = calibrated_threshold(
             [
@@ -264,7 +298,7 @@ class SunsetViewScorer:
         references = self.reference_scorer.score(vectors)
         scores = []
         for reference, image_score in zip(references, image_scores, strict=True):
-            combined = reference.margin + image_score.warm_tone_prevalence
+            combined = reference.margin + image_score.warm_tone_strength
             scores.append(
                 SunsetViewScore(
                     good_similarity=reference.good_similarity,
@@ -340,10 +374,13 @@ def load_view_scorers() -> tuple[
 def score_cameras(
     matches: list[MatchedCamera],
     sunset_quality: tuple[int, ...],
+    extra_snapshot_indices: set[int],
     fetch_snapshot: Callable[[Camera], CameraSnapshot],
-    encoder: OpenClipImageEncoder,
-    storm_scorer: OpenClipViewScorer,
-    sunset_scorer: SunsetViewScorer,
+    encode_images: Callable[[list[bytes]], torch.Tensor],
+    score_storm_views: Callable[[list[CameraSnapshot], torch.Tensor], list[ViewScore]],
+    score_sunset_views: Callable[
+        [torch.Tensor, list[CameraImageScores]], list[SunsetViewScore]
+    ],
 ) -> list[ScoredCamera]:
     if len(matches) != len(sunset_quality):
         raise ValueError("Camera matches and sunset scores must have the same length")
@@ -354,8 +391,12 @@ def score_cameras(
             candidate_positions = [
                 position
                 for position, match in enumerate(batch)
-                if match.event_ids
-                or sunset_quality[start + position] >= SUNSET_MINIMUM_SCORE
+                if not match.camera.link_only
+                and (
+                    match.event_ids
+                    or sunset_quality[start + position] >= SUNSET_MINIMUM_SCORE
+                    or start + position in extra_snapshot_indices
+                )
             ]
             snapshots = list(
                 executor.map(
@@ -381,11 +422,15 @@ def score_cameras(
                     candidate_positions, snapshots, strict=True
                 )
                 if sharpness[position] >= MIN_LAPLACIAN_VARIANCE
+                and (
+                    batch[position].event_ids
+                    or sunset_quality[start + position] >= SUNSET_MINIMUM_SCORE
+                )
             ]
             storm_scores: dict[int, ViewScore] = {}
             sunset_scores: dict[int, SunsetViewScore] = {}
             if sharp_candidates:
-                vectors = encoder.encode(
+                vectors = encode_images(
                     [snapshot.image for _, snapshot in sharp_candidates]
                 )
                 storm_positions = [
@@ -401,7 +446,7 @@ def score_cameras(
                 storm_scores = dict(
                     zip(
                         (sharp_candidates[index][0] for index in storm_positions),
-                        storm_scorer.score(
+                        score_storm_views(
                             [sharp_candidates[index][1] for index in storm_positions],
                             vectors[storm_positions],
                         ),
@@ -411,7 +456,7 @@ def score_cameras(
                 sunset_scores = dict(
                     zip(
                         (sharp_candidates[index][0] for index in sunset_positions),
-                        sunset_scorer.score(
+                        score_sunset_views(
                             vectors[sunset_positions],
                             [
                                 image_scores[sharp_candidates[index][0]]
@@ -440,3 +485,40 @@ def score_cameras(
                     )
                 )
     return cameras
+
+
+def include_camera_frames(
+    cameras: list[ScoredCamera],
+    required_indices: set[int],
+    fetch_frame: Callable[[Camera], CameraFrame],
+) -> list[ScoredCamera]:
+    faa_sites: dict[tuple[float, float], list[int]] = defaultdict(list)
+    for index, scored in enumerate(cameras):
+        if scored.camera.network == "FAA WeatherCams":
+            faa_sites[(scored.camera.latitude, scored.camera.longitude)].append(index)
+
+    frame_indices = set(required_indices)
+    for site_indices in faa_sites.values():
+        if len(site_indices) > 1 and any(
+            cameras[index].frame is not None or index in required_indices
+            for index in site_indices
+        ):
+            frame_indices.update(site_indices)
+
+    missing_indices = sorted(
+        index
+        for index in frame_indices
+        if cameras[index].frame is None and not cameras[index].camera.link_only
+    )
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        frames = list(
+            executor.map(
+                fetch_frame,
+                (cameras[index].camera for index in missing_indices),
+            )
+        )
+
+    with_frames = cameras.copy()
+    for index, frame in zip(missing_indices, frames, strict=True):
+        with_frames[index] = replace(cameras[index], frame=frame)
+    return with_frames

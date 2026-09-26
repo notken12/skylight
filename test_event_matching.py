@@ -1,10 +1,20 @@
 import unittest
 from datetime import UTC, datetime, timedelta
+from email.utils import format_datetime
+from typing import Any
 
 from pyproj import Geod
 
 from camera_matching import match_cameras
-from cameras import Camera, faa_cameras
+from cameras import (
+    AURORAMAX_IMAGE_URL,
+    UCALGARY_LATEST_URL,
+    UCALGARY_OBSERVATORIES_URL,
+    Camera,
+    auroramax_cameras,
+    faa_cameras,
+    ucalgary_aurora_cameras,
+)
 from event_geometry import VISUAL_CLOUD_BUFFER_KM, enclosing_circle
 from probsevere import classify_storms
 from shape_complexity import score_shape
@@ -131,6 +141,100 @@ class EventMatchingTests(unittest.TestCase):
 
         self.assertEqual([match.event_ids for match in matches], [("storm-a",)] * 2)
 
+    def test_all_sky_camera_matches_aurora_without_direction(self) -> None:
+        events = {
+            "features": [
+                {
+                    "properties": {
+                        "id": "aurora-a",
+                        "view_circle": {
+                            "center_latitude": 60.0,
+                            "center_longitude": -112.0,
+                            "radius_km": 50.0,
+                        },
+                    }
+                }
+            ]
+        }
+        camera = Camera(
+            "UCalgary TREx RGB",
+            "Fort Smith",
+            60.03,
+            -111.93,
+            "https://example.com/live",
+            sky_facing=True,
+        )
+
+        self.assertEqual(match_cameras(events, [camera])[0].event_ids, ())
+        self.assertEqual(
+            match_cameras(events, [camera], include_sky_facing=True)[0].event_ids,
+            ("aurora-a",),
+        )
+
+    def test_live_aurora_sources_keep_only_recent_images(self) -> None:
+        recent = datetime.now(UTC).replace(microsecond=0)
+        stale = recent - timedelta(hours=2)
+        streams = [
+            {
+                "id": "trexrgb_fsmi_standard",
+                "site_uid": "fsmi",
+                "mimetype": "image/jpeg",
+            },
+            {
+                "id": "trexrgb_gill_standard",
+                "site_uid": "gill",
+                "mimetype": "image/jpeg",
+            },
+        ]
+        observatories = [
+            {
+                "uid": "fsmi",
+                "full_name": "Fort Smith, NWT, Canada",
+                "geodetic_latitude": 60.03,
+                "geodetic_longitude": -111.93,
+            },
+            {
+                "uid": "gill",
+                "full_name": "Gillam, MB, Canada",
+                "geodetic_latitude": 56.38,
+                "geodetic_longitude": -94.64,
+            },
+        ]
+
+        def fetch_json(url: str) -> Any:
+            if url == UCALGARY_OBSERVATORIES_URL:
+                return observatories
+            return {"streams": streams}
+
+        def fetch_headers(url: str) -> dict[str, str]:
+            time = (
+                recent
+                if url == UCALGARY_LATEST_URL.format(id=streams[0]["id"])
+                else stale
+            )
+            return {"x-rt-stream-last-updated-utc": time.isoformat()}
+
+        cameras = ucalgary_aurora_cameras(fetch_json, fetch_headers)
+
+        self.assertEqual(len(cameras), 1)
+        self.assertTrue(cameras[0].sky_facing)
+        self.assertEqual(cameras[0].name, "Fort Smith, NWT, Canada · all sky")
+        self.assertEqual(cameras[0].view_time, recent.isoformat())
+        self.assertEqual(
+            cameras[0].snapshot_url,
+            f"{UCALGARY_LATEST_URL.format(id=streams[0]['id'])}?at={int(recent.timestamp())}",
+        )
+
+        auroramax = auroramax_cameras(
+            lambda url: (
+                {"last-modified": format_datetime(recent, usegmt=True)}
+                if url == AURORAMAX_IMAGE_URL
+                else {}
+            )
+        )
+        self.assertEqual(len(auroramax), 1)
+        self.assertTrue(auroramax[0].sky_facing)
+
     def test_storm_instance_preserves_score_inputs(self) -> None:
         ring = [
             [-100.1, 40.0],
@@ -141,7 +245,7 @@ class EventMatchingTests(unittest.TestCase):
         ]
         data = {
             "product": "ProbSevere 3.0",
-            "validTime": "20260923_120000",
+            "validTime": "20260923_120000 UTC",
             "features": [
                 {
                     "geometry": {"type": "Polygon", "coordinates": [ring]},
@@ -159,7 +263,7 @@ class EventMatchingTests(unittest.TestCase):
         instance = classify_storms(data, score_shape, enclosing_circle)["features"][0]
         properties = instance["properties"]
 
-        self.assertEqual(properties["valid_time"], data["validTime"])
+        self.assertEqual(properties["valid_time"], "2026-09-23T12:00:00+00:00")
         self.assertEqual(
             properties["view_circle"]["radius_km"],
             round(properties["circle"]["radius_km"] + VISUAL_CLOUD_BUFFER_KM, 1),

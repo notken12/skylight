@@ -30,6 +30,12 @@ def fetch_json(url: str) -> Any:
     return json.loads(fetch_text(url))
 
 
+def fetch_headers(url: str) -> dict[str, str]:
+    request = Request(url, headers={"User-Agent": USER_AGENT})
+    with urlopen(request, timeout=30) as response:
+        return {name.lower(): value for name, value in response.headers.items()}
+
+
 def fetch_faa_json(url: str) -> Any:
     return json.loads(fetch_text(url, referer=FAA_WEATHERCAMS_REFERER))
 
