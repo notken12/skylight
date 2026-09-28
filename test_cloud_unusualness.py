@@ -21,7 +21,10 @@ class CloudUnusualnessTests(unittest.TestCase):
         textured[1, :, ::2] = 1
         bounds = (30.0, 31.5, -100.0, -98.5)
 
-        patches = [describe_patch(field, bounds) for field in (clear, sheet, textured)]
+        patches = [
+            describe_patch(field, "Test", bounds)
+            for field in (clear, sheet, textured)
+        ]
         scores = score_patches(patches)
 
         self.assertEqual(scores[0], 0)
@@ -32,14 +35,17 @@ class CloudUnusualnessTests(unittest.TestCase):
         self.assertGreater(scores[2], scores[1])
 
     def test_icon_volume_ranks_its_cloudy_tile(self) -> None:
-        latitudes = np.arange(55, 19.75, -0.25)
-        longitudes = np.arange(220, 310.25, 0.25)
+        latitudes = np.arange(85, 16.75, -0.25)
+        longitudes = np.arange(170, 310.25, 0.25)
         cloud_fraction = np.zeros(
             (3, len(latitudes), len(longitudes)), dtype=np.float32
         )
         rows = (latitudes >= 24.75) & (latitudes < 26.25)
         columns = (longitudes >= 234.75) & (longitudes < 236.25)
         cloud_fraction[1][np.ix_(rows, columns)] = 0.8
+        aleutian_rows = (latitudes >= 50.25) & (latitudes < 51.75)
+        aleutian_columns = (longitudes >= 171) & (longitudes < 172.5)
+        cloud_fraction[1][np.ix_(aleutian_rows, aleutian_columns)] = 0.6
         volume = CloudVolume(
             cloud_fraction=cloud_fraction,
             latitudes=latitudes,
@@ -53,7 +59,28 @@ class CloudUnusualnessTests(unittest.TestCase):
         features = classify_patches(volume)["features"]
         highest = max(features, key=lambda feature: feature["properties"]["score"])
 
-        self.assertEqual(len(features), 680)
+        self.assertEqual(
+            {feature["properties"]["region"] for feature in features},
+            {"North America", "Alaska", "Western Aleutians", "Hawaii"},
+        )
+        self.assertGreater(len(features), 680)
+        self.assertEqual(
+            len({feature["properties"]["id"] for feature in features}),
+            len(features),
+        )
+        self.assertTrue(
+            any(feature["properties"]["id"] == "50.25:-180.00" for feature in features)
+        )
+        self.assertTrue(
+            any(feature["properties"]["id"] == "17.25:-180.00" for feature in features)
+        )
+        western_aleutian = next(
+            feature
+            for feature in features
+            if feature["properties"]["id"] == "50.25:171.00"
+        )
+        self.assertGreater(western_aleutian["properties"]["vertical_variation"], 0)
+        self.assertEqual(western_aleutian["geometry"]["coordinates"][0][0], [171, 50.25])
         self.assertEqual(highest["properties"]["id"], "24.75:-125.25")
         self.assertGreater(highest["properties"]["vertical_variation"], 0)
         self.assertEqual(result.forecast_time, "2026-09-24T12:00+00:00")

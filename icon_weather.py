@@ -23,7 +23,7 @@ ICON_WEIGHTS_URL = (
 )
 ICON_WEIGHTS_MEMBER = "ICON_GLOBAL2WORLD_025_EASY/weights_icogl2world_025.nc"
 ICON_CACHE_DIR = Path(__file__).parent / "output/icon_cache"
-SOUTH, NORTH, WEST, EAST = 20, 55, 220, 310
+SOUTH, NORTH, WEST, EAST = 17, 85, 170, 310
 GRID_STEP = 0.25
 GRID_SHAPE = (int((NORTH - SOUTH) / GRID_STEP) + 1, int((EAST - WEST) / GRID_STEP) + 1)
 ICON_GRID_POINTS = 2_949_120
@@ -61,7 +61,7 @@ def icon_height_url(cycle: datetime, level: int) -> str:
 def icon_source_indices(
     cache_dir: Path, fetch: Callable[[str], bytes]
 ) -> NDArray[np.int32]:
-    path = cache_dir / "conus_source_indices.npy"
+    path = cache_dir / "north_america_pacific_source_indices.npy"
     if path.exists():
         indices = np.load(path)
     else:
@@ -145,7 +145,7 @@ def icon_level_heights(
     cache_dir: Path,
     fetch: Callable[[str], bytes],
 ) -> tuple[NDArray[np.float32], NDArray[np.float32]]:
-    path = cache_dir / "conus_level_heights_dense_high.npz"
+    path = cache_dir / "north_america_pacific_level_heights_dense_high.npz"
     if path.exists():
         with np.load(path) as cached:
             centers = np.asarray(cached["centers_km"], dtype=np.float32)

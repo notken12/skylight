@@ -38,6 +38,7 @@ export type CameraRow = {
 
 export type EventProperties = {
   id: string;
+  region?: string;
   score?: number;
   probability?: number;
   hail_probability?: number;

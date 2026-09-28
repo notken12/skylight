@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
-import type { CameraDetails, CameraRow, MapEvent, RunMap, Score } from "./types";
+import type { Feature, Geometry } from "geojson";
+import type { CameraDetails, CameraRow, EventProperties, MapEvent, RunMap, Score } from "./types";
 
 const cameraColors: Record<string, string> = {
   "ALERTWest": "#0891b2",
@@ -70,6 +71,7 @@ function eventPopup(event: MapEvent, viewCount: number): HTMLElement {
     content.append(detail("Camera candidates", viewCount));
   }
   if (event.kind === "cloud_patch") {
+    if (properties.region) content.append(detail("Region", properties.region));
     content.append(detail("Horizontal variation", properties.horizontal_variation ?? 0));
     content.append(detail("Vertical variation", properties.vertical_variation ?? 0));
     content.append(detail("Peak cloud fraction", `${properties.peak_cloud_fraction}%`));
@@ -172,6 +174,20 @@ function markerFor(row: CameraRow, events: Map<number, MapEvent>, highlighted: b
   });
 }
 
+function displayedCloudFeature(feature: Feature<Geometry, EventProperties>): Feature<Geometry, EventProperties> {
+  if (feature.properties.region !== "Western Aleutians") return feature;
+  if (feature.geometry.type !== "Polygon") throw new Error("Western Aleutian cloud patch must be a polygon");
+  return {
+    ...feature,
+    geometry: {
+      type: "Polygon",
+      coordinates: feature.geometry.coordinates.map((ring) =>
+        ring.map(([longitude, ...rest]) => [longitude - 360, ...rest]),
+      ),
+    },
+  };
+}
+
 export function WeatherMap({ data, selectedCamera }: { data: RunMap; selectedCamera: string | null }) {
   const element = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -182,7 +198,7 @@ export function WeatherMap({ data, selectedCamera }: { data: RunMap; selectedCam
     const map = L.map(element.current, { preferCanvas: true, zoomControl: false });
     mapRef.current = map;
     markers.current = new Map();
-    map.fitBounds([[24, -170], [75, -50]]);
+    map.fitBounds([[17, -190], [76, -50]]);
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18,
@@ -244,7 +260,7 @@ export function WeatherMap({ data, selectedCamera }: { data: RunMap; selectedCam
         layer.bindPopup(eventPopup(event, viewCounts.get(event.id) ?? 0));
       },
     }).addTo(map);
-    const cloudLayer = L.geoJSON(cloudEvents.map((event) => event.feature), {
+    const cloudLayer = L.geoJSON(cloudEvents.map((event) => displayedCloudFeature(event.feature)), {
       style: (feature) => {
         const score = requiredNumber(feature?.properties?.score, "cloud variation score");
         return { color: "transparent", weight: 0, fillColor: level(score, [0, 35, 70, 90, 98], cloudColors), fillOpacity: score === 0 ? 0 : 0.08 + 0.45 * (score / 100) ** 2 };
