@@ -51,6 +51,8 @@ export type EventProperties = {
   horizontal_variation?: number;
   vertical_variation?: number;
   peak_cloud_fraction?: number;
+  variation_percentile?: number;
+  cover_factor?: number;
   interestingness?: { score: number; severe_probability?: number; outline_complexity?: number };
   outline_shape?: { score: number };
   view_circle?: { center_latitude: number; center_longitude: number; radius_km: number };

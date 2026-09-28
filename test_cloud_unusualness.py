@@ -4,6 +4,7 @@ from datetime import UTC, datetime
 import numpy as np
 
 from cloud_unusualness import (
+    CloudPatch,
     classify_patches,
     describe_patch,
     load_cloud_unusualness,
@@ -27,12 +28,24 @@ class CloudUnusualnessTests(unittest.TestCase):
         ]
         scores = score_patches(patches)
 
-        self.assertEqual(scores[0], 0)
+        self.assertEqual(scores[0].score, 0)
         self.assertEqual(patches[1].horizontal_variation, 0)
         self.assertGreater(patches[1].vertical_variation, 0)
         self.assertGreater(patches[2].horizontal_variation, 0)
         self.assertGreater(patches[2].variation, patches[1].variation)
-        self.assertGreater(scores[2], scores[1])
+        self.assertGreater(scores[2].score, scores[1].score)
+
+    def test_cover_extremes_reduce_interestingness(self) -> None:
+        patches = [
+            CloudPatch("Test", 30, 31.5, -100, -98.5, 0.1, 0.1, cover)
+            for cover in (0.05, 0.5, 0.95)
+        ]
+        scores = score_patches(patches)
+
+        self.assertEqual([score.variation_percentile for score in scores], [50] * 3)
+        self.assertAlmostEqual(scores[0].cover_factor, scores[2].cover_factor)
+        self.assertGreater(scores[1].score, scores[0].score)
+        self.assertGreater(scores[1].score, scores[2].score)
 
     def test_icon_volume_ranks_its_cloudy_tile(self) -> None:
         latitudes = np.arange(85, 16.75, -0.25)

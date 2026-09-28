@@ -372,6 +372,22 @@
       "reason": "user selected as a poor storm view",
       "selected_at": "2026-09-23T22:29:27.215303+00:00",
       "weather_valid_at": "2026-09-23T22:22:39Z"
+    },
+    {
+      "camera_id": 14052,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1096/details/camera/14052",
+      "name": "Utah Valley Hospital \u00b7 South",
+      "filename": "14052-1790617906496.jpg",
+      "captured_at": "2026-09-28T17:52:05.452Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1096/28/14052-1790617906496.jpg",
+      "label_source": "user",
+      "label": "storm_view",
+      "storm_presence": "storm_view",
+      "view_quality": "good",
+      "event_ids": [],
+      "reason": "user selected as a good storm view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
     }
-  ]
+  ],
+  "updated_at": "2026-09-28T18:06:43.390192+00:00"
 }

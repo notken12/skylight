@@ -1,11 +1,11 @@
 # FAA camera view samples
 
-Twenty-one FAA JPEG snapshots from 2026-09-23, captured around 21:40–22:29 UTC. `manifest.json` records each image's FAA capture time, source page, original image URL, camera ID, label provenance, collection time, and nearby ProbSevere observation time. Open `gallery.html` to review the images.
+Twenty-two FAA JPEG snapshots from September 23 and 28, 2026. `manifest.json` records each image's FAA capture time, source page, original image URL, camera ID, label provenance, and selection time. The September 23 examples also retain nearby ProbSevere observation times. Open `gallery.html` to review the images.
 
 The labels have two separate purposes:
 
-- `storm_presence`: ten user-confirmed `storm_view` examples, three user-selected `no_storm` scenic views, and eight `unknown` views whose poor quality prevents a reliable weather judgment.
-- `view_quality`: eleven `good` views and ten `poor` views. Two of the poor views still show a storm; the others include fog, flat low-contrast sky, a soft horizon, and an obstructing tower.
+- `storm_presence`: eleven user-confirmed `storm_view` examples, three user-selected `no_storm` scenic views, and eight `unknown` views whose poor quality prevents a reliable weather judgment.
+- `view_quality`: twelve `good` views and ten `poor` views. Two of the poor views still show a storm; the others include fog, flat low-contrast sky, a soft horizon, and an obstructing tower.
 
 These are subjective camera-view examples, not independently verified meteorological ground truth. Keep the `unknown` frames out of a binary storm-presence training set. The current OpenCLIP filter uses only `storm_view` + `good` frames as positive references; scenic nonstorm and poor views, including the two poor storm views, are negative references for **view selection**. This small, single-network collection is useful for a similarity prototype and visual review; it is too narrow for a trustworthy global classifier.
 

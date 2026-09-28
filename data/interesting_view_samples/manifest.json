@@ -1,0 +1,125 @@
+{
+  "curated_at": "2026-09-28T18:06:43.390192+00:00",
+  "samples": [
+    {
+      "camera_id": 14000,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1077/details/camera/14000",
+      "name": "Bear River Valley Hospital · South",
+      "filename": "14000-1790617821054.jpg",
+      "captured_at": "2026-09-28T17:50:36.165Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1077/28/14000-1790617821054.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 14001,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1077/details/camera/14001",
+      "name": "Bear River Valley Hospital · SouthWest",
+      "filename": "14001-1790618031108.jpg",
+      "captured_at": "2026-09-28T17:54:21.737Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1077/28/14001-1790618031108.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 14002,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1077/details/camera/14002",
+      "name": "Bear River Valley Hospital · NorthWest",
+      "filename": "14002-1790617565825.jpg",
+      "captured_at": "2026-09-28T17:46:29.565Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1077/28/14002-1790617565825.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 13981,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1072/details/camera/13981",
+      "name": "McKay-Dee Hospital · South",
+      "filename": "13981-1790617986127.jpg",
+      "captured_at": "2026-09-28T17:53:37.151Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1072/28/13981-1790617986127.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 13982,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1072/details/camera/13982",
+      "name": "McKay-Dee Hospital · West",
+      "filename": "13982-1790618046278.jpg",
+      "captured_at": "2026-09-28T17:54:41.235Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1072/28/13982-1790618046278.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 13983,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/1073/details/camera/13983",
+      "name": "Intermountain Medical Center · North",
+      "filename": "13983-1790617953686.jpg",
+      "captured_at": "2026-09-28T17:52:54.922Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/1073/28/13983-1790617953686.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 10569,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/180/details/camera/10569",
+      "name": "Skwentna · East",
+      "filename": "10569-1790618121163.jpg",
+      "captured_at": "2026-09-28T17:55:37.062Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/180/28/10569-1790618121163.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 10779,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/231/details/camera/10779",
+      "name": "Sleetmute · NorthEast",
+      "filename": "10779-1790617986129.jpg",
+      "captured_at": "2026-09-28T17:53:37.280Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/231/28/10779-1790617986129.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 10780,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/231/details/camera/10780",
+      "name": "Sleetmute · SouthEast",
+      "filename": "10780-1790618001107.jpg",
+      "captured_at": "2026-09-28T17:53:55.461Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/231/28/10780-1790618001107.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    },
+    {
+      "camera_id": 10375,
+      "source_url": "https://weathercams.faa.gov/cameras/cameraSite/132/details/camera/10375",
+      "name": "Buckland · SouthEast",
+      "filename": "10375-1790618271179.jpg",
+      "captured_at": "2026-09-28T17:58:10.240Z",
+      "image_url": "https://images.wcams-static.faa.gov/webimages/132/28/10375-1790618271179.jpg",
+      "label_source": "user",
+      "label": "interesting_good",
+      "reason": "user selected as a visually interesting view",
+      "selected_at": "2026-09-28T18:06:43.390192+00:00"
+    }
+  ]
+}

@@ -75,6 +75,8 @@ function eventPopup(event: MapEvent, viewCount: number): HTMLElement {
     content.append(detail("Horizontal variation", properties.horizontal_variation ?? 0));
     content.append(detail("Vertical variation", properties.vertical_variation ?? 0));
     content.append(detail("Peak cloud fraction", `${properties.peak_cloud_fraction}%`));
+    if (properties.variation_percentile !== undefined) content.append(detail("Variation percentile", `${properties.variation_percentile}/100`));
+    if (properties.cover_factor !== undefined) content.append(detail("Cloud-cover factor", `${Math.round(100 * properties.cover_factor)}%`));
   }
   const history = document.createElement("a");
   history.href = `/events/${event.event_id}`;

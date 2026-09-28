@@ -44,6 +44,13 @@ class CloudPatch:
 
 
 @dataclass(frozen=True)
+class CloudScore:
+    variation_percentile: float
+    cover_factor: float
+    score: float
+
+
+@dataclass(frozen=True)
 class CloudUnusualness:
     features: dict[str, Any]
     forecast_time: str
@@ -74,20 +81,30 @@ def describe_patch(
     )
 
 
-def score_patches(patches: list[CloudPatch]) -> NDArray[np.float64]:
+def score_patches(patches: list[CloudPatch]) -> list[CloudScore]:
     variations = np.array([patch.variation for patch in patches])
-    scores = np.zeros(len(patches), dtype=np.float64)
+    percentiles = np.zeros(len(patches), dtype=np.float64)
     varying = variations > 0
     if np.any(varying):
-        scores[varying] = (
+        percentiles[varying] = (
             100
             * (rankdata(variations[varying], method="average") - 0.5)
             / np.count_nonzero(varying)
         )
+    scores = []
+    for patch, percentile in zip(patches, percentiles, strict=True):
+        cover_factor = 4 * patch.peak_cloud_fraction * (1 - patch.peak_cloud_fraction)
+        scores.append(
+            CloudScore(
+                variation_percentile=float(percentile),
+                cover_factor=cover_factor,
+                score=float(percentile * cover_factor),
+            )
+        )
     return scores
 
 
-def patch_feature(patch: CloudPatch, score: float) -> dict[str, Any]:
+def patch_feature(patch: CloudPatch, score: CloudScore) -> dict[str, Any]:
     return {
         "type": "Feature",
         "geometry": {
@@ -105,7 +122,9 @@ def patch_feature(patch: CloudPatch, score: float) -> dict[str, Any]:
         "properties": {
             "id": f"{patch.south:.2f}:{patch.west:.2f}",
             "region": patch.region,
-            "score": round(score, 1),
+            "score": round(score.score, 1),
+            "variation_percentile": round(score.variation_percentile, 1),
+            "cover_factor": round(score.cover_factor, 3),
             "horizontal_variation": round(100 * patch.horizontal_variation, 2),
             "vertical_variation": round(100 * patch.vertical_variation, 2),
             "peak_cloud_fraction": round(100 * patch.peak_cloud_fraction, 1),
@@ -139,7 +158,7 @@ def classify_patches(volume: CloudVolume) -> dict[str, Any]:
     return {
         "type": "FeatureCollection",
         "features": [
-            patch_feature(patch, float(score))
+            patch_feature(patch, score)
             for patch, score in zip(patches, score_patches(patches), strict=True)
         ],
     }
