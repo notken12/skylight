@@ -18,7 +18,7 @@ from cloud_unusualness import load_cloud_unusualness
 from event_geometry import enclosing_circle
 from frame_archive import FrameArchive
 from icon_weather import load_cloud_volume
-from map_render import build_map_data
+from map_data import build_map_data
 from probsevere import classify_storms, parse_probsevere_time
 from shape_complexity import score_shape
 from sunset_overlay import render_sunset_overlay

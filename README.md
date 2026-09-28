@@ -45,6 +45,14 @@ uv run uvicorn api_server:app --host 127.0.0.1 --port 8765
 
 Open <http://127.0.0.1:8765/>. The collector writes `output/skylight.sqlite3`, saves immutable sunset overlays in `output/assets`, and archives fetched candidate frames under `output/assets/frames`. The page loads the latest run, lets you select earlier runs, and links event popups to their score histories. OpenStreetMap tiles require an HTTP page with a valid Referer.
 
+### Coolify
+
+Deploy the repository as a Dockerfile application. Set the exposed port to `8765` and mount persistent storage at `/app/output`. The image serves the built frontend and API; its collector uses the same database and assets. The container runs as UID `10001`, so a host directory mount must be writable by that UID. Keep one application replica while using the local SQLite database.
+
+Add a Coolify Scheduled Task to the application with command `cd /app && /app/.venv/bin/python storm_map.py` and an initial frequency of `*/30 * * * *`. Choose a timeout based on an observed run rather than the five-minute default. Run the task once with **Execute Now** and verify the saved run appears on the map. The collector currently skips duplicate UTC-minute slots but does not prevent executions from overlapping across different minutes.
+
+The image retains its Python dependencies and reference images; `/app/output` retains the SQLite database, scored frames, overlays, ICON cache, and model cache across deployments. Back up the database consistently along with the saved assets. The Linux PyTorch dependencies in the current lockfile include CUDA libraries, so allow substantial build disk space even on a CPU-only host.
+
 The collector can be scheduled, for example every fifteen minutes:
 
 ```cron

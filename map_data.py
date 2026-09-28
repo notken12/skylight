@@ -1,6 +1,4 @@
-import json
 from dataclasses import asdict
-from pathlib import Path
 from typing import Any
 
 from aurora import AuroraEvents
@@ -8,8 +6,6 @@ from camera_ranking import rank_cameras
 from cloud_unusualness import CloudUnusualness
 from sunset_overlay import SunsetOverlay
 from view_scoring import ScoredCamera
-
-TEMPLATE_PATH = Path(__file__).with_name("map_template.html")
 
 
 def build_map_data(
@@ -64,23 +60,3 @@ def build_map_data(
         "clouds": asdict(clouds),
         "metadata": metadata,
     }
-
-
-def render_map(
-    storms: dict[str, Any],
-    cameras: list[ScoredCamera],
-    sunset: SunsetOverlay,
-    auroras: AuroraEvents | None,
-    clouds: CloudUnusualness,
-    metadata: dict[str, str],
-    output_path: Path,
-) -> None:
-    map_data = build_map_data(storms, cameras, sunset, auroras, clouds, metadata)
-    html = TEMPLATE_PATH.read_text()
-    for name, value in map_data.items():
-        serialized = json.dumps(value, ensure_ascii=True, separators=(",", ":")).replace(
-            "<", "\\u003c"
-        )
-        html = html.replace(f"__{name.upper()}__", serialized)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(html)
