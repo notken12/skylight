@@ -3,8 +3,9 @@ import unittest
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from time import perf_counter
 
-from weather_database import save_run
+from weather_database import initialize, save_run
 from weather_queries import event_history, list_runs, read_run_map, run_for_slot
 
 
@@ -153,11 +154,13 @@ class WeatherDatabaseTests(unittest.TestCase):
                         at,
                         assets,
                         {("FAA WeatherCams", "1"): "/assets/frames/saved.jpg"},
+                        perf_counter() - 2,
                     )
                 )
             data = read_run_map(database, run_ids[0])
             assert data is not None
             self.assertEqual(len(data["events"]), 2)
+            self.assertGreaterEqual(data["run"]["duration_seconds"], 2)
             self.assertEqual(len(data["cameras"]), 2)
             self.assertIsNone(data["cameras"][1]["sample"])
             sample = data["cameras"][0]["sample"]
@@ -170,6 +173,7 @@ class WeatherDatabaseTests(unittest.TestCase):
             assert history is not None
             self.assertEqual(len(history["samples"]), 2)
             self.assertEqual([row["id"] for row in list_runs(database, 10)], run_ids[::-1])
+            self.assertGreaterEqual(list_runs(database, 10)[0]["duration_seconds"], 2)
             self.assertEqual(
                 run_for_slot(database, first.isoformat(timespec="minutes")), run_ids[0]
             )
@@ -185,6 +189,7 @@ class WeatherDatabaseTests(unittest.TestCase):
                 None,
                 assets,
                 {},
+                perf_counter(),
             )
             later = read_run_map(database, later_id)
             assert later is not None
@@ -231,7 +236,7 @@ class WeatherDatabaseTests(unittest.TestCase):
             data["cameras"][0]["aurora_cloud_cover_percent"] = 20
             data["cameras"][0]["aurora_dark"] = True
             database = root / "weather.sqlite3"
-            run_id = save_run(database, data, None, None, assets, {})
+            run_id = save_run(database, data, None, None, assets, {}, perf_counter())
             saved = read_run_map(database, run_id)
             assert saved is not None
             auroras = [event for event in saved["events"] if event["kind"] == "aurora"]
@@ -239,6 +244,27 @@ class WeatherDatabaseTests(unittest.TestCase):
             scores = saved["cameras"][0]["sample"]["scores"]
             self.assertEqual(scores["aurora_cloud_cover"]["value"], 20)
             self.assertEqual(scores["aurora_dark"]["value"], 1)
+
+    def test_existing_database_adds_run_duration(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            database = root / "weather.sqlite3"
+            assets = root / "assets"
+            assets.mkdir()
+            (assets / "band-old.png").write_bytes(b"band")
+            (assets / "quality-old.png").write_bytes(b"quality")
+            at = datetime(2026, 9, 26, 10, 0, tzinfo=UTC)
+            run_id = save_run(
+                database, sample_data(at, "old"), None, None, assets, {}, perf_counter()
+            )
+            with sqlite3.connect(database) as connection:
+                connection.execute("ALTER TABLE runs DROP COLUMN duration_seconds")
+            initialize(database)
+            with sqlite3.connect(database) as connection:
+                duration = connection.execute(
+                    "SELECT duration_seconds FROM runs WHERE id = ?", (run_id,)
+                ).fetchone()[0]
+            self.assertIsNone(duration)
 
 
 if __name__ == "__main__":

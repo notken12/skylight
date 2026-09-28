@@ -5,6 +5,7 @@ import zlib
 from contextlib import closing
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 from aurora import OVATION_URL
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS runs (
     metadata_json TEXT NOT NULL,
     sunset_json TEXT NOT NULL,
     aurora_json TEXT,
-    clouds_json TEXT NOT NULL
+    clouds_json TEXT NOT NULL,
+    duration_seconds REAL CHECK (duration_seconds >= 0)
 );
 CREATE INDEX IF NOT EXISTS runs_generated_idx ON runs(generated_at_utc DESC);
 CREATE TABLE IF NOT EXISTS run_sources (
@@ -185,6 +187,12 @@ def connect(database_path: Path) -> sqlite3.Connection:
 def initialize(database_path: Path) -> None:
     with closing(connect(database_path)) as connection:
         connection.executescript(SCHEMA)
+        run_columns = {row["name"] for row in connection.execute("PRAGMA table_info(runs)")}
+        if "duration_seconds" not in run_columns:
+            connection.execute(
+                "ALTER TABLE runs ADD COLUMN duration_seconds REAL CHECK (duration_seconds >= 0)"
+            )
+            connection.commit()
 
 
 def existing_or_new_event(
@@ -450,6 +458,7 @@ def save_run(
     slot_at: datetime | None,
     assets_dir: Path,
     archived_frames: dict[tuple[str, str], str],
+    started_at: float,
 ) -> int:
     camera_keys = []
     catalog_rows = []
@@ -570,4 +579,8 @@ def save_run(
                     hashlib.sha256(asset_path.read_bytes()).hexdigest(),
                 ),
             )
+        connection.execute(
+            "UPDATE runs SET duration_seconds = ? WHERE id = ?",
+            (perf_counter() - started_at, run_id),
+        )
     return run_id

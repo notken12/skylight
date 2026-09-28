@@ -23,6 +23,7 @@ def list_runs(
     with closing(connect(database_path)) as connection:
         rows = connection.execute(
             """SELECT r.id, r.generated_at_utc, r.map_at_utc, r.camera_count,
+                      r.duration_seconds,
                       s.observed_at_utc AS storm_valid_at_utc,
                       (SELECT COUNT(*) FROM event_samples es WHERE es.run_id = r.id)
                       AS event_count
@@ -229,6 +230,7 @@ def read_run_map(database_path: Path, run_id: int) -> dict[str, Any] | None:
             "generated_at_utc": run["generated_at_utc"],
             "map_at_utc": run["map_at_utc"],
             "camera_count": run["camera_count"],
+            "duration_seconds": run["duration_seconds"],
             "metadata": json.loads(run["metadata_json"]),
             "sunset": json.loads(run["sunset_json"]),
             "aurora": json.loads(run["aurora_json"]) if run["aurora_json"] else None,

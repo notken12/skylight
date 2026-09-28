@@ -71,6 +71,7 @@ export type RunSummary = {
   storm_valid_at_utc: string;
   camera_count: number;
   event_count: number;
+  duration_seconds: number | null;
 };
 
 export type RunMap = {
@@ -79,6 +80,7 @@ export type RunMap = {
     generated_at_utc: string;
     map_at_utc: string;
     camera_count: number;
+    duration_seconds: number | null;
     metadata: Record<string, string>;
     sunset: { band_url: string; quality_url: string; forecast_time: string; source_url: string };
     aurora: { observation_time: string; forecast_time: string; cloud_time: string } | null;

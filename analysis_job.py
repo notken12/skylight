@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 from functools import partial
 from pathlib import Path
+from time import perf_counter
 
 from aurora import (
     MAXIMUM_CLOUD_PERCENT,
@@ -46,6 +47,7 @@ from weather_source import (
 
 
 def main() -> None:
+    started_at = perf_counter()
     parser = argparse.ArgumentParser(
         description="Collect weather events and camera views into SQLite."
     )
@@ -179,9 +181,10 @@ def main() -> None:
         slot_at,
         arguments.assets_dir,
         frame_archive.urls,
+        started_at,
     )
     print(
-        f"Saved run {run_id} to {arguments.database}: {len(storms['features'])} storms, {len(cameras)} cameras, "
+        f"Saved run {run_id} to {arguments.database} in {perf_counter() - started_at:.1f}s: {len(storms['features'])} storms, {len(cameras)} cameras, "
         f"{len(auroras.features['features']) if auroras is not None else 0} aurora regions, "
         f"{len(clouds.features['features'])} cloud patches, "
         f"{sum(bool(camera.event_ids) for camera in auroras.cameras) if auroras is not None else 0} aurora camera candidates, "
