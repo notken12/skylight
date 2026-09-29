@@ -98,7 +98,7 @@ def main() -> None:
             aurora_data = aurora_future.result()
             aurora_time = parse_utc_time(aurora_data["Forecast Time"])
             aurora_cloud = executor.submit(
-                load_total_cloud_cover, aurora_time, map_time
+                load_total_cloud_cover, aurora_time, map_time, fetch_bytes
             ).result()
 
     storms = classify_storms(weather_data, score_shape, enclosing_circle)

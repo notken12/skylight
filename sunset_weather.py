@@ -1,16 +1,18 @@
+from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 
 import numpy as np
 from eccodes import codes_get, codes_get_values, codes_grib_new_from_file, codes_release
 from numpy.typing import NDArray
 
-from weather_source import fetch_bytes
-
 AURORA_SOUTH, AURORA_NORTH, AURORA_WEST, AURORA_EAST = 35, 80, 180, 310
+GFS_CYCLE = timedelta(hours=6)
+MAX_GFS_CYCLE_ATTEMPTS = 3
 
 
 @dataclass(frozen=True)
@@ -119,10 +121,23 @@ def read_total_cloud_cover(payload: bytes, source_url: str) -> CloudCoverGrid:
     )
 
 
-def load_total_cloud_cover(at: datetime, available_at: datetime) -> CloudCoverGrid:
+def load_total_cloud_cover(
+    at: datetime, available_at: datetime, fetch: Callable[[str], bytes]
+) -> CloudCoverGrid:
     target_cycle, target_hour = forecast_cycle(at)
     target_time = target_cycle + timedelta(hours=target_hour)
-    cycle, _ = forecast_cycle(available_at)
-    forecast_hour = round((target_time - cycle) / timedelta(hours=1))
-    source_url = gfs_total_cloud_url(cycle, forecast_hour)
-    return read_total_cloud_cover(fetch_bytes(source_url), source_url)
+    latest_cycle, _ = forecast_cycle(available_at)
+    cycle_offset = 0
+    while True:
+        cycle = latest_cycle - cycle_offset * GFS_CYCLE
+        forecast_hour = round((target_time - cycle) / timedelta(hours=1))
+        source_url = gfs_total_cloud_url(cycle, forecast_hour)
+        try:
+            payload = fetch(source_url)
+        except HTTPError as error:
+            if error.code != 404 or cycle_offset == MAX_GFS_CYCLE_ATTEMPTS - 1:
+                raise
+            print(f"GFS cloud forecast unavailable (404): {source_url}")
+            cycle_offset += 1
+            continue
+        return read_total_cloud_cover(payload, source_url)
