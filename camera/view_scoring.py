@@ -15,17 +15,19 @@ from open_clip.model import CLIP
 from PIL import Image
 from torch.nn.functional import normalize
 
-from blur_filter import MIN_LAPLACIAN_VARIANCE, laplacian_variance
-from camera_image_scores import CameraImageScores, score_camera_image
-from camera_matching import MatchedCamera
-from camera_snapshots import CameraFrame, CameraSnapshot
-from cameras import Camera
+from camera.blur_filter import MIN_LAPLACIAN_VARIANCE, laplacian_variance
+from camera.camera_image_scores import CameraImageScores, score_camera_image
+from camera.camera_matching import MatchedCamera
+from camera.camera_snapshots import CameraFrame, CameraSnapshot
+from camera.cameras import Camera
 
 MODEL_NAME = "ViT-B-32"
 MODEL_WEIGHTS = "laion2b_s34b_b79k"
-REFERENCE_MANIFEST = Path(__file__).parent / "data/camera_view_samples/manifest.json"
+REFERENCE_MANIFEST = (
+    Path(__file__).resolve().parents[1] / "data/camera_view_samples/manifest.json"
+)
 SUNSET_REFERENCE_MANIFEST = (
-    Path(__file__).parent / "data/sunset_view_samples/manifest.json"
+    Path(__file__).resolve().parents[1] / "data/sunset_view_samples/manifest.json"
 )
 SUNSET_MINIMUM_SCORE = 10
 type PhenomenonType = Literal["storm", "sunset"]

@@ -9,7 +9,7 @@ The labels have two separate purposes:
 
 These are subjective camera-view examples, not independently verified meteorological ground truth. Keep the `unknown` frames out of a binary storm-presence training set. The current OpenCLIP filter uses only `storm_view` + `good` frames as positive references; scenic nonstorm and poor views, including the two poor storm views, are negative references for **view selection**. This small, single-network collection is useful for a similarity prototype and visual review; it is too narrow for a trustworthy global classifier.
 
-`faa_snapshots.py` can collect another batch. Its input is a JSON list of records containing at least `camera_id`; additional fields are copied into the output manifest. For example:
+`camera/faa_snapshots.py` can collect another batch. Its input is a JSON list of records containing at least `camera_id`; additional fields are copied into the output manifest. For example:
 
 ```json
 [
@@ -21,4 +21,4 @@ These are subjective camera-view examples, not independently verified meteorolog
 ]
 ```
 
-Run `uv run python faa_snapshots.py input.json --output output/new_snapshots`. Add `--at 2026-09-23T21:50:00Z` to select the latest image before a particular time when it remains in FAA's recent-image feed. That feed is a public website endpoint and may change.
+Run `uv run python -m camera.faa_snapshots input.json --output output/new_snapshots`. Add `--at 2026-09-23T21:50:00Z` to select the latest image before a particular time when it remains in FAA's recent-image feed. That feed is a public website endpoint and may change.

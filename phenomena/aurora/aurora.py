@@ -7,11 +7,11 @@ from typing import Any
 import numpy as np
 from scipy.ndimage import map_coordinates
 
-from camera_matching import MatchedCamera, match_cameras
-from cameras import Camera
-from event_geometry import enclosing_circle
-from sunset_scoring import solar_geometry
-from sunset_weather import CloudCoverGrid
+from camera.camera_matching import MatchedCamera, match_cameras
+from camera.cameras import Camera
+from phenomena.event_geometry import enclosing_circle
+from phenomena.sunset.sunset_scoring import solar_geometry
+from phenomena.sunset.sunset_weather import CloudCoverGrid
 from weather_source import parse_utc_time
 
 OVATION_URL = "https://services.swpc.noaa.gov/json/ovation_aurora_latest.json"

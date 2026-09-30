@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from cameras import Camera
-from faa_snapshots import FAA_REFERER, fetch_latest_image
+from camera.cameras import Camera
+from camera.faa_snapshots import FAA_REFERER, fetch_latest_image
 
 type FetchJson = Callable[[str], Any]
 type FetchBytes = Callable[[str, str | None], bytes]

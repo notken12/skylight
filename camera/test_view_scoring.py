@@ -3,11 +3,11 @@ from pathlib import Path
 
 import torch
 
-from camera_image_scores import CameraImageScores
-from camera_matching import MatchedCamera
-from camera_snapshots import CameraFrame, CameraSnapshot
-from cameras import Camera
-from view_scoring import (
+from camera.camera_image_scores import CameraImageScores
+from camera.camera_matching import MatchedCamera
+from camera.camera_snapshots import CameraFrame, CameraSnapshot
+from camera.cameras import Camera
+from camera.view_scoring import (
     OpenClipReferenceScorer,
     PhenomenonResult,
     ScoredCamera,
@@ -59,7 +59,7 @@ class ViewScoringTests(unittest.TestCase):
     def test_sunset_score_adds_warm_tones_to_openclip_margin(self) -> None:
         good = torch.tensor([[1.0, 0.0], [1.0, 0.0]])
         bad = torch.tensor([[0.0, 1.0], [0.0, 1.0]])
-        samples = Path(__file__).parent / "data/sunset_view_samples"
+        samples = Path(__file__).resolve().parents[1] / "data/sunset_view_samples"
         reference_images = [
             (samples / filename).read_bytes()
             for filename in ("01-good.jpg", "03-good.jpg", "08-bad.jpg", "10-bad.jpg")
@@ -87,7 +87,7 @@ class ViewScoringTests(unittest.TestCase):
             for index, camera in enumerate(cameras)
         ]
         image = (
-            Path(__file__).parent / "data/sunset_view_samples/03-good.jpg"
+            Path(__file__).resolve().parents[1] / "data/sunset_view_samples/03-good.jpg"
         ).read_bytes()
         fetched = []
         encoded = []

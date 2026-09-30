@@ -98,8 +98,8 @@ Storm popups show an **outline complexity** score, and the Top events list uses 
 For the wider precipitation and cloud fields, run the local scene scorer at a latitude and longitude:
 
 ```sh
-uv run python scene_shapes.py 43.249199 -115.434059
-uv run python scene_shapes.py 43.249199 -115.434059 --radius-km 100 --reflectivity-dbz 20
+uv run python -m phenomena.storm.scene_shapes 43.249199 -115.434059
+uv run python -m phenomena.storm.scene_shapes 43.249199 -115.434059 --radius-km 100 --reflectivity-dbz 20
 ```
 
 The command fetches live [MRMS low-level reflectivity](https://mrms.ncep.noaa.gov/2D/ReflectivityAtLowestAltitude/) and [GOES ABI Clear Sky Mask](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01503) data. GOES-18 covers the western locations and GOES-19 the eastern locations. `--at` selects snapshots at or before a UTC time when they are still present in the MRMS live directory. The script rejects observations more than 15 minutes older than the requested time.
@@ -117,7 +117,7 @@ The map reads public camera metadata and links to each source's live view. The l
 - [FAA WeatherCams](https://weathercams.faa.gov/): wide-angle aviation weather cameras with several directions per site across the US and Canada. Canadian third-party sites operated by NAV CANADA are included when active and not under maintenance, even though the FAA catalog marks most of them unvalidated; the one-hour image freshness check and per-camera maintenance checks still apply. The camera popup names its operator. Each recent view becomes its own camera record with its published bearing and wedge angle. The script reads the public website's catalog with its required Referer; this endpoint is not a documented developer API and could change.
 - [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/current/viewer.phtml): recent weather webcam images with location and view angle.
 
-Traffic camera feeds from Washington DOT, Nebraska DOT, and Maryland CHART are disabled for now. Their parsers remain in `cameras.py` for later use. ALERTWest and FAA WeatherCams offer useful horizons, while USGS cameras provide wider geographic coverage. The [NPS webcam API](https://www.nps.gov/subjects/developer/api-documentation.htm) is another promising source of scenic views but requires an API key and is not included in the script.
+Traffic camera feeds from Washington DOT, Nebraska DOT, and Maryland CHART are disabled for now. Their parsers remain in `camera/cameras.py` for later use. ALERTWest and FAA WeatherCams offer useful horizons, while USGS cameras provide wider geographic coverage. The [NPS webcam API](https://www.nps.gov/subjects/developer/api-documentation.htm) is another promising source of scenic views but requires an API key and is not included in the script.
 
 ## Camera view samples
 
@@ -125,9 +125,13 @@ The [FAA camera view samples](data/camera_view_samples/README.md) contain timest
 
 ## Development
 
+Phenomenon-specific code lives in `phenomena/sunset/`, `phenomena/aurora/`, and `phenomena/storm/`. Shared cloud and geometry modules live directly in `phenomena/`. Camera collection, matching, snapshots, and image scoring live in `camera/`. Tests sit alongside the code they exercise; application entry points and database modules remain at the repository root.
+
+Run nested command-line modules from the repository root with `python -m`, as in the scene-shape examples above. The test command explicitly includes every test directory because these folders have no `__init__.py` files.
+
 ```sh
 uv run ruff check .
 uv run ruff format --check .
 uv run ty check
-uv run python -m unittest
+uv run python -m unittest test_*.py camera/test_*.py phenomena/test_*.py phenomena/*/test_*.py
 ```

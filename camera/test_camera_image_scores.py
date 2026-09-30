@@ -3,7 +3,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from camera_image_scores import score_camera_image
+from camera.camera_image_scores import score_camera_image
 
 
 def image_bytes(

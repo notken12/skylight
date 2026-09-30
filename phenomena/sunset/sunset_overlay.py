@@ -6,9 +6,9 @@ import numpy as np
 from PIL import Image
 from scipy.ndimage import map_coordinates
 
-from cameras import Camera
-from cloud_volume import CloudVolume
-from sunset_scoring import quality_grid, sunset_band
+from camera.cameras import Camera
+from phenomena.cloud_volume import CloudVolume
+from phenomena.sunset.sunset_scoring import quality_grid, sunset_band
 
 PALETTE = np.array(
     [

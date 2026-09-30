@@ -8,7 +8,7 @@ from scipy.ndimage import find_objects, label
 from skimage.measure import perimeter_crofton
 from skimage.morphology import convex_hull_image
 
-from geojson_polygons import polygons_of
+from phenomena.geojson_polygons import polygons_of
 
 EARTH_RADIUS_KM = 6371.0088
 

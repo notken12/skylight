@@ -27,6 +27,8 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --locked --no-dev --no-install-project --no-cache
 
 COPY *.py ./
+COPY camera/ ./camera/
+COPY phenomena/ ./phenomena/
 COPY data/camera_view_samples/ ./data/camera_view_samples/
 COPY data/sunset_view_samples/ ./data/sunset_view_samples/
 COPY --from=frontend /app/frontend/dist/ ./frontend/dist/

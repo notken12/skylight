@@ -5,7 +5,7 @@ from unittest.mock import patch
 from urllib.error import HTTPError
 from urllib.parse import parse_qs, urlparse
 
-from sunset_weather import load_total_cloud_cover
+from phenomena.sunset.sunset_weather import load_total_cloud_cover
 
 
 class SunsetWeatherTests(unittest.TestCase):
@@ -18,7 +18,7 @@ class SunsetWeatherTests(unittest.TestCase):
                 raise HTTPError(url, 404, "Not Found", Message(), None)
             return b"forecast"
 
-        with patch("sunset_weather.read_total_cloud_cover") as read:
+        with patch("phenomena.sunset.sunset_weather.read_total_cloud_cover") as read:
             load_total_cloud_cover(
                 datetime(2026, 9, 29, 10, 32, tzinfo=UTC),
                 datetime(2026, 9, 29, 10, 1, tzinfo=UTC),

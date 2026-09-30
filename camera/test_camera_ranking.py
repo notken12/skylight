@@ -1,10 +1,10 @@
 import unittest
 
-from aurora import AuroraCamera, AuroraEvents
-from camera_ranking import rank_cameras
-from cameras import Camera
-from sunset_overlay import SunsetOverlay
-from view_scoring import ScoredCamera, SunsetViewScore, ViewScore
+from camera.camera_ranking import rank_cameras
+from camera.cameras import Camera
+from camera.view_scoring import ScoredCamera, SunsetViewScore, ViewScore
+from phenomena.aurora.aurora import AuroraCamera, AuroraEvents
+from phenomena.sunset.sunset_overlay import SunsetOverlay
 
 
 class CameraRankingTests(unittest.TestCase):

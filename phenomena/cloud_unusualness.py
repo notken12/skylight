@@ -5,7 +5,7 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy.stats import rankdata
 
-from cloud_volume import CloudVolume
+from phenomena.cloud_volume import CloudVolume
 
 TILE_DEGREES = 1.5
 
@@ -145,7 +145,9 @@ def classify_patches(volume: CloudVolume) -> dict[str, Any]:
                 column_start = np.searchsorted(volume.longitudes, west % 360)
                 column_end = np.searchsorted(volume.longitudes, east % 360)
                 if row_end - row_start < 2 or column_end - column_start < 2:
-                    raise ValueError(f"ICON cloud grid does not cover {region.name} at {south}, {west}")
+                    raise ValueError(
+                        f"ICON cloud grid does not cover {region.name} at {south}, {west}"
+                    )
                 patches.append(
                     describe_patch(
                         volume.cloud_fraction[

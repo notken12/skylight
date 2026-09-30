@@ -2,10 +2,10 @@ from bisect import bisect_right
 from dataclasses import dataclass
 from typing import Any
 
-from aurora import AuroraEvents
-from blur_filter import MIN_LAPLACIAN_VARIANCE
-from sunset_overlay import SunsetOverlay
-from view_scoring import ScoredCamera
+from camera.blur_filter import MIN_LAPLACIAN_VARIANCE
+from camera.view_scoring import ScoredCamera
+from phenomena.aurora.aurora import AuroraEvents
+from phenomena.sunset.sunset_overlay import SunsetOverlay
 
 VIEW_WEIGHT = 0.48
 EVENT_WEIGHT = 0.32

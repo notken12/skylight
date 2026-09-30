@@ -3,10 +3,8 @@ from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from typing import Any
 
-from pyproj import Geod
-
-from camera_matching import match_cameras
-from cameras import (
+from camera.camera_matching import match_cameras
+from camera.cameras import (
     AURORAMAX_IMAGE_URL,
     UCALGARY_LATEST_URL,
     UCALGARY_OBSERVATORIES_URL,
@@ -15,35 +13,9 @@ from cameras import (
     faa_cameras,
     ucalgary_aurora_cameras,
 )
-from event_geometry import VISUAL_CLOUD_BUFFER_KM, enclosing_circle
-from probsevere import classify_storms
-from shape_complexity import score_shape
-
-GEOD = Geod(ellps="WGS84")
 
 
 class EventMatchingTests(unittest.TestCase):
-    def test_event_circle_contains_an_irregular_storm(self) -> None:
-        ring = [
-            [-101.0, 39.0],
-            [-99.7, 39.0],
-            [-99.7, 39.4],
-            [-100.6, 39.4],
-            [-100.6, 40.0],
-            [-101.0, 40.0],
-            [-101.0, 39.0],
-        ]
-        circle = enclosing_circle({"type": "Polygon", "coordinates": [ring]})
-
-        for longitude, latitude in ring:
-            _, _, distance_m = GEOD.inv(
-                circle.center_longitude,
-                circle.center_latitude,
-                longitude,
-                latitude,
-            )
-            self.assertLess(distance_m / 1000, circle.radius_km)
-
     def test_camera_heading_and_range_control_association(self) -> None:
         storms = {
             "features": [
@@ -234,49 +206,6 @@ class EventMatchingTests(unittest.TestCase):
         )
         self.assertEqual(len(auroramax), 1)
         self.assertTrue(auroramax[0].sky_facing)
-
-    def test_storm_instance_preserves_score_inputs(self) -> None:
-        ring = [
-            [-100.1, 40.0],
-            [-99.9, 40.0],
-            [-99.9, 40.2],
-            [-100.1, 40.2],
-            [-100.1, 40.0],
-        ]
-        data = {
-            "product": "ProbSevere 3.0",
-            "validTime": "20260923_120000 UTC",
-            "features": [
-                {
-                    "geometry": {"type": "Polygon", "coordinates": [ring]},
-                    "properties": {"ID": "storm-a", "AccumFCD": "4", "COMPREF": "51.2"},
-                    "models": {
-                        "probsevere": {"PROB": "60"},
-                        "probhail": {"PROB": "20"},
-                        "probwind": {"PROB": "30"},
-                        "probtor": {"PROB": "1"},
-                    },
-                }
-            ],
-        }
-
-        instance = classify_storms(data, score_shape, enclosing_circle)["features"][0]
-        properties = instance["properties"]
-
-        self.assertEqual(properties["valid_time"], "2026-09-23T12:00:00+00:00")
-        self.assertEqual(
-            properties["view_circle"]["radius_km"],
-            round(properties["circle"]["radius_km"] + VISUAL_CLOUD_BUFFER_KM, 1),
-        )
-        self.assertEqual(properties["interestingness"]["severe_probability"], 60)
-        self.assertEqual(
-            properties["interestingness"]["outline_complexity"],
-            properties["outline_shape"]["score"],
-        )
-        self.assertEqual(
-            properties["interestingness"]["score"],
-            round((60 + properties["outline_shape"]["score"]) / 2, 1),
-        )
 
     def test_faa_views_keep_individual_bearings(self) -> None:
         current = datetime.now(UTC).isoformat()

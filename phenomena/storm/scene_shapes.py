@@ -6,7 +6,7 @@ from datetime import UTC, datetime, timedelta
 import numpy as np
 from numpy.typing import NDArray
 
-from scene_data import (
+from phenomena.storm.scene_data import (
     CloudGrid,
     RadarGrid,
     goes_cloud_mask,
@@ -16,7 +16,7 @@ from scene_data import (
     read_goes_grid,
     read_mrms_grid,
 )
-from shape_complexity import ShapeComplexity, score_mask
+from phenomena.storm.shape_complexity import ShapeComplexity, score_mask
 from weather_source import fetch_bytes, fetch_text, parse_utc_time
 
 type FetchText = Callable[[str], str]

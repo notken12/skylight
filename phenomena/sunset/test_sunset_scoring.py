@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 
 import numpy as np
 
-from sunset_scoring import sunset_band
+from phenomena.sunset.sunset_scoring import sunset_band
 
 
 class SunsetScoringTests(unittest.TestCase):

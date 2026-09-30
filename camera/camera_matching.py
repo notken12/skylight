@@ -4,7 +4,7 @@ from typing import Any
 
 from pyproj import Geod
 
-from cameras import Camera
+from camera.cameras import Camera
 
 EARTH_RADIUS_KM = 6371.0088
 MAX_VIEW_DISTANCE_KM = 100.0

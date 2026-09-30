@@ -4,7 +4,7 @@ import numpy as np
 from numpy.typing import NDArray
 from scipy.ndimage import map_coordinates
 
-from cloud_volume import CloudVolume
+from phenomena.cloud_volume import CloudVolume
 
 EARTH_RADIUS_KM = 6371.0088
 

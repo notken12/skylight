@@ -3,9 +3,9 @@ from datetime import UTC, datetime, timedelta
 
 import numpy as np
 
-from aurora import classify_auroras
-from cameras import Camera
-from sunset_weather import CloudCoverGrid
+from camera.cameras import Camera
+from phenomena.aurora.aurora import classify_auroras
+from phenomena.sunset.sunset_weather import CloudCoverGrid
 
 
 class AuroraTests(unittest.TestCase):

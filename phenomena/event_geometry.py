@@ -4,7 +4,7 @@ from typing import Any
 
 from pyproj import CRS, Transformer
 
-from geojson_polygons import polygons_of
+from phenomena.geojson_polygons import polygons_of
 
 CIRCLE_BUFFER_KM = 5.0
 VISUAL_CLOUD_BUFFER_KM = 40.0

@@ -5,9 +5,9 @@ from pathlib import Path
 
 from PIL import Image, ImageFilter
 
-from blur_filter import MIN_LAPLACIAN_VARIANCE, laplacian_variance
+from camera.blur_filter import MIN_LAPLACIAN_VARIANCE, laplacian_variance
 
-SAMPLES = Path(__file__).parent / "data/sunset_view_samples"
+SAMPLES = Path(__file__).resolve().parents[1] / "data/sunset_view_samples"
 
 
 class BlurFilterTests(unittest.TestCase):

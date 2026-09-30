@@ -8,7 +8,7 @@ from pathlib import Path
 from time import perf_counter
 from typing import Any
 
-from aurora import OVATION_URL
+from phenomena.aurora.aurora import OVATION_URL
 from weather_source import parse_utc_time
 
 SCHEMA = """

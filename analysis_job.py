@@ -5,26 +5,12 @@ from functools import partial
 from pathlib import Path
 from time import perf_counter
 
-from aurora import (
-    MAXIMUM_CLOUD_PERCENT,
-    MINIMUM_AURORA_PERCENT,
-    OVATION_URL,
-    classify_auroras,
-)
-from blur_filter import MIN_LAPLACIAN_VARIANCE
-from camera_matching import match_cameras
-from camera_snapshots import fetch_camera_snapshot, latest_camera_frame
-from cameras import load_cameras
-from cloud_unusualness import load_cloud_unusualness
-from event_geometry import enclosing_circle
-from frame_archive import FrameArchive
-from icon_weather import load_cloud_volume
-from map_data import build_map_data
-from probsevere import classify_storms, parse_probsevere_time
-from shape_complexity import score_shape
-from sunset_overlay import render_sunset_overlay
-from sunset_weather import load_total_cloud_cover
-from view_scoring import (
+from camera.blur_filter import MIN_LAPLACIAN_VARIANCE
+from camera.camera_matching import match_cameras
+from camera.camera_snapshots import fetch_camera_snapshot, latest_camera_frame
+from camera.cameras import load_cameras
+from camera.frame_archive import FrameArchive
+from camera.view_scoring import (
     MODEL_NAME,
     MODEL_WEIGHTS,
     SUNSET_MINIMUM_SCORE,
@@ -33,6 +19,20 @@ from view_scoring import (
     reference_digest,
     score_cameras,
 )
+from map_data import build_map_data
+from phenomena.aurora.aurora import (
+    MAXIMUM_CLOUD_PERCENT,
+    MINIMUM_AURORA_PERCENT,
+    OVATION_URL,
+    classify_auroras,
+)
+from phenomena.cloud_unusualness import load_cloud_unusualness
+from phenomena.event_geometry import enclosing_circle
+from phenomena.icon_weather import load_cloud_volume
+from phenomena.storm.probsevere import classify_storms, parse_probsevere_time
+from phenomena.storm.shape_complexity import score_shape
+from phenomena.sunset.sunset_overlay import render_sunset_overlay
+from phenomena.sunset.sunset_weather import load_total_cloud_cover
 from weather_database import save_run
 from weather_queries import run_for_slot
 from weather_source import (
@@ -70,13 +70,17 @@ def main() -> None:
     arguments = parser.parse_args()
     requested_time = parse_utc_time(arguments.at) if arguments.at else None
     map_time = requested_time or datetime.now(UTC)
-    slot_at = map_time.replace(second=0, microsecond=0) if requested_time is None else None
+    slot_at = (
+        map_time.replace(second=0, microsecond=0) if requested_time is None else None
+    )
     if slot_at is not None:
         existing_run = run_for_slot(
             arguments.database, slot_at.isoformat(timespec="minutes")
         )
         if existing_run is not None:
-            print(f"Run {existing_run} already covers {slot_at.isoformat(timespec='minutes')}")
+            print(
+                f"Run {existing_run} already covers {slot_at.isoformat(timespec='minutes')}"
+            )
             return
 
     with ThreadPoolExecutor(max_workers=4) as executor:
@@ -171,9 +175,7 @@ def main() -> None:
             f"{calibration.true_negatives}/{calibration.negative_count} rejected views"
         ),
     }
-    data = build_map_data(
-        storms, scored_cameras, sunset, auroras, clouds, metadata
-    )
+    data = build_map_data(storms, scored_cameras, sunset, auroras, clouds, metadata)
     run_id = save_run(
         arguments.database,
         data,

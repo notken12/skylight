@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 
 import numpy as np
 
-from icon_weather import (
+from phenomena.icon_weather import (
     cloud_by_altitude,
     icon_cloud_url,
     icon_forecast_cycle,

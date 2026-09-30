@@ -3,14 +3,14 @@ from datetime import UTC, datetime
 
 import numpy as np
 
-from cloud_unusualness import (
+from phenomena.cloud_unusualness import (
     CloudPatch,
     classify_patches,
     describe_patch,
     load_cloud_unusualness,
     score_patches,
 )
-from cloud_volume import CloudVolume
+from phenomena.cloud_volume import CloudVolume
 
 
 class CloudUnusualnessTests(unittest.TestCase):
@@ -23,8 +23,7 @@ class CloudUnusualnessTests(unittest.TestCase):
         bounds = (30.0, 31.5, -100.0, -98.5)
 
         patches = [
-            describe_patch(field, "Test", bounds)
-            for field in (clear, sheet, textured)
+            describe_patch(field, "Test", bounds) for field in (clear, sheet, textured)
         ]
         scores = score_patches(patches)
 
@@ -93,7 +92,9 @@ class CloudUnusualnessTests(unittest.TestCase):
             if feature["properties"]["id"] == "50.25:171.00"
         )
         self.assertGreater(western_aleutian["properties"]["vertical_variation"], 0)
-        self.assertEqual(western_aleutian["geometry"]["coordinates"][0][0], [171, 50.25])
+        self.assertEqual(
+            western_aleutian["geometry"]["coordinates"][0][0], [171, 50.25]
+        )
         self.assertEqual(highest["properties"]["id"], "24.75:-125.25")
         self.assertGreater(highest["properties"]["vertical_variation"], 0)
         self.assertEqual(result.forecast_time, "2026-09-24T12:00+00:00")

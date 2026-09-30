@@ -1,12 +1,12 @@
 import unittest
 from unittest.mock import Mock
 
-from aurora import AuroraCamera, AuroraEvents
-from camera_matching import MatchedCamera
-from camera_ranking import rank_cameras
-from cameras import linked_aurora_cameras
-from sunset_overlay import SunsetOverlay
-from view_scoring import include_camera_frames, score_cameras
+from camera.camera_matching import MatchedCamera
+from camera.camera_ranking import rank_cameras
+from camera.cameras import linked_aurora_cameras
+from camera.view_scoring import include_camera_frames, score_cameras
+from phenomena.aurora.aurora import AuroraCamera, AuroraEvents
+from phenomena.sunset.sunset_overlay import SunsetOverlay
 
 
 class LinkedAuroraCameraTests(unittest.TestCase):

@@ -3,8 +3,8 @@ from dataclasses import asdict
 from datetime import UTC, datetime
 from typing import Any
 
-from event_geometry import EventCircle, visual_search_circle
-from shape_complexity import ShapeComplexity
+from phenomena.event_geometry import EventCircle, visual_search_circle
+from phenomena.storm.shape_complexity import ShapeComplexity
 
 
 def parse_probsevere_time(value: str) -> datetime:

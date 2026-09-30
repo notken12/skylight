@@ -6,8 +6,8 @@ from threading import Lock
 
 from PIL import Image
 
-from camera_snapshots import CameraSnapshot
-from cameras import Camera
+from camera.camera_snapshots import CameraSnapshot
+from camera.cameras import Camera
 
 SUFFIXES = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 
@@ -25,7 +25,9 @@ class FrameArchive:
 
     def fetch(self, camera: Camera) -> CameraSnapshot:
         if camera.provider_id is None:
-            raise ValueError(f"Camera lacks provider ID: {camera.network} {camera.name}")
+            raise ValueError(
+                f"Camera lacks provider ID: {camera.network} {camera.name}"
+            )
         snapshot = self.fetch_snapshot(camera)
         with Image.open(BytesIO(snapshot.image)) as image:
             image_format = image.format
@@ -38,5 +40,7 @@ class FrameArchive:
         with self.lock:
             if not path.exists():
                 path.write_bytes(snapshot.image)
-            self.urls[(camera.network, camera.provider_id)] = f"/assets/frames/{path.name}"
+            self.urls[(camera.network, camera.provider_id)] = (
+                f"/assets/frames/{path.name}"
+            )
         return snapshot

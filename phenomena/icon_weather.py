@@ -12,7 +12,7 @@ from eccodes import codes_get, codes_get_values, codes_grib_new_from_file, codes
 from netCDF4 import Dataset
 from numpy.typing import NDArray
 
-from cloud_volume import CloudVolume
+from phenomena.cloud_volume import CloudVolume
 from weather_source import fetch_bytes
 
 ICON_MODEL_LEVELS = (*range(56, 91), *range(92, 121, 2))
@@ -22,7 +22,7 @@ ICON_WEIGHTS_URL = (
     "https://opendata.dwd.de/weather/lib/cdo/ICON_GLOBAL2WORLD_025_EASY.tar.bz2"
 )
 ICON_WEIGHTS_MEMBER = "ICON_GLOBAL2WORLD_025_EASY/weights_icogl2world_025.nc"
-ICON_CACHE_DIR = Path(__file__).parent / "output/icon_cache"
+ICON_CACHE_DIR = Path(__file__).resolve().parents[1] / "output/icon_cache"
 SOUTH, NORTH, WEST, EAST = 17, 85, 170, 310
 GRID_STEP = 0.25
 GRID_SHAPE = (int((NORTH - SOUTH) / GRID_STEP) + 1, int((EAST - WEST) / GRID_STEP) + 1)

@@ -1,11 +1,11 @@
 from dataclasses import asdict
 from typing import Any
 
-from aurora import AuroraEvents
-from camera_ranking import rank_cameras
-from cloud_unusualness import CloudUnusualness
-from sunset_overlay import SunsetOverlay
-from view_scoring import ScoredCamera
+from camera.camera_ranking import rank_cameras
+from camera.view_scoring import ScoredCamera
+from phenomena.aurora.aurora import AuroraEvents
+from phenomena.cloud_unusualness import CloudUnusualness
+from phenomena.sunset.sunset_overlay import SunsetOverlay
 
 
 def build_map_data(

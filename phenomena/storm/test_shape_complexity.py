@@ -4,7 +4,7 @@ import unittest
 import numpy as np
 from skimage.draw import disk, ellipse
 
-from shape_complexity import score_mask, score_shape
+from phenomena.storm.shape_complexity import score_mask, score_shape
 
 
 def oval_ring(
