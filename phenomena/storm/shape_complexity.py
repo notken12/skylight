@@ -2,12 +2,6 @@ from dataclasses import dataclass
 from math import cos, pi, radians
 from typing import Any
 
-import numpy as np
-from numpy.typing import NDArray
-from scipy.ndimage import find_objects, label
-from skimage.measure import perimeter_crofton
-from skimage.morphology import convex_hull_image
-
 from phenomena.geojson_polygons import polygons_of
 
 EARTH_RADIUS_KM = 6371.0088
@@ -136,31 +130,3 @@ def score_shape(geometry: dict[str, Any]) -> ShapeComplexity:
     return score_components(
         [polygon_metrics(polygon) for polygon in polygons_of(geometry)]
     )
-
-
-def score_mask(
-    mask: NDArray[np.bool_], min_component_pixels: int = 4
-) -> ShapeComplexity:
-    if mask.ndim != 2:
-        raise ValueError("Shape mask must have two dimensions")
-    if min_component_pixels < 1:
-        raise ValueError("Minimum component size must be positive")
-
-    labels, _ = label(mask, structure=np.ones((3, 3), dtype=np.uint8))
-    metrics = []
-    for identifier, bounds in enumerate(find_objects(labels), start=1):
-        if bounds is None:
-            raise ValueError(f"Missing labeled component {identifier}")
-        component = labels[bounds] == identifier
-        component_area = int(np.count_nonzero(component))
-        if component_area < min_component_pixels:
-            continue
-        hull = convex_hull_image(component)
-        component_perimeter = perimeter_crofton(component, directions=4)
-        jaggedness = max(
-            0.0, 1 - perimeter_crofton(hull, directions=4) / component_perimeter
-        )
-        nonconvexity = 1 - component_area / np.count_nonzero(hull)
-        metrics.append((component_area, jaggedness, nonconvexity))
-
-    return score_components(metrics)

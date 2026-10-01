@@ -1,10 +1,7 @@
 import math
 import unittest
 
-import numpy as np
-from skimage.draw import disk, ellipse
-
-from phenomena.storm.shape_complexity import score_mask, score_shape
+from phenomena.storm.shape_complexity import score_shape
 
 
 def oval_ring(
@@ -46,36 +43,6 @@ class ShapeComplexityTests(unittest.TestCase):
         self.assertEqual(separated.component_count, 2)
         self.assertAlmostEqual(separated.fragmentation, 0.5, places=2)
         self.assertGreater(separated.score, single.score)
-
-    def test_raster_oval_scores_below_concave_and_separated_masks(self) -> None:
-        oval = np.zeros((128, 128), dtype=bool)
-        rows, columns = ellipse(64, 64, 16, 38)
-        oval[rows, columns] = True
-
-        concave = np.zeros_like(oval)
-        concave[20:110, 20:35] = True
-        concave[20:110, 90:105] = True
-        concave[95:110, 20:105] = True
-
-        separated = np.zeros_like(oval)
-        rows, columns = disk((35, 35), 18)
-        separated[rows, columns] = True
-        rows, columns = disk((90, 90), 18)
-        separated[rows, columns] = True
-
-        self.assertLess(score_mask(oval).score, 2)
-        self.assertGreater(score_mask(concave).score, 15)
-        self.assertGreater(score_mask(separated).score, score_mask(oval).score)
-        self.assertEqual(score_mask(separated).component_count, 2)
-
-    def test_single_pixel_noise_does_not_change_raster_score(self) -> None:
-        mask = np.zeros((80, 80), dtype=bool)
-        rows, columns = disk((40, 40), 18)
-        mask[rows, columns] = True
-        original = score_mask(mask)
-        mask[0, 0] = True
-
-        self.assertEqual(score_mask(mask), original)
 
 
 if __name__ == "__main__":

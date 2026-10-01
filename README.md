@@ -93,20 +93,9 @@ An experimental **interestingness** score ranks events using the mean of ProbSev
 
 ## Shape complexity
 
-Storm popups show an **outline complexity** score, and the Top events list uses the combined interestingness score. Storm fill color shows severe-weather probability; outline color and thickness show shape complexity. This score uses each ProbSevere polygon and is separate from severe-weather probability. ProbSevere features are single polygons, so their fragmentation term is zero; the wider radar and cloud masks can contain separate pieces.
+Storm popups show an **outline complexity** score, and the Top events list uses the combined interestingness score. Storm fill color shows severe-weather probability; outline color and thickness show shape complexity. This score uses each ProbSevere polygon and is separate from severe-weather probability. ProbSevere features are single polygons, so their fragmentation term is zero.
 
-For the wider precipitation and cloud fields, run the local scene scorer at a latitude and longitude:
-
-```sh
-uv run python -m phenomena.storm.scene_shapes 43.249199 -115.434059
-uv run python -m phenomena.storm.scene_shapes 43.249199 -115.434059 --radius-km 100 --reflectivity-dbz 20
-```
-
-The command fetches live [MRMS low-level reflectivity](https://mrms.ncep.noaa.gov/2D/ReflectivityAtLowestAltitude/) and [GOES ABI Clear Sky Mask](https://www.ncei.noaa.gov/access/metadata/landing-page/bin/iso?id=gov.noaa.ncdc%3AC01503) data. GOES-18 covers the western locations and GOES-19 the eastern locations. `--at` selects snapshots at or before a UTC time when they are still present in the MRMS live directory. The script rejects observations more than 15 minutes older than the requested time.
-
-Each mask is scored in a square window around the point, with a half-width of 100 km by default. Rain-area pixels have MRMS reflectivity of at least 20 dBZ by default; cloudy pixels are the GOES mask's probably cloudy or cloudy categories with good quality. The score is 0–100: the mean of jaggedness (`1 − convex-hull perimeter / boundary perimeter`), nonconvexity (`1 − occupied area / convex-hull area`), and fragmentation (`1 − largest piece area / total occupied area`). The first two measurements are weighted by piece area. Pieces smaller than four pixels are ignored by default. The command also reports the number of pieces and the fraction of the window covered.
-
-The score describes geometry at the chosen window and resolution. MRMS reflectivity is a radar echo, not a direct observation of a visible rain curtain; GOES shows cloud cover from above. A high score is a candidate for webcam inspection, not a verified visual-interest label.
+The score is 0–100: the mean of jaggedness (`1 − convex-hull perimeter / boundary perimeter`), nonconvexity (`1 − polygon area / convex-hull area`), and fragmentation (`1 − largest polygon area / total polygon area`). Jaggedness and nonconvexity are weighted by polygon area when scoring multiple polygons. The score describes the convective-core outline, not the wider cloud or rain field or a verified visual-interest label.
 
 ## Webcam sources
 

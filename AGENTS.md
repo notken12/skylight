@@ -24,7 +24,7 @@ Explore detection of shelf clouds, wall clouds, and other distinctive storm stru
 
 For visually interesting cloud and rain views, assess spatial structure separately from severe-weather risk. Candidate signals are storm footprint and growth, line or arc shape, separated cells, strong reflectivity gradients, rain-area edges, and the angular width and distance of that structure from each camera. ProbSevere polygons and `SIZE` support a first pass, but their storm objects describe convective cores; use gridded MRMS reflectivity or precipitation and GOES imagery to evaluate the wider rain shield and cloud field. Rank individual camera views using bearing, field of view, elevation, and image freshness. Validate proposed visual-interest scores against saved camera frames rather than treating any radar shape as proof of a shelf cloud, wall cloud, or rain curtain.
 
-The first geometry scorer uses area-weighted jaggedness, nonconvexity, and fragmentation. It scores ProbSevere outlines on the map, and `phenomena/storm/scene_shapes.py` applies the same principles to local MRMS radar and GOES cloud masks. Keep source times, window size, threshold, coverage, and component count with each score; a zero score can also mean the mask contains no qualifying area. The prototype uses outline complexity for exploratory ranking; calibrate it against camera frames before treating that ranking as reliable.
+The first geometry scorer uses area-weighted jaggedness, nonconvexity, and fragmentation to score ProbSevere outlines on the map. The prototype uses outline complexity for exploratory ranking; calibrate it against camera frames before treating that ranking as reliable.
 
 ## Camera image filtering
 
