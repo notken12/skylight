@@ -18,7 +18,7 @@ The [Churchill Northern Lights Cam](https://explore.org/livecams/polar-bears/nor
 
 ## Sunset overlay
 
-The main `analysis_job.py` command also draws the sunset band and quality layer. The band covers locations where the sun is between 2° above and 6° below the horizon after solar noon. Inside the continental US portion of that band, a colored 0–100 experimental quality estimate uses live [DWD ICON global cloud forecasts](https://opendata.dwd.de/weather/nwp/icon/grib/). Cameras with a forecast score below 10 are dimmed unless they independently qualify as storm views. Cameras scoring at least 10 are checked with a combined image score: the OpenCLIP good-minus-rejected similarity margin plus warm-color strength across the entire frame. A camera with any visible phenomenon keeps its network color; a visible sunset gets a yellow outline. Storm or sunset candidates with no visible phenomena show an X. The lower gate allows a confirmed vivid sunset at McClure Mountain, previously scored 12/100 under GFS, to reach the image filter. The sunset candidate list includes cameras with any visible phenomenon and ranks them by sunset score, including cameras whose storm filter alone accepted the frame. Hover or click for the frame, forecast score, image score, live feed link, and any storm match details. When several FAA cameras share one location, click the site dot to choose a direction and see that camera's details. Layer controls let you show or hide the band, quality colors, and sunset cameras independently.
+The main `backend/analysis_job.py` command also draws the sunset band and quality layer. The band covers locations where the sun is between 2° above and 6° below the horizon after solar noon. Inside the continental US portion of that band, a colored 0–100 experimental quality estimate uses live [DWD ICON global cloud forecasts](https://opendata.dwd.de/weather/nwp/icon/grib/). Cameras with a forecast score below 10 are dimmed unless they independently qualify as storm views. Cameras scoring at least 10 are checked with a combined image score: the OpenCLIP good-minus-rejected similarity margin plus warm-color strength across the entire frame. A camera with any visible phenomenon keeps its network color; a visible sunset gets a yellow outline. Storm or sunset candidates with no visible phenomena show an X. The lower gate allows a confirmed vivid sunset at McClure Mountain, previously scored 12/100 under GFS, to reach the image filter. The sunset candidate list includes cameras with any visible phenomenon and ranks them by sunset score, including cameras whose storm filter alone accepted the frame. Hover or click for the frame, forecast score, image score, live feed link, and any storm match details. When several FAA cameras share one location, click the site dot to choose a direction and see that camera's details. Layer controls let you show or hide the band, quality colors, and sunset cameras independently.
 
 The scorer follows the **two phases described in the [SunsetHue whitepaper](https://sunsethue.com/whitepaper)**: trace sunlight through the 3D cloud field to estimate each cell's reflection potential, then trace multiple sight lines from an observer and average their visible reflection. It uses ICON cloud fraction on 50 selected model levels from the lower atmosphere through roughly 17 km, including every model level from 56 through 90 to retain closely spaced upper clouds, with matching half-level heights to locate each layer. DWD's [official nearest-neighbor weights](https://opendata.dwd.de/weather/lib/cdo/) map the native triangular grid to 0.25°; the cloud fields are then interpolated onto 0.5 km altitude layers. Middle and high clouds receive more weight. [SunsetHue reports switching from GFS to ICON](https://sunsethue.com/news/new-model-icon), but does not publish its exact ray sampling, weights, post-processing formulas, or selected ICON fields. Our numbers are **not** its quality metric and are not calibrated probabilities. This version does not apply the whitepaper's humidity and golden-hour duration adjustments.
 
@@ -39,8 +39,8 @@ A Python collector saves NOAA ProbSevere v3 storm objects, aurora regions, cloud
 ```sh
 uv sync
 cd frontend && npm ci && npm run build && cd ..
-uv run python analysis_job.py
-uv run uvicorn api_server:app --host 127.0.0.1 --port 8765
+uv run python -m backend.analysis_job
+uv run uvicorn backend.api_server:app --host 127.0.0.1 --port 8765
 ```
 
 Open <http://127.0.0.1:8765/>. The collector writes `output/skylight.sqlite3`, saves immutable sunset overlays in `output/assets`, and archives fetched candidate frames under `output/assets/frames`. The page loads the latest run, lets you select earlier runs, and links event popups to their score histories. OpenStreetMap tiles require an HTTP page with a valid Referer.
@@ -49,14 +49,14 @@ Open <http://127.0.0.1:8765/>. The collector writes `output/skylight.sqlite3`, s
 
 Deploy the repository as a Dockerfile application. Set the exposed port to `8765` and mount persistent storage at `/app/output`. The image serves the built frontend and API; its collector uses the same database and assets. The container runs as UID `10001`, so a host directory mount must be writable by that UID. Keep one application replica while using the local SQLite database.
 
-Add a Coolify Scheduled Task to the application with command `cd /app && /app/.venv/bin/python analysis_job.py` and an initial frequency of `*/30 * * * *`. Choose a timeout based on an observed run rather than the five-minute default. Run the task once with **Execute Now** and verify the saved run appears on the map. The collector currently skips duplicate UTC-minute slots but does not prevent executions from overlapping across different minutes.
+Add a Coolify Scheduled Task to the application with command `cd /app && /app/.venv/bin/python -m backend.analysis_job` and an initial frequency of `*/30 * * * *`. Choose a timeout based on an observed run rather than the five-minute default. Run the task once with **Execute Now** and verify the saved run appears on the map. The collector currently skips duplicate UTC-minute slots but does not prevent executions from overlapping across different minutes.
 
 The image retains its Python dependencies and reference images; `/app/output` retains the SQLite database, scored frames, overlays, ICON cache, and model cache across deployments. Back up the database consistently along with the saved assets. The Linux PyTorch dependencies in the current lockfile include CUDA libraries, so allow substantial build disk space even on a CPU-only host.
 
 The collector can be scheduled, for example every fifteen minutes:
 
 ```cron
-*/15 * * * * cd /Users/ken/dev/skylight && /Users/ken/.local/bin/uv run python analysis_job.py
+*/15 * * * * cd /Users/ken/dev/skylight && /Users/ken/.local/bin/uv run python -m backend.analysis_job
 ```
 
 Each successful run is committed as one SQLite transaction. `runs.duration_seconds` records elapsed time from job start through the final database writes; existing runs have a null duration. Failed jobs and duplicate-minute skips do not create run rows. A rerun in the same UTC minute is skipped. The API offers `GET /api/runs`, `GET /api/runs/{id}`, `GET /api/events/{id}/history`, and `GET /api/cameras/history?network=...&provider_id=...`. The FastAPI server serves the built frontend and saved assets; it never runs the collector on a page request. For frontend development, run `npm run dev` inside `frontend` and keep the API server on port 8765.
@@ -66,7 +66,7 @@ The first run downloads the OpenCLIP `ViT-B-32` `laion2b_s34b_b79k` checkpoint. 
 For a past snapshot, pass a UTC time:
 
 ```sh
-uv run python analysis_job.py --at 2026-09-21T20:00:00Z
+uv run python -m backend.analysis_job --at 2026-09-21T20:00:00Z
 ```
 
 `--at` selects the most recent ProbSevere file at or before that instant from the [Iowa State MRMS archive](https://mtarchive.geol.iastate.edu/). With no time argument, the script selects the latest published [NOAA NCEP ProbSevere file](https://mrms.ncep.noaa.gov/ProbSevere/PROBSEVERE/). The page uses live OpenStreetMap tiles and the Leaflet library, so it needs an internet connection.
@@ -106,7 +106,7 @@ The map reads public camera metadata and links to each source's live view. The l
 - [FAA WeatherCams](https://weathercams.faa.gov/): wide-angle aviation weather cameras with several directions per site across the US and Canada. Canadian third-party sites operated by NAV CANADA are included when active and not under maintenance, even though the FAA catalog marks most of them unvalidated; the one-hour image freshness check and per-camera maintenance checks still apply. The camera popup names its operator. Each recent view becomes its own camera record with its published bearing and wedge angle. The script reads the public website's catalog with its required Referer; this endpoint is not a documented developer API and could change.
 - [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/current/viewer.phtml): recent weather webcam images with location and view angle.
 
-Traffic camera feeds from Washington DOT, Nebraska DOT, and Maryland CHART are disabled for now. Their parsers remain in `camera/cameras.py` for later use. ALERTWest and FAA WeatherCams offer useful horizons, while USGS cameras provide wider geographic coverage. The [NPS webcam API](https://www.nps.gov/subjects/developer/api-documentation.htm) is another promising source of scenic views but requires an API key and is not included in the script.
+Traffic camera feeds from Washington DOT, Nebraska DOT, and Maryland CHART are disabled for now. Their parsers remain in `backend/camera/cameras.py` for later use. ALERTWest and FAA WeatherCams offer useful horizons, while USGS cameras provide wider geographic coverage. The [NPS webcam API](https://www.nps.gov/subjects/developer/api-documentation.htm) is another promising source of scenic views but requires an API key and is not included in the script.
 
 ## Camera view samples
 
@@ -114,13 +114,13 @@ The [FAA camera view samples](data/camera_view_samples/README.md) contain timest
 
 ## Development
 
-Phenomenon-specific code lives in `phenomena/sunset/`, `phenomena/aurora/`, and `phenomena/storm/`. Shared cloud and geometry modules live directly in `phenomena/`. Camera collection, matching, snapshots, and image scoring live in `camera/`. Tests sit alongside the code they exercise; application entry points and database modules remain at the repository root.
+Phenomenon-specific code lives in `backend/phenomena/sunset/`, `backend/phenomena/aurora/`, and `backend/phenomena/storm/`. Shared cloud and geometry modules live directly in `backend/phenomena/`. Camera collection, matching, snapshots, and image scoring live in `backend/camera/`. Tests sit alongside the code they exercise; application entry points and database modules live directly in `backend/`. Python dependency configuration remains at the repository root.
 
-Run nested command-line modules from the repository root with `python -m`, as in the scene-shape examples above. The test command explicitly includes every test directory because these folders have no `__init__.py` files.
+Run backend command-line modules from the repository root with `python -m`, as in the collector commands above. The test command explicitly includes every test directory because these folders have no `__init__.py` files.
 
 ```sh
 uv run ruff check .
 uv run ruff format --check .
 uv run ty check
-uv run python -m unittest test_*.py camera/test_*.py phenomena/test_*.py phenomena/*/test_*.py
+uv run python -m unittest backend/test_*.py backend/camera/test_*.py backend/phenomena/test_*.py backend/phenomena/*/test_*.py
 ```

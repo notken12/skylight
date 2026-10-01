@@ -24,11 +24,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY pyproject.toml uv.lock ./
+COPY rate_limiter/pyproject.toml ./rate_limiter/pyproject.toml
 RUN uv sync --locked --no-dev --no-install-project --no-cache
 
-COPY *.py ./
-COPY camera/ ./camera/
-COPY phenomena/ ./phenomena/
+COPY backend/ ./backend/
 COPY data/camera_view_samples/ ./data/camera_view_samples/
 COPY data/sunset_view_samples/ ./data/sunset_view_samples/
 COPY --from=frontend /app/frontend/dist/ ./frontend/dist/
@@ -38,4 +37,4 @@ RUN useradd --user-group --uid 10001 --create-home skylight \
 USER skylight
 
 EXPOSE 8765
-CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "8765"]
+CMD ["uvicorn", "backend.api_server:app", "--host", "0.0.0.0", "--port", "8765"]
