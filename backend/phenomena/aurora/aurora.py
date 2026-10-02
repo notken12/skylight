@@ -8,7 +8,7 @@ import numpy as np
 from scipy.ndimage import map_coordinates
 
 from backend.camera.camera_matching import MatchedCamera, match_cameras
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera
 from backend.phenomena.event_geometry import enclosing_circle
 from backend.phenomena.sunset.sunset_scoring import solar_geometry
 from backend.phenomena.sunset.sunset_weather import CloudCoverGrid

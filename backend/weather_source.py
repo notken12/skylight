@@ -1,6 +1,7 @@
 import json
 import re
 from collections.abc import Callable
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 from urllib.parse import urljoin
@@ -13,13 +14,26 @@ USER_AGENT = "Skylight storm-map prototype (public-data research)"
 FAA_WEATHERCAMS_REFERER = "https://weathercams.faa.gov/"
 
 
-def fetch_bytes(url: str, referer: str | None = None) -> bytes:
+@dataclass(frozen=True)
+class HttpResponse:
+    body: bytes
+    headers: dict[str, str]
+
+
+def fetch_response(url: str, referer: str | None = None) -> HttpResponse:
     headers = {"User-Agent": USER_AGENT}
     if referer is not None:
         headers["Referer"] = referer
     request = Request(url, headers=headers)
     with urlopen(request, timeout=30) as response:
-        return response.read()
+        return HttpResponse(
+            response.read(),
+            {name.lower(): value for name, value in response.headers.items()},
+        )
+
+
+def fetch_bytes(url: str, referer: str | None = None) -> bytes:
+    return fetch_response(url, referer).body
 
 
 def fetch_text(url: str, referer: str | None = None) -> str:

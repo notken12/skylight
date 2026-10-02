@@ -1,27 +1,12 @@
 from collections.abc import Callable
-from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera, CameraFrame, CameraSnapshot
 from backend.camera.faa_snapshots import FAA_REFERER, fetch_latest_image
 
 type FetchJson = Callable[[str], Any]
 type FetchBytes = Callable[[str, str | None], bytes]
-
-
-@dataclass(frozen=True)
-class CameraSnapshot:
-    camera: Camera
-    image: bytes
-    captured_at: str
-    image_url: str
-
-
-@dataclass(frozen=True)
-class CameraFrame:
-    image_url: str
-    captured_at: str
 
 
 def latest_camera_frame(

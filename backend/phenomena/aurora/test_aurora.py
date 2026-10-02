@@ -3,7 +3,7 @@ from datetime import UTC, datetime, timedelta
 
 import numpy as np
 
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera
 from backend.phenomena.aurora.aurora import classify_auroras
 from backend.phenomena.sunset.sunset_weather import CloudCoverGrid
 

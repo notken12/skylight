@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 from scipy.ndimage import map_coordinates
 
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera
 from backend.phenomena.cloud_volume import CloudVolume
 from backend.phenomena.sunset.sunset_scoring import quality_grid, sunset_band
 

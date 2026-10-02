@@ -1,7 +1,7 @@
 import unittest
 
+from backend.camera.camera_models import Camera
 from backend.camera.camera_ranking import rank_cameras
-from backend.camera.cameras import Camera
 from backend.camera.view_scoring import ScoredCamera, SunsetViewScore, ViewScore
 from backend.phenomena.aurora.aurora import AuroraCamera, AuroraEvents
 from backend.phenomena.sunset.sunset_overlay import SunsetOverlay

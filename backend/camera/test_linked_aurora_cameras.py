@@ -3,7 +3,12 @@ from unittest.mock import Mock
 
 from backend.camera.camera_matching import MatchedCamera
 from backend.camera.camera_ranking import rank_cameras
-from backend.camera.cameras import linked_aurora_cameras
+from backend.camera.cameras import (
+    AthabascaAuroraCamNetwork,
+    CameraDatabase,
+    ExploreNetwork,
+    UAFAllskyNetwork,
+)
 from backend.camera.view_scoring import include_camera_frames, score_cameras
 from backend.phenomena.aurora.aurora import AuroraCamera, AuroraEvents
 from backend.phenomena.sunset.sunset_overlay import SunsetOverlay
@@ -11,7 +16,9 @@ from backend.phenomena.sunset.sunset_overlay import SunsetOverlay
 
 class LinkedAuroraCameraTests(unittest.TestCase):
     def test_linked_feeds_do_not_request_or_score_still_frames(self) -> None:
-        cameras = linked_aurora_cameras()
+        cameras = CameraDatabase(
+            [ExploreNetwork(), UAFAllskyNetwork(), AthabascaAuroraCamNetwork()]
+        ).list_cameras()
         self.assertEqual(len(cameras), 4)
         self.assertTrue(all(camera.link_only for camera in cameras))
         self.assertFalse(cameras[-1].feed_verified)

@@ -5,8 +5,7 @@ import torch
 
 from backend.camera.camera_image_scores import CameraImageScores
 from backend.camera.camera_matching import MatchedCamera
-from backend.camera.camera_snapshots import CameraFrame, CameraSnapshot
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera, CameraFrame, CameraSnapshot
 from backend.camera.view_scoring import (
     OpenClipReferenceScorer,
     PhenomenonResult,

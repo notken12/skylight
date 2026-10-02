@@ -6,8 +6,7 @@ from threading import Lock
 
 from PIL import Image
 
-from backend.camera.camera_snapshots import CameraSnapshot
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera, CameraSnapshot
 
 SUFFIXES = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
 

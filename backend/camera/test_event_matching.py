@@ -2,16 +2,18 @@ import unittest
 from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from typing import Any
+from unittest.mock import Mock
 
 from backend.camera.camera_matching import match_cameras
+from backend.camera.camera_models import Camera
 from backend.camera.cameras import (
     AURORAMAX_IMAGE_URL,
+    FAA_CAMERAS_URL,
     UCALGARY_LATEST_URL,
     UCALGARY_OBSERVATORIES_URL,
-    Camera,
-    auroramax_cameras,
-    faa_cameras,
-    ucalgary_aurora_cameras,
+    AuroraMAXNetwork,
+    FAANetwork,
+    UCalgaryTRExNetwork,
 )
 
 
@@ -186,7 +188,7 @@ class EventMatchingTests(unittest.TestCase):
             )
             return {"x-rt-stream-last-updated-utc": time.isoformat()}
 
-        cameras = ucalgary_aurora_cameras(fetch_json, fetch_headers)
+        cameras = UCalgaryTRExNetwork(fetch_json, fetch_headers).list_cameras()
 
         self.assertEqual(len(cameras), 1)
         self.assertTrue(cameras[0].sky_facing)
@@ -197,13 +199,13 @@ class EventMatchingTests(unittest.TestCase):
             f"{UCALGARY_LATEST_URL.format(id=streams[0]['id'])}?at={int(recent.timestamp())}",
         )
 
-        auroramax = auroramax_cameras(
+        auroramax = AuroraMAXNetwork(
             lambda url: (
                 {"last-modified": format_datetime(recent, usegmt=True)}
                 if url == AURORAMAX_IMAGE_URL
                 else {}
             )
-        )
+        ).list_cameras()
         self.assertEqual(len(auroramax), 1)
         self.assertTrue(auroramax[0].sky_facing)
 
@@ -245,12 +247,18 @@ class EventMatchingTests(unittest.TestCase):
             ],
         }
 
-        cameras = faa_cameras(lambda _url: {"payload": [site]})
+        fetch_json = Mock(return_value={"payload": [site]})
+        network = FAANetwork(fetch_json)
+        cameras = network.list_cameras()
 
         self.assertEqual(len(cameras), 1)
         self.assertEqual(cameras[0].azimuth_degrees, 320)
         self.assertEqual(cameras[0].bearing_tolerance_degrees, 22.5)
         self.assertTrue(cameras[0].url.endswith("/details/camera/10758"))
+        self.assertIs(network.get_camera("10758"), cameras[0])
+        self.assertIsNone(network.get_camera("missing"))
+        network.list_cameras()
+        fetch_json.assert_called_once_with(FAA_CAMERAS_URL)
 
     def test_faa_imports_recent_nav_canada_views(self) -> None:
         now = datetime.now(UTC).isoformat()
@@ -278,7 +286,7 @@ class EventMatchingTests(unittest.TestCase):
             ],
         }
 
-        cameras = faa_cameras(lambda _url: {"payload": [site]})
+        cameras = FAANetwork(lambda _url: {"payload": [site]}).list_cameras()
 
         self.assertEqual(len(cameras), 1)
         self.assertEqual(cameras[0].operated_by, "NAV CANADA")
@@ -287,9 +295,13 @@ class EventMatchingTests(unittest.TestCase):
         self.assertEqual(cameras[0].camera_id, 11036)
 
         unvalidated_us = site | {"country": "US"}
-        self.assertEqual(faa_cameras(lambda _url: {"payload": [unvalidated_us]}), [])
+        self.assertEqual(
+            FAANetwork(lambda _url: {"payload": [unvalidated_us]}).list_cameras(), []
+        )
         other_operator = site | {"operatedBy": "Other"}
-        self.assertEqual(faa_cameras(lambda _url: {"payload": [other_operator]}), [])
+        self.assertEqual(
+            FAANetwork(lambda _url: {"payload": [other_operator]}).list_cameras(), []
+        )
 
 
 if __name__ == "__main__":

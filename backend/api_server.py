@@ -1,8 +1,9 @@
+import sqlite3
 import os
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, List
 
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, status
 from fastapi.staticfiles import StaticFiles
 
 from backend.weather_database import initialize
@@ -11,6 +12,13 @@ from backend.weather_queries import (
     event_history,
     list_runs,
     read_run_map,
+)
+from backend.camera.cameras import CameraDatabase, get_camera_database
+from backend.rate_limiter_client import RateLimiterClient
+import boto3
+from backend.camera.archive.archive_service import (
+    CameraArchiveService,
+    WebpImageConverter,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,15 +31,37 @@ def database_path(request: Request) -> Path:
 Database = Annotated[Path, Depends(database_path)]
 
 
+def get_real_ip(request: Request) -> str | None:
+    # 1. Check the X-Forwarded-For header (often a comma-separated list: client, proxy1, proxy2)
+    x_forwarded_for = request.headers.get("X-Forwarded-For")
+    if x_forwarded_for:
+        # The first IP in the list is the original client
+        client_ip = x_forwarded_for.split(",")[0].strip()
+    else:
+        # 2. Fallback to X-Real-IP or direct client host
+        client_ip = request.headers.get("X-Real-IP") or (
+            request.client.host if request.client else None
+        )
+    return client_ip
+
+
 def create_app(
     database: Path,
     assets: Path,
     frontend: Path,
+    camera_database: CameraDatabase,
+    rate_limiter_client: RateLimiterClient,
+    camera_archive_service: CameraArchiveService,
 ) -> FastAPI:
     initialize(database)
     assets.mkdir(parents=True, exist_ok=True)
     app = FastAPI(title="Weather phenomena and webcam views")
     app.state.database_path = database
+
+    def rate_limit(buckets: List[str]):
+        ok = rate_limiter_client.request(buckets)
+        if not ok:
+            raise HTTPException(status_code=status.HTTP_429_TOO_MANY_REQUESTS)
 
     @app.get("/api/runs")
     def runs(
@@ -71,13 +101,37 @@ def create_app(
     ) -> list[dict]:
         return camera_history(database, network, provider_id, limit)
 
+    @app.post("/api/cameras/{network}/{camera_id}/archive")
+    def archive_frame(network: str, camera_id: str, req: Request):
+        ip = get_real_ip(req)
+        if not ip:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+        rate_limit(["global", f"ip:{ip}"])
+        img = camera_database.fetch_latest_snapshot(network, camera_id).image
+        id = camera_archive_service.archive_frame(network, camera_id, img)
+        return id
+
     app.mount("/assets", StaticFiles(directory=assets), name="assets")
     app.frontend("/", directory=frontend)
     return app
 
 
-app = create_app(
-    Path(os.environ.get("SKYLIGHT_DATABASE", ROOT / "output/skylight.sqlite3")),
-    Path(os.environ.get("SKYLIGHT_ASSETS_DIR", ROOT / "output/assets")),
-    ROOT / "frontend/dist",
-)
+database = Path(os.environ.get("SKYLIGHT_DATABASE", ROOT / "output/skylight.sqlite3"))
+s3_client = boto3.client("s3")
+with sqlite3.connect(database) as db_connection:
+    camera_archive_service = CameraArchiveService(
+        s3=s3_client,
+        db_connection=db_connection,
+        bucket="skylight",
+        image_converter=WebpImageConverter(),
+    )
+    app = create_app(
+        database=database,
+        assets=Path(os.environ.get("SKYLIGHT_ASSETS_DIR", ROOT / "output/assets")),
+        frontend=ROOT / "frontend/dist",
+        camera_database=get_camera_database(),
+        rate_limiter_client=RateLimiterClient(
+            os.environ.get("RATE_LIMITER_PATH", "http://localhost:8001/request")
+        ),
+        camera_archive_service=camera_archive_service,
+    )

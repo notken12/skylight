@@ -18,8 +18,7 @@ from torch.nn.functional import normalize
 from backend.camera.blur_filter import MIN_LAPLACIAN_VARIANCE, laplacian_variance
 from backend.camera.camera_image_scores import CameraImageScores, score_camera_image
 from backend.camera.camera_matching import MatchedCamera
-from backend.camera.camera_snapshots import CameraFrame, CameraSnapshot
-from backend.camera.cameras import Camera
+from backend.camera.camera_models import Camera, CameraFrame, CameraSnapshot
 
 MODEL_NAME = "ViT-B-32"
 MODEL_WEIGHTS = "laion2b_s34b_b79k"
@@ -62,7 +61,7 @@ class ViewScore:
     margin: float
     threshold: float
     accepted: bool
-    captured_at: str
+    captured_at: str | None
     image_url: str
 
 

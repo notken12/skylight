@@ -8,7 +8,7 @@ from time import perf_counter
 from backend.camera.blur_filter import MIN_LAPLACIAN_VARIANCE
 from backend.camera.camera_matching import match_cameras
 from backend.camera.camera_snapshots import fetch_camera_snapshot, latest_camera_frame
-from backend.camera.cameras import load_cameras
+from backend.camera.cameras import load_camera_database
 from backend.camera.frame_archive import FrameArchive
 from backend.camera.view_scoring import (
     MODEL_NAME,
@@ -85,7 +85,7 @@ def main() -> None:
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         camera_future = executor.submit(
-            load_cameras, fetch_json, fetch_faa_json, fetch_headers
+            load_camera_database, fetch_json, fetch_faa_json, fetch_headers
         )
         scorer_future = executor.submit(load_view_scorers)
         sunset_future = executor.submit(load_cloud_volume, map_time)
@@ -94,7 +94,7 @@ def main() -> None:
         )
         source_url = probsevere_source(requested_time, fetch_text)
         weather_data = fetch_json(source_url)
-        cameras = camera_future.result()
+        cameras = camera_future.result().list_cameras()
         encoder, storm_scorer, sunset_scorer = scorer_future.result()
         sunset_cloud = sunset_future.result()
         clouds = load_cloud_unusualness(sunset_cloud)

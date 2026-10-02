@@ -209,6 +209,26 @@ class WeatherDatabaseTests(unittest.TestCase):
                 later["events"][0]["event_id"], data["events"][0]["event_id"]
             )
 
+    def test_frames_without_capture_times_keep_their_urls(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            assets = root / "assets"
+            assets.mkdir()
+            (assets / "band-unknown.png").write_bytes(b"band")
+            (assets / "quality-unknown.png").write_bytes(b"quality")
+            at = datetime(2026, 10, 1, 12, tzinfo=UTC)
+            data = sample_data(at, "unknown")
+            data["cameras"][0]["frame"]["captured_at"] = None
+            database = root / "weather.sqlite3"
+            run_id = save_run(database, data, None, at, assets, {}, perf_counter())
+            saved = read_run_map(database, run_id)
+            assert saved is not None
+            sample = saved["cameras"][0]["sample"]
+            self.assertIsNone(sample["captured_at_utc"])
+            self.assertEqual(
+                sample["frame_url"], "https://example.com/frame-unknown.jpg"
+            )
+
     def test_aurora_event_and_candidate_scores(self) -> None:
         with TemporaryDirectory() as directory:
             root = Path(directory)

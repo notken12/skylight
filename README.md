@@ -116,6 +116,20 @@ The [FAA camera view samples](data/camera_view_samples/README.md) contain timest
 
 Phenomenon-specific code lives in `backend/phenomena/sunset/`, `backend/phenomena/aurora/`, and `backend/phenomena/storm/`. Shared cloud and geometry modules live directly in `backend/phenomena/`. Camera collection, matching, snapshots, and image scoring live in `backend/camera/`. Tests sit alongside the code they exercise; application entry points and database modules live directly in `backend/`. Python dependency configuration remains at the repository root.
 
+`CameraNetwork` defines the provider interface. Each provider has a concrete implementation, such as `FAANetwork` and `USGSNetwork`, that loads its catalog once using injected fetch functions. `CameraCatalog` provides shared identity validation and indexed lookup. `CameraDatabase` accepts network implementations and dispatches camera lookups by network name and provider ID:
+
+```python
+database = CameraDatabase([FAANetwork(fetch_faa_json), USGSNetwork(fetch_json)])
+camera = database.get_camera("FAA WeatherCams", "11036")
+snapshot = database.fetch_latest_snapshot("FAA WeatherCams", "11036")
+```
+
+`get_camera_database()` lazily loads the existing nine provider networks and returns one shared `CameraDatabase` per process. Initialization is protected by a lock so concurrent callers receive the same instance. `load_camera_database(fetch_json, fetch_faa_json, fetch_headers)` constructs an independent database with injected fetch functions.
+
+`fetch_latest_snapshot` returns a `CameraSnapshot` with image bytes, the source URL, and the provider's capture time. Each call fetches a fresh frame while leaving the indexed catalog unchanged. Image transport can be injected through the network constructor's `fetch_response` argument. Shared camera and frame models live in `backend/camera/camera_models.py`.
+
+FAA and USGS select dated images; ALERTWest and Iowa Mesonet refresh their bulk metadata before downloading the selected image. TREx reads the image and its update header from the same response. AuroraMAX uses the image response's `Last-Modified` time, which indicates file modification rather than a guaranteed exposure time. Traffic camera snapshots have `captured_at=None` because their feeds provide no capture time. Explore.org, UAF Allsky, and Athabasca raise `NotImplementedError` for still-image retrieval. Unknown networks or camera IDs raise `KeyError`; provider errors propagate.
+
 Run backend command-line modules from the repository root with `python -m`, as in the collector commands above. The test command explicitly includes every test directory because these folders have no `__init__.py` files.
 
 ```sh

@@ -145,6 +145,19 @@ CREATE TABLE IF NOT EXISTS run_artifacts (
     sha256 TEXT NOT NULL,
     PRIMARY KEY (run_id, kind)
 );
+CREATE TABLE IF NOT EXISTS archived_frames (
+    id INTEGER PRIMARY KEY,
+    network TEXT NOT NULL,
+    camera_id TEXT NOT NULL,
+    created_at_utc TEXT NOT NULL,
+    s3_key TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS archived_frames_created_at_idx 
+    ON archived_frames(created_at_utc);
+CREATE INDEX IF NOT EXISTS archived_frames_network_idx 
+    ON archived_frames(network);
+CREATE INDEX IF NOT EXISTS archived_frames_network_camera_id_idx 
+    ON archived_frames(network, camera_id);
 """
 
 PIPELINE_VERSION = "1"
@@ -369,7 +382,7 @@ def insert_camera_sample(
             camera["provider_id"],
             compact_json(camera_data),
             parse_utc_time(frame["captured_at"]).isoformat(timespec="microseconds")
-            if frame is not None
+            if frame is not None and frame["captured_at"] is not None
             else None,
             frame["image_url"] if frame is not None else None,
             archived_url,
