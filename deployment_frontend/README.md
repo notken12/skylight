@@ -16,7 +16,7 @@ npm run check      # type check
 npm run build      # static files in dist/
 ```
 
-The API server (`uv run uvicorn backend.api_server:app --port 8765` from the repository root) must have at least one saved run. To have the API server serve this app's build instead of the developer map, set `SKYLIGHT_FRONTEND_DIR=deployment_frontend/dist`; the [root README](../README.md#frontends) covers switching between the two frontends. The Docker image still serves `frontend/`.
+The API server (`uv run uvicorn backend.api_server:app --port 8765` from the repository root) must have at least one saved run. To have the API server serve this app's build instead of the developer map locally, set `SKYLIGHT_FRONTEND_DIR=deployment_frontend/dist`; the [root README](../README.md#frontends) covers switching between the two frontends. The Docker image builds this app and serves it from `/app/frontend/dist` without an environment override.
 
 The API server does not need PyTorch, which only the collector uses for image scoring. On a machine where `uv sync` cannot install the pinned PyTorch (Intel Macs, for example), start it with just its runtime packages:
 

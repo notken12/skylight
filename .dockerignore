@@ -8,5 +8,8 @@ output/
 frontend/node_modules/
 frontend/dist/
 frontend/*.tsbuildinfo
+deployment_frontend/node_modules/
+deployment_frontend/dist/
+deployment_frontend/*.tsbuildinfo
 test_*.py
 **/test_*.py

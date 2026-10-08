@@ -66,7 +66,7 @@ cd deployment_frontend && npm ci && npm run build && cd ..
 SKYLIGHT_FRONTEND_DIR=deployment_frontend/dist uv run uvicorn backend.api_server:app --host 127.0.0.1 --port 8765
 ```
 
-The Docker image still builds and serves `frontend/` only.
+The Docker image builds `deployment_frontend/` and serves it from `/app/frontend/dist`, using the API server's default frontend path. No `SKYLIGHT_FRONTEND_DIR` override is needed in Docker.
 
 ### Coolify
 

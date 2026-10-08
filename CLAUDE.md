@@ -58,6 +58,6 @@ Conventions that span files:
 - Network I/O goes through the helpers in `backend/weather_source.py` (`fetch_json`, `fetch_bytes`, `fetch_faa_json`, …). Scoring and parsing functions receive fetchers and scorers as callables, so tests run offline with fakes. Keep new code injectable in the same way.
 - Database schema: `SCHEMA` in `weather_database.py` uses `CREATE TABLE IF NOT EXISTS`, and `initialize()` adds columns to existing databases ad hoc with `ALTER TABLE`. Any schema change needs a matching upgrade path for existing `output/skylight.sqlite3` files.
 - View scores are versioned. `visual_scorer_version` includes `reference_digest()`, a hash of the reference images, so adding or relabeling images in `data/camera_view_samples` or `data/sunset_view_samples` changes the scorer version and the leave-one-out calibrated thresholds. Those folders' `manifest.json` files hold the labels; `data/interesting_view_samples` is not used by any scorer yet.
-- The Docker image copies only `backend/`, the two reference-sample folders, and `frontend/dist`. A new runtime data dependency must be added to the `Dockerfile`.
+- The Docker image copies only `backend/`, the two reference-sample folders, and the `deployment_frontend/` build into `/app/frontend/dist`. A new runtime data dependency must be added to the `Dockerfile`.
 
 `rate_limiter/` is a separate uv workspace member: a small standalone FastAPI sliding-window rate limiter (`POST /request?buckets=...`). The backend does not use it yet.

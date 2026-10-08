@@ -1,9 +1,9 @@
 FROM node:22-bookworm-slim AS frontend
 
 WORKDIR /app/frontend
-COPY frontend/package.json frontend/package-lock.json ./
+COPY deployment_frontend/package.json deployment_frontend/package-lock.json ./
 RUN npm ci
-COPY frontend/ ./
+COPY deployment_frontend/ ./
 RUN npm run build
 
 FROM python:3.12-slim-bookworm
