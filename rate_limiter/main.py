@@ -10,7 +10,7 @@ class RateLimitBucket:
     max_reqs: int
     reqs: Deque[int]
 
-    def __init__(self, window_len: int, max_reqs: int):
+    def __init__(self, max_reqs: int, window_len: int):
         self.reqs = deque()
         self.window_len = window_len
         self.max_reqs = max_reqs
@@ -36,15 +36,26 @@ class RateLimiter:
     clock: Callable[[], int]
 
     def __init__(self, clock):
-        self.buckets = {}
+        self.buckets = {"archive:global": RateLimitBucket(100, int(6e10))}
         self.lock = Lock()
         self.clock = clock
+
+    def configure_bucket(self, bucket: str) -> RateLimitBucket | None:
+        if bucket.startswith("archive:ip:"):
+            return RateLimitBucket(10, int(6e10))
 
     def handle_request(self, buckets: List[str]) -> bool:
         with self.lock:
             now = self.clock()
             valid = True
             for b in buckets:
+                if b not in self.buckets:
+                    new_bucket = self.configure_bucket(b)
+                    if new_bucket:
+                        self.buckets[b] = new_bucket
+                    else:
+                        # invalid bucket
+                        return False
                 if not self.buckets[b].check_request_validity(now):
                     valid = False
                     break

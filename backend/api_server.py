@@ -106,7 +106,7 @@ def create_app(
         ip = get_real_ip(req)
         if not ip:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
-        rate_limit(["global", f"ip:{ip}"])
+        rate_limit(["archive:global", f"archive:ip:{ip}"])
         img = camera_database.fetch_latest_snapshot(network, camera_id).image
         id = camera_archive_service.archive_frame(network, camera_id, img)
         return id
