@@ -79,5 +79,5 @@ def create_app(
 app = create_app(
     Path(os.environ.get("SKYLIGHT_DATABASE", ROOT / "output/skylight.sqlite3")),
     Path(os.environ.get("SKYLIGHT_ASSETS_DIR", ROOT / "output/assets")),
-    ROOT / "frontend/dist",
+    Path(os.environ.get("SKYLIGHT_FRONTEND_DIR", ROOT / "frontend/dist")),
 )

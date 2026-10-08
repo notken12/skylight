@@ -45,6 +45,29 @@ uv run uvicorn backend.api_server:app --host 127.0.0.1 --port 8765
 
 Open <http://127.0.0.1:8765/>. The collector writes `output/skylight.sqlite3`, saves immutable sunset overlays in `output/assets`, and archives fetched candidate frames under `output/assets/frames`. The page loads the latest run, lets you select earlier runs, and links event popups to their score histories. OpenStreetMap tiles require an HTTP page with a valid Referer.
 
+### Frontends
+
+Two frontends read the same API:
+
+- `frontend/`: the developer map, which shows every score, threshold, and saved run.
+- `deployment_frontend/`: the user-facing app, with an Explore globe and a full-screen Watch viewer. Its [README](deployment_frontend/README.md) describes it.
+
+For development, keep the API server on port 8765 and start the Vite dev server of the frontend you want. Both proxy `/api` to port 8765, and `deployment_frontend` also proxies `/assets` for saved frames. Both use port 5173 by default; if one is already running, Vite starts the other on the next free port and prints its address.
+
+```sh
+cd frontend && npm run dev
+cd deployment_frontend && npm run dev
+```
+
+The API server serves one built frontend at `/`, `frontend/dist` by default. Set `SKYLIGHT_FRONTEND_DIR` to serve the other one; a relative path resolves from the directory where you start the server:
+
+```sh
+cd deployment_frontend && npm ci && npm run build && cd ..
+SKYLIGHT_FRONTEND_DIR=deployment_frontend/dist uv run uvicorn backend.api_server:app --host 127.0.0.1 --port 8765
+```
+
+The Docker image still builds and serves `frontend/` only.
+
 ### Coolify
 
 Deploy the repository as a Dockerfile application. Set the exposed port to `8765` and mount persistent storage at `/app/output`. The image serves the built frontend and API; its collector uses the same database and assets. The container runs as UID `10001`, so a host directory mount must be writable by that UID. Keep one application replica while using the local SQLite database.
@@ -78,6 +101,14 @@ Webcam feed links generally show **current** views even when a saved run is old.
 Each ProbSevere feature becomes an event instance with its ID, valid time, original polygon, and a core circle. The circle center is the polygon's area-weighted centroid in a local azimuthal projection; its radius reaches the farthest exterior vertex plus 5 km. A separate visual search circle extends 40 km beyond the core circle to admit cameras that may show peripheral cloud structure. This buffer is an experimental heuristic, not a measured cloud boundary. The original polygon remains available for more precise spatial work.
 
 A camera is a possible view when it is no farther than 100 km from the visual search circle and its heading could intersect that circle. Cameras inside the visual search circle qualify from any heading. Outside it, the circle's angular width relaxes the bearing check as the camera approaches; farther cameras must point more directly toward it. FAA WeatherCams use each view's published bearing and map wedge angle. ALERTWest uses its current pan angle and Iowa Mesonet uses its published angle; both use a provisional 20° pointing tolerance because their feeds do not provide a field-of-view width. USGS HIVIS has no heading in the current camera catalog, so its markers stay dim. These are geometric candidates; the image filter below evaluates their latest available frames.
+
+### Known issue: one camera matched to several storms
+
+The matcher links a camera to **every** event whose visual search circle it could see. Nothing assigns a camera view to a single event, so storms close together list the same cameras. In run 1 (2026-10-03 21:02 UTC), seven of the eight storms with accepted views are around Houston and share frames from two FAA WeatherCams sites. The storms near College Station (30.63°N 96.33°W) and Montgomery (30.42°N 95.55°W and 30.42°N 95.73°W) all list the same two views, Post Oak Heliport · North and Sugar Land · North; the storms at 28.95°N 96.63°W and 28.98°N 96.42°W both list Post Oak Heliport · West and Sugar Land · West.
+
+As a result, both frontends show several storms with identical camera frames, and per-event view counts overstate how many distinct views exist. A frame matched to several storms does not show which storm, if any, it captures.
+
+Planned fix, in the backend so every client gets the same answer: assign each camera view to at most one event, preferring the event closest to the camera's heading and falling back to the nearest event for cameras without a heading (such as sky-facing aurora cameras), and store that assignment with the match. Events left without a view then show as having no camera view.
 
 ## Camera image filter
 

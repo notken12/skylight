@@ -1,0 +1,14 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  // The API server already serves saved frames at /assets, so built files go under /ui.
+  build: { assetsDir: "ui" },
+  server: {
+    proxy: {
+      "/api": "http://127.0.0.1:8765",
+      "/assets": "http://127.0.0.1:8765",
+    },
+  },
+});
