@@ -63,7 +63,7 @@ p { margin: 0; }
 }
 .panel-head { display: flex; justify-content: space-between; align-items: baseline; }
 .wordmark { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
-.title-xl { font-size: 34px; font-weight: 600; letter-spacing: -.03em; line-height: 1.05; }
+.title-xl { font-size: 17px; font-weight: 600; letter-spacing: -.03em; line-height: 1.05; }
 .title-lg { display: flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
 .section-title { font-size: 15px; font-weight: 600; padding-top: 12px; border-top: 1px solid var(--line); }
 .event-head { display: flex; flex-direction: column; gap: 4px; }
@@ -113,7 +113,7 @@ p { margin: 0; }
 .watch .mono { color: #D0D0D0; }
 
 .watch-info { position: absolute; left: 40px; top: 32px; max-width: min(640px, calc(100% - 360px)); display: flex; flex-direction: column; gap: 6px; }
-.watch-info h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 600; letter-spacing: -.025em; line-height: 1.05; overflow-wrap: anywhere; }
+.watch-info h1 { font-size: clamp(14px, 2vw, 22px); font-weight: 600; letter-spacing: -.025em; line-height: 1.05; overflow-wrap: anywhere; }
 .watch-progress { position: absolute; right: 40px; top: 40px; width: 240px; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; white-space: nowrap; }
 .track { width: 100%; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); overflow: hidden; }
 .track i { display: block; height: 100%; background: #FFFFFF; animation-name: progress; animation-timing-function: linear; animation-fill-mode: forwards; }
@@ -154,7 +154,7 @@ p { margin: 0; }
     box-shadow: 0 -1px 0 var(--line), 0 -16px 36px rgba(0, 0, 0, .08);
   }
   .panel::before { content: ""; align-self: center; width: 38px; height: 5px; border-radius: 3px; background: #D6D6D2; flex-shrink: 0; }
-  .title-xl { font-size: 28px; }
+  .title-xl { font-size: 14px; }
   .maplibregl-ctrl-bottom-right { display: none; }
 
   .mode-bar {
