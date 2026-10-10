@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useRouteLoaderData, useSearchParams } from "react-router";
 import type { Sky } from "../core/sky";
-import { KIND_LABEL, facingLabel, formatAgo, formatCoordinates } from "../core/format";
+import { KIND_LABEL, facingLabel, formatCoordinates } from "../core/format";
 import { KindSymbol } from "../components/symbols";
+import { CameraCaptureTime, CameraImage } from "../components/camera-image";
 
 const ADVANCE_MS = 12_000;
 
@@ -36,11 +37,6 @@ export function Watch() {
     return () => window.removeEventListener("keydown", onKey);
   }, [go]);
 
-  // Start loading the next frame so the switch is instant.
-  useEffect(() => {
-    if (views.length > 1) new Image().src = views[(index + 1) % views.length].imageUrl;
-  }, [index, views]);
-
   if (!view) {
     return (
       <main className="watch watch-empty">
@@ -55,7 +51,7 @@ export function Watch() {
 
   return (
     <main className="watch" aria-label="Camera viewer">
-      <img key={view.key} className="watch-frame" src={view.imageUrl} alt={`Latest frame from ${view.name}`} />
+      <CameraImage key={view.key} className="watch-frame" view={view} />
       <div className="scrim scrim-top" />
       <div className="scrim scrim-bottom" />
 
@@ -63,7 +59,7 @@ export function Watch() {
         <span className="eyebrow on-dark"><KindSymbol kind={view.kind} size={11} onDark />{KIND_LABEL[view.kind].one}</span>
         <h1>{view.name}</h1>
         <p className="mono">{[view.network, facingLabel(view.name, view.direction)].filter(Boolean).join(" · ")}</p>
-        <p className="mono">{formatCoordinates(view.latitude, view.longitude)} · captured {formatAgo(view.capturedAt)}</p>
+        <p className="mono">{formatCoordinates(view.latitude, view.longitude)} · <CameraCaptureTime view={view} /></p>
       </header>
 
       <div className="watch-progress">
@@ -102,7 +98,7 @@ export function Watch() {
           <div>
             {upNext.map((next) => (
               <button key={next.key} type="button" onClick={() => setParams({ camera: next.key }, { replace: true })}>
-                <img src={next.imageUrl} alt="" loading="lazy" />
+                <CameraImage view={next} decorative />
                 <span><KindSymbol kind={next.kind} size={9} onDark />{next.name}</span>
               </button>
             ))}

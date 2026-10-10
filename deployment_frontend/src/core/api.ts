@@ -3,8 +3,8 @@ import type { RunMap, RunSummary } from "./types";
 // baseUrl is empty on the web (same origin); a native app passes the server's address.
 export type ApiOptions = { baseUrl?: string; signal?: AbortSignal };
 
-async function readJson<T>(path: string, { baseUrl = "", signal }: ApiOptions = {}): Promise<T> {
-  const response = await fetch(baseUrl + path, { signal });
+export async function readJson<T>(path: string, { baseUrl = "", signal }: ApiOptions = {}): Promise<T> {
+  const response = await fetch(baseUrl + path, { signal, cache: "no-store" });
   if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${path}`);
   return response.json() as Promise<T>;
 }

@@ -13,6 +13,7 @@ Two modes, switched from the bar at the bottom:
 npm ci
 npm run dev        # http://127.0.0.1:5173, proxies /api and /assets to the API server on :8765
 npm run check      # type check
+npm test           # live camera polling tests (Node 22.18+)
 npm run build      # static files in dist/
 ```
 
@@ -29,6 +30,25 @@ uv run --no-project --with fastapi --with uvicorn --with numpy --with scipy --wi
 ## Known issue: shared camera views
 
 Several nearby storms often list the same cameras, so their panels show identical frames. This comes from the backend's camera matching, and the fix belongs there; see [Known issue: one camera matched to several storms](../README.md#known-issue-one-camera-matched-to-several-storms). The app shows the matches as they are.
+
+## Live camera images
+
+Explore and Watch use current provider images. Saved runs still determine event matches and rankings; the displayed image and its capture timestamp come from the live source. The developer map retains archived frames for historical inspection.
+
+| Network | Poll interval | Lookup |
+| --- | --- | --- |
+| FAA WeatherCams | 30 seconds | `GET /api/cameras/FAA%20WeatherCams/{camera_id}/latest_image` |
+| ALERTWest | 5 seconds | Provider camera catalog |
+| USGS HIVIS | 15 seconds | Provider camera catalog |
+| Iowa Mesonet | 15 seconds | Provider webcam GeoJSON |
+| UCalgary TREx RGB | 1 second | Provider latest image, including capture-time header |
+| AuroraMAX | 2 seconds | Provider latest image headers |
+
+The FAA endpoint returns `image_url` and `captured_at_utc` with `Cache-Control: no-store`. It uses FAA's required Referer for metadata retrieval; browsers download the image directly from FAA's image host. Other networks are polled directly by the browser. Catalog polling is shared across displayed cameras in each network; individual camera requests are shared across components displaying the same camera. Polling runs only while a component uses that feed and the tab is visible, resumes immediately on visibility, and avoids overlapping requests. Source errors propagate to the page error boundary. Archived images are never substituted for a failed live source.
+
+Polling intervals are shorter than the normal published image cadences: [FAA's 10 minutes](https://www.faa.gov/air_traffic/publications/atpubs/fs_html/chap8_section_3.html), [ALERTCalifornia's 15 seconds](https://alertcalifornia.org/technology/), [Iowa's minute during active weather](https://mesonet.agron.iastate.edu/current/webcam.php), [TREx's nominal 3 seconds](https://data.phys.ucalgary.ca/), and [AuroraMAX's 6 seconds](https://www.nasa.gov/wp-content/uploads/2022/03/iss_technical_publication_030116.pdf). USGS collection intervals vary by camera and are supplied in its `ingest.intr` metadata; some cameras have irregular schedules. ALERTWest hosts cameras from multiple networks, so ALERTCalifornia's cadence is not a universal guarantee. TREx's archived burst mode is faster than its nominal mode and is not an every-frame guarantee for these latest-image streams.
+
+A latest-image API does not guarantee delivery of every frame. Source publication delays, network latency, long requests, browser timer throttling, and hidden tabs can delay or skip frames. Capture times reflect provider metadata, not the time of the analysis run or the browser request.
 
 ## Layout
 

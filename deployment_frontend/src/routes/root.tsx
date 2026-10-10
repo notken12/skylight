@@ -61,7 +61,7 @@ export function ErrorScreen() {
   return (
     <main className="status-screen">
       <h1>Can’t load the sky right now</h1>
-      <p>The weather data didn’t load. Check that the API server is running and has saved at least one run, then reload.</p>
+      <p>The weather or live camera data didn’t load. Please reload to try again.</p>
     </main>
   );
 }

@@ -1,10 +1,13 @@
 import os
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
 
+from backend.camera.camera_snapshots import FetchJson
+from backend.camera.faa_snapshots import latest_image_at
 from backend.weather_database import initialize
 from backend.weather_queries import (
     camera_history,
@@ -12,6 +15,7 @@ from backend.weather_queries import (
     list_runs,
     read_run_map,
 )
+from backend.weather_source import fetch_faa_json
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -27,6 +31,7 @@ def create_app(
     database: Path,
     assets: Path,
     frontend: Path,
+    fetch_camera_json: FetchJson = fetch_faa_json,
 ) -> FastAPI:
     initialize(database)
     assets.mkdir(parents=True, exist_ok=True)
@@ -70,6 +75,28 @@ def create_app(
         limit: Annotated[int, Query(ge=1, le=500)] = 100,
     ) -> list[dict]:
         return camera_history(database, network, provider_id, limit)
+
+    @app.get("/api/cameras/{network}/{camera_id}/latest_image")
+    def latest_camera_image(
+        network: str, camera_id: int, response: Response
+    ) -> dict[str, str]:
+        if network != "FAA WeatherCams":
+            raise HTTPException(
+                status_code=404, detail="Network does not require server lookup"
+            )
+        if camera_id <= 0:
+            raise HTTPException(status_code=422, detail="Camera ID must be positive")
+        images = fetch_camera_json(
+            f"https://weathercams.faa.gov/api/cameras/{camera_id}/images/last/24"
+        )["payload"]
+        image = latest_image_at(images, datetime.now(UTC))
+        if image is None:
+            raise HTTPException(status_code=404, detail="No current camera image")
+        response.headers["Cache-Control"] = "no-store"
+        return {
+            "image_url": image["imageUri"],
+            "captured_at_utc": image["imageDatetime"],
+        }
 
     app.mount("/assets", StaticFiles(directory=assets), name="assets")
     app.frontend("/", directory=frontend)

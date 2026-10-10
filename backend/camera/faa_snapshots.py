@@ -15,15 +15,26 @@ def fetch_latest_image(
     camera_id: int, at: datetime, fetch_json: Callable[[str], Any]
 ) -> dict[str, Any]:
     url = f"https://weathercams.faa.gov/api/cameras/{camera_id}/images/last/24"
-    images = fetch_json(url)["payload"]
-    return max(
-        (
-            image
-            for image in images
-            if datetime.fromisoformat(image["imageDatetime"]) <= at
-        ),
-        key=lambda image: image["imageDatetime"],
-    )
+    image = latest_image_at(fetch_json(url)["payload"], at)
+    if image is None:
+        raise ValueError(f"No FAA camera image at or before {at.isoformat()}")
+    return image
+
+
+def latest_image_at(
+    images: list[dict[str, Any]], at: datetime
+) -> dict[str, Any] | None:
+    latest = None
+    latest_time = None
+    for image in images:
+        captured_at = datetime.fromisoformat(image["imageDatetime"])
+        if captured_at > at:
+            continue
+        if latest_time is not None and captured_at <= latest_time:
+            continue
+        latest = image
+        latest_time = captured_at
+    return latest
 
 
 def collect_snapshot(

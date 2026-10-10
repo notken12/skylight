@@ -11,11 +11,10 @@ export type CameraView = {
   key: string;
   name: string;
   network: string;
+  providerId: string;
   direction: string | null;
   latitude: number;
   longitude: number;
-  imageUrl: string;
-  capturedAt: string | null;
   sourceUrl: string;
   rank: number;
   kind: EventKind;
@@ -92,8 +91,7 @@ export function buildSky(run: RunMap): Sky {
   const views: CameraView[] = [];
   for (const row of run.cameras) {
     const sample = row.sample;
-    const imageUrl = sample?.archived_url ?? sample?.frame_url;
-    if (!sample || !imageUrl) continue;
+    if (!sample || sample.camera.link_only) continue;
     const stormPassed = sample.scores.storm_view?.passed === true;
     const seen = sample.event_sample_ids
       .map((id) => eventsBySample.get(id))
@@ -105,11 +103,10 @@ export function buildSky(run: RunMap): Sky {
       key: cameraKey(camera.network, camera.provider_id),
       name: camera.name,
       network: camera.network,
+      providerId: camera.provider_id,
       direction: camera.direction ?? null,
       latitude: camera.latitude,
       longitude: camera.longitude,
-      imageUrl,
-      capturedAt: sample.captured_at_utc,
       sourceUrl: camera.url,
       rank: sample.scores.overall_rank?.value ?? 0,
       kind: KIND[seen[0].kind],

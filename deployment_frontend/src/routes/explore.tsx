@@ -2,6 +2,7 @@ import { Link, useNavigate, useRouteLoaderData, useSearchParams } from "react-ro
 import { EVENT_KINDS, bestOfEachKind, watchable, type CameraView, type Sky, type SkyEvent } from "../core/sky";
 import { KIND_LABEL, facingLabel, formatAgo, formatCoordinates, formatUtcTime, plural } from "../core/format";
 import { KindSymbol } from "../components/symbols";
+import { CameraCaptureTime, CameraImage } from "../components/camera-image";
 import { selectedEventId, selectedGroup } from "./root";
 
 export function Explore() {
@@ -36,7 +37,7 @@ function EventList({ events }: { events: SkyEvent[] }) {
       {events.map((event) => (
         <li key={event.id}>
           <button type="button" className="event-row" onClick={() => void navigate(`/?event=${event.id}`)}>
-            {event.views[0] && <img className="thumb" src={event.views[0].imageUrl} alt="" loading="lazy" />}
+            {event.views[0] && <CameraImage className="thumb" view={event.views[0]} decorative />}
             <span className="event-row-text">
               <span className="event-row-title"><KindSymbol kind={event.kind} size={11} />{KIND_LABEL[event.kind].one}</span>
               <span className="mono muted">{formatCoordinates(event.center[1], event.center[0])}</span>
@@ -113,9 +114,9 @@ function EventPanel({ event }: { event: SkyEvent }) {
 function CameraCard({ view, large = false }: { view: CameraView; large?: boolean }) {
   return (
     <Link className={large ? "camera-card large" : "camera-card"} to={`/watch?${new URLSearchParams({ camera: view.key })}`}>
-      <img key={view.imageUrl} src={view.imageUrl} alt={`Latest frame from ${view.name}`} loading="lazy" />
+      <CameraImage view={view} />
       <span className="camera-name">{view.name}</span>
-      <span className="mono muted">{[facingLabel(view.name, view.direction), formatAgo(view.capturedAt)].filter(Boolean).join(" · ")}</span>
+      <span className="mono muted">{facingLabel(view.name, view.direction)} · <CameraCaptureTime view={view} /></span>
     </Link>
   );
 }
