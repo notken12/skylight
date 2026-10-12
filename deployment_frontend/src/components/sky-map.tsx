@@ -111,6 +111,15 @@ export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera 
       map.setPaintProperty(id, "line-opacity", 0.85);
       map.setPaintProperty(id, "line-width", ["interpolate", ["linear"], ["zoom"], 1, 0.5, 5, 0.9, 10, 1.2]);
     }
+    // Country labels fall back to the English name, which OpenStreetMap data can get wrong
+    // (Turkey's is "T"). Prefer the curated international name; keep the two-script form as is.
+    for (const id of ["label_country_1", "label_country_2", "label_country_3"]) {
+      if (!map.getLayer(id)) continue;
+      map.setLayoutProperty(id, "text-field", ["case",
+        ["has", "name:nonlatin"], ["concat", ["get", "name:latin"], "\n", ["get", "name:nonlatin"]],
+        ["coalesce", ["get", "name_int"], ["get", "name_en"], ["get", "name"]],
+      ]);
+    }
   }
 
   function addLayers(map: MapLibreMap) {
