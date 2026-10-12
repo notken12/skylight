@@ -1,12 +1,13 @@
 import type { EventKind } from "../core/sky";
 
-// One shape per phenomenon: storm triangle, aurora wave, cloud lines.
-const COLOR: Record<EventKind, string> = { storm: "#1F57E0", aurora: "#7A45DC", cloud: "currentColor" };
-const ON_DARK: Record<EventKind, string> = { storm: "#7FA2FF", aurora: "#B596FF", cloud: "currentColor" };
+// One shape per phenomenon: storm triangle, aurora wave, sunset disc, cloud lines.
+const COLOR: Record<EventKind, string> = { storm: "#1F57E0", aurora: "#7A45DC", sunset: "#F0531C", cloud: "currentColor" };
+const ON_DARK: Record<EventKind, string> = { storm: "#7FA2FF", aurora: "#B596FF", sunset: "#FF8A5C", cloud: "currentColor" };
 
 function paths(kind: EventKind, color: string): string {
   if (kind === "storm") return `<path d="M7 1.5L13 12H1Z" fill="${color}"/>`;
   if (kind === "aurora") return `<path d="M1 8q3 -5 6 0t6 0" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"/>`;
+  if (kind === "sunset") return `<circle cx="7" cy="7" r="5.5" fill="${color}"/>`;
   return `<path d="M1.5 5h11M3 9h8" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round"/>`;
 }
 
@@ -24,6 +25,7 @@ export function KindSymbol({ kind, size = 12, onDark = false }: { kind: EventKin
     <svg className="kind-symbol" width={size} height={size} viewBox="0 0 14 14" aria-hidden="true">
       {kind === "storm" && <path d="M7 1.5L13 12H1Z" fill={color} />}
       {kind === "aurora" && <path d="M1 8q3 -5 6 0t6 0" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" />}
+      {kind === "sunset" && <circle cx="7" cy="7" r="5.5" fill={color} />}
       {kind === "cloud" && <path d="M1.5 5h11M3 9h8" fill="none" stroke={color} strokeWidth="1.6" strokeLinecap="round" />}
     </svg>
   );

@@ -3,16 +3,18 @@ import maplibregl, { type GeoJSONSource, type Map as MapLibreMap } from "maplibr
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { Feature, FeatureCollection, Geometry, Point } from "geojson";
 import { EVENT_KINDS, type EventKind, type Sky, type SkyEvent } from "../core/sky";
+import { sunsetLine } from "../core/sun";
 import { KIND_LABEL, plural } from "../core/format";
 import { CAMERA_SVG, symbolSvg } from "./symbols";
 
 // OpenFreeMap: free vector tiles without an API key. Positron is a quiet light base we recolour below.
 const STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
-const KIND_COLOR: Record<EventKind, string> = { storm: "#1F57E0", aurora: "#7A45DC", cloud: "#111111" };
+const KIND_COLOR: Record<EventKind, string> = { storm: "#1F57E0", aurora: "#7A45DC", sunset: "#F0531C", cloud: "#111111" };
 const EMPTY: FeatureCollection = { type: "FeatureCollection", features: [] };
 
 type Props = {
   sky: Sky;
+  now: Date;
   selectedId: number | null;
   onSelect: (eventId: number) => void;
   onSelectGroup: (eventIds: number[]) => void;
@@ -42,12 +44,12 @@ function panelPadding() {
     : { top: 40, bottom: 120, left: 440, right: 40 };
 }
 
-export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera }: Props) {
+export function SkyMap({ sky, now, selectedId, onSelect, onSelectGroup, onOpenCamera }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const markers = useRef(new Map<string, maplibregl.Marker>());
-  const state = useRef({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera, ready: false });
-  state.current = { ...state.current, sky, selectedId, onSelect, onSelectGroup, onOpenCamera };
+  const state = useRef({ sky, now, selectedId, onSelect, onSelectGroup, onOpenCamera, ready: false });
+  state.current = { ...state.current, sky, now, selectedId, onSelect, onSelectGroup, onOpenCamera };
 
   useEffect(() => {
     if (!container.current) throw new Error("Map container is missing");
@@ -98,6 +100,11 @@ export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera 
     if (map && state.current.ready) applySelection(map, true);
   }, [selectedId]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map && state.current.ready) setSunsetBand(map);
+  }, [now]);
+
   // White land, pale water, thin ink country borders, and no glow around the globe.
   function restyleBase(map: MapLibreMap) {
     for (const layer of map.getStyle().layers) {
@@ -138,6 +145,16 @@ export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera 
       "line-opacity": ["interpolate", ["linear"], ["zoom"], 3.5, 0.85, 5.5, 0],
     } }, firstLabel);
 
+    // A faint orange band where the sun is setting right now. Its width grows with zoom so it
+    // covers roughly the same few hundred kilometres on the ground at every scale.
+    map.addSource("sunset-band", { type: "geojson", data: EMPTY });
+    map.addLayer({ id: "sunset-band", type: "line", source: "sunset-band", paint: {
+      "line-color": KIND_COLOR.sunset,
+      "line-opacity": 0.16,
+      "line-width": ["interpolate", ["exponential", 2], ["zoom"], 0, 6, 8, 1536],
+      "line-blur": ["interpolate", ["exponential", 2], ["zoom"], 0, 3, 8, 768],
+    }, layout: { "line-cap": "round", "line-join": "round" } }, firstLabel);
+
     map.addSource("footprints", { type: "geojson", data: EMPTY });
     map.addLayer({ id: "footprints-fill", type: "fill", source: "footprints", minzoom: 3.5,
       paint: { "fill-color": KIND_COLOR.storm, "fill-opacity": 0.16 } });
@@ -150,7 +167,7 @@ export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera 
     map.addSource("quiet", { type: "geojson", data: EMPTY });
     map.addLayer({ id: "quiet", type: "circle", source: "quiet", paint: {
       "circle-radius": ["interpolate", ["linear"], ["zoom"], 1, 2, 6, 4],
-      "circle-color": ["match", ["get", "kind"], "storm", KIND_COLOR.storm, "aurora", KIND_COLOR.aurora, KIND_COLOR.cloud],
+      "circle-color": ["match", ["get", "kind"], "storm", KIND_COLOR.storm, "aurora", KIND_COLOR.aurora, "sunset", KIND_COLOR.sunset, KIND_COLOR.cloud],
       "circle-opacity": 0.4,
     } });
 
@@ -170,7 +187,14 @@ export function SkyMap({ sky, selectedId, onSelect, onSelectGroup, onOpenCamera 
     } });
   }
 
+  function setSunsetBand(map: MapLibreMap) {
+    (map.getSource("sunset-band") as GeoJSONSource).setData({
+      type: "Feature", properties: {}, geometry: { type: "MultiLineString", coordinates: sunsetLine(state.current.now) },
+    });
+  }
+
   function setData(map: MapLibreMap) {
+    setSunsetBand(map);
     const { events } = state.current.sky;
     const storms = events.filter((event) => event.kind === "storm");
     (map.getSource("footprints") as GeoJSONSource).setData(collection(storms.map((event) => ({

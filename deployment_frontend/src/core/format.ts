@@ -3,6 +3,7 @@ import type { EventKind } from "./sky";
 export const KIND_LABEL: Record<EventKind, { one: string; many: string }> = {
   storm: { one: "Storm", many: "Storms" },
   aurora: { one: "Aurora", many: "Aurora zones" },
+  sunset: { one: "Sunset", many: "Sunsets" },
   cloud: { one: "Cloud pattern", many: "Cloud patterns" },
 };
 

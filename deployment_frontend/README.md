@@ -50,10 +50,37 @@ Polling intervals are shorter than the normal published image cadences: [FAA's 1
 
 A latest-image API does not guarantee delivery of every frame. Source publication delays, network latency, long requests, browser timer throttling, and hidden tabs can delay or skip frames. Capture times reflect provider metadata, not the time of the analysis run or the browser request.
 
+## Sunsets
+
+Sunsets are an event kind like storms and aurora: an orange disc pin, a panel, a live camera image, and a place in Watch. The backend has no sunset events, only a per-camera sunset image score (`sunset_view`), so `src/core/sky.ts` makes one sunset event per camera whose frame passed it, at the camera's position. Their ids are `1_000_000_000` plus the camera sample id; unlike backend event ids they are not stable across runs. Backend sunset events would replace this.
+
+A sunset pin disappears the moment the sun sets at its camera (sun elevation below −0.833°, the standard sunset definition) and is never shown from a run more than three hours old, so an old run cannot bring back the previous evening's sunsets. The app re-checks every minute. `src/core/sun.ts` computes the sun's position from the time alone with the standard low-precision formulas, which agree with published sunset times to within a few minutes.
+
+A faint orange band marks where the sun is setting right now, recomputed every minute. It shows where sunsets are happening, not that any camera there has a view of one; only cameras whose frames passed the sunset filter get pins. Sunset pins need a collector run close to local sunset, because the backend runs the sunset image filter only on cameras whose sunset forecast scores at least 10.
+
+### Limitations and known issues
+
+As of 2026-10-12 no saved run has produced a sunset pin, because no collector run has happened near sunset. The behaviour below was checked with tests and with live FAA frames on a hand-made run; it has not been seen on real collector output yet.
+
+Selection:
+
+- **The sunset filter is experimental.** It is calibrated on 17 good and 22 bad example frames, where it accepts 15 of 17 and rejects all 22. Those are in-sample results, not an independent test (see the root README's sunset section), so on real cameras it will sometimes pass a dull frame or miss a good one. Frames that do not pass never get a pin; the app adds no filtering of its own.
+- **Pins depend on collector timing.** Sunset colour lasts roughly 20–40 minutes. At a 30-minute collector interval many sunsets fall between runs and never get a pin. Running every 10–15 minutes around North American sunset (about 22:00–03:00 UTC, depending on season) catches more.
+- **A pin is earned at collection time but shown live.** The filter judges the frame fetched by the collector, while Explore and Watch show the camera's current image. If clouds move in after the run, the pin stays up, with a duller live image, until the sun sets at that camera.
+- **Sunset event ids change every run.** A link such as `/?event=…` to a sunset stops working after the next run. Backend sunset events with persistent ids would fix this.
+
+Display (from a check with live FAA frames at sunset on 2026-10-12):
+
+- **On phones, Watch can crop the sun out.** Watch fills the screen by cropping the centre of the frame. A sunset puts the sun low and often off-centre, so a tall phone crop can show sky and skyline without the sun.
+- **FAA's "Image Unavailable" placeholder is shown as a live image.** Some FAA cameras serve a blue placeholder instead of a photo; the live feed displays it like any frame. This affects every event kind, not only sunsets.
+- **Watch is black until the next live image arrives.** Since images switched to live sources, the next camera is not preloaded, so advancing shows "waiting for live image" for a few seconds (about 4 s in the check).
+- **Camera text bars overlap the Watch title.** FAA frames carry their own name and timestamp bar along the top edge, which sits behind the app's title and coordinates in full-screen Watch.
+- **A stray "·" appears before the capture time** in event panels when a camera's name already ends in its direction (for example "Pier 7 Heliport · West"), because the empty direction label still gets a separator.
+
 ## Layout
 
 - `src/core/`: plain TypeScript with no React or DOM: API calls, the JSON types, and `sky.ts`, which turns a saved run into events and camera views. A future native app can reuse it.
 - `src/components/`: the map (`sky-map.tsx`), mode bar, and phenomenon symbols.
 - `src/routes/`: `root.tsx` loads the latest run and keeps the map mounted; `explore.tsx` and `watch.tsx` are the two modes.
 
-What counts as a camera view: a camera whose frame passed the storm image filter for a matched storm, or a forecast aurora candidate. Sunsets are left out until that mode exists. Cloud patterns show only the 10 most varied tiles. Base map tiles come from [OpenFreeMap](https://openfreemap.org/) (Positron style), recoloured to white land and pale water. Country borders are thin ink on the globe and ease to light grey when zoomed in. `public/coastline.geojson` is the public-domain [Natural Earth](https://www.naturalearthdata.com/) 1:50m coastline, simplified (about 2 km tolerance, islets under 0.15° dropped, coordinates rounded to 0.01°); it draws an ink coastline on the globe and fades out by zoom 5.5, where the base map's own shoreline takes over. The base style has no coastline layer, and outlining its tiled water would draw tile seams.
+What counts as a camera view: a camera whose frame passed the storm image filter for a matched storm, a forecast aurora candidate, or a camera whose frame passed the sunset image filter. Cloud patterns show only the 10 most varied tiles. Base map tiles come from [OpenFreeMap](https://openfreemap.org/) (Positron style), recoloured to white land and pale water. Country borders are thin ink on the globe and ease to light grey when zoomed in. `public/coastline.geojson` is the public-domain [Natural Earth](https://www.naturalearthdata.com/) 1:50m coastline, simplified (about 2 km tolerance, islets under 0.15° dropped, coordinates rounded to 0.01°); it draws an ink coastline on the globe and fades out by zoom 5.5, where the base map's own shoreline takes over. The base style has no coastline layer, and outlining its tiled water would draw tile seams.

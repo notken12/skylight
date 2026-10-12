@@ -1,12 +1,19 @@
-import { useEffect } from "react";
-import { Outlet, useLoaderData, useLocation, useNavigate, useRevalidator, useSearchParams, type LoaderFunctionArgs } from "react-router";
+import { useEffect, useMemo, useState } from "react";
+import { Outlet, useLoaderData, useLocation, useNavigate, useOutletContext, useRevalidator, useSearchParams, type LoaderFunctionArgs } from "react-router";
 import { getLatestRunMap } from "../core/api";
-import { buildSky, type Sky } from "../core/sky";
+import { buildSky, skyAt, type Sky } from "../core/sky";
 import { ModeBar } from "../components/mode-bar";
 import { SkyMap } from "../components/sky-map";
 
 // The collector saves a new run every few minutes; check for one this often while the tab is visible.
 const REFRESH_MS = 5 * 60_000;
+// Sunsets end on the sun's schedule, not the collector's: re-check the sky this often.
+const CLOCK_MS = 60_000;
+
+// The sky as of the current minute, for the Explore and Watch routes.
+export function useSky(): Sky {
+  return useOutletContext<Sky>();
+}
 
 export async function rootLoader({ request }: LoaderFunctionArgs): Promise<Sky> {
   return buildSky(await getLatestRunMap({ signal: request.signal }));
@@ -23,7 +30,9 @@ export function selectedGroup(params: URLSearchParams): number[] {
 }
 
 export function Root() {
-  const sky = useLoaderData() as Sky;
+  const run = useLoaderData() as Sky;
+  const [now, setNow] = useState(() => new Date());
+  const sky = useMemo(() => skyAt(run, now), [run, now]);
   const [params] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,17 +46,23 @@ export function Root() {
     return () => clearInterval(timer);
   }, [revalidator]);
 
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), CLOCK_MS);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className={watching ? "app is-watching" : "app"}>
       {/* The map stays mounted under Watch so returning to Explore keeps the view. */}
       <SkyMap
         sky={sky}
+        now={now}
         selectedId={watching ? null : selectedEventId(params)}
         onSelect={(id) => void navigate(`/?event=${id}`)}
         onSelectGroup={(ids) => void navigate(`/?events=${ids.join(",")}`)}
         onOpenCamera={(key) => void navigate(`/watch?${new URLSearchParams({ camera: key })}`)}
       />
-      <Outlet />
+      <Outlet context={sky} />
       <ModeBar />
     </div>
   );

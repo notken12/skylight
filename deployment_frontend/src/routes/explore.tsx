@@ -1,12 +1,12 @@
-import { Link, useNavigate, useRouteLoaderData, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { EVENT_KINDS, bestOfEachKind, watchable, type CameraView, type Sky, type SkyEvent } from "../core/sky";
 import { KIND_LABEL, facingLabel, formatAgo, formatCoordinates, formatUtcTime, plural } from "../core/format";
 import { KindSymbol } from "../components/symbols";
 import { CameraCaptureTime, CameraImage } from "../components/camera-image";
-import { selectedEventId, selectedGroup } from "./root";
+import { selectedEventId, selectedGroup, useSky } from "./root";
 
 export function Explore() {
-  const sky = useRouteLoaderData("root") as Sky;
+  const sky = useSky();
   const [params] = useSearchParams();
   const id = selectedEventId(params);
   const event = sky.events.find((candidate) => candidate.id === id);
@@ -83,7 +83,7 @@ function HomePanel({ sky }: { sky: Sky }) {
       </ul>
       <h2 className="eyebrow">Most interesting now</h2>
       {best.length === 0
-        ? <p className="muted">No camera has a clear view of a storm or aurora right now. New views appear as the data updates.</p>
+        ? <p className="muted">No camera has a clear view of a storm, aurora or sunset right now. New views appear as the data updates.</p>
         : <EventList events={best} />}
     </section>
   );

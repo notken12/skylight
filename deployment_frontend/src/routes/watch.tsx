@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useRouteLoaderData, useSearchParams } from "react-router";
-import type { Sky } from "../core/sky";
+import { Link, useSearchParams } from "react-router";
 import { KIND_LABEL, facingLabel, formatCoordinates } from "../core/format";
 import { KindSymbol } from "../components/symbols";
 import { CameraCaptureTime, CameraImage } from "../components/camera-image";
+import { useSky } from "./root";
 
 const ADVANCE_MS = 12_000;
 
 export function Watch() {
-  const sky = useRouteLoaderData("root") as Sky;
+  const sky = useSky();
   const [params, setParams] = useSearchParams();
   const [paused, setPaused] = useState(false);
   const views = sky.views;
@@ -41,7 +41,7 @@ export function Watch() {
     return (
       <main className="watch watch-empty">
         <h1>Nothing to watch right now</h1>
-        <p>No camera has a clear view of a storm or aurora at the moment. New views appear as the data updates.</p>
+        <p>No camera has a clear view of a storm, aurora or sunset at the moment. New views appear as the data updates.</p>
       </main>
     );
   }
