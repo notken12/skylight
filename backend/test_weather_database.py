@@ -153,18 +153,22 @@ class WeatherDatabaseTests(unittest.TestCase):
                         None,
                         at,
                         assets,
-                        {("FAA WeatherCams", "1"): "/assets/frames/saved.jpg"},
                         perf_counter() - 2,
                     )
                 )
             data = read_run_map(database, run_ids[0])
             assert data is not None
-            self.assertEqual(len(data["events"]), 2)
+            self.assertEqual(len(data["events"]), 1)
+            self.assertFalse(data["run"]["forecast_geojson_available"])
             self.assertGreaterEqual(data["run"]["duration_seconds"], 2)
             self.assertEqual(len(data["cameras"]), 2)
             self.assertIsNone(data["cameras"][1]["sample"])
             sample = data["cameras"][0]["sample"]
-            self.assertEqual(sample["archived_url"], "/assets/frames/saved.jpg")
+            self.assertIsNone(sample["archived_url"])
+            self.assertEqual(sample["frame_url"], "https://example.com/frame-0.jpg")
+            self.assertEqual(
+                sample["captured_at_utc"], first.isoformat(timespec="microseconds")
+            )
             self.assertEqual(sample["scores"]["sharpness"]["value"], 40)
             self.assertEqual(sample["scores"]["warm_tone"]["value"], 0.2)
             self.assertTrue(sample["scores"]["storm_view"]["passed"])
@@ -200,7 +204,6 @@ class WeatherDatabaseTests(unittest.TestCase):
                 None,
                 None,
                 assets,
-                {},
                 perf_counter(),
             )
             later = read_run_map(database, later_id)
@@ -250,7 +253,7 @@ class WeatherDatabaseTests(unittest.TestCase):
             data["cameras"][0]["aurora_cloud_cover_percent"] = 20
             data["cameras"][0]["aurora_dark"] = True
             database = root / "weather.sqlite3"
-            run_id = save_run(database, data, None, None, assets, {}, perf_counter())
+            run_id = save_run(database, data, None, None, assets, perf_counter())
             saved = read_run_map(database, run_id)
             assert saved is not None
             auroras = [event for event in saved["events"] if event["kind"] == "aurora"]
@@ -258,6 +261,26 @@ class WeatherDatabaseTests(unittest.TestCase):
             scores = saved["cameras"][0]["sample"]["scores"]
             self.assertEqual(scores["aurora_cloud_cover"]["value"], 20)
             self.assertEqual(scores["aurora_dark"]["value"], 1)
+            (assets / "band-next.png").write_bytes(b"band")
+            (assets / "quality-next.png").write_bytes(b"quality")
+            save_run(
+                database,
+                sample_data(at + timedelta(minutes=10), "next"),
+                None,
+                None,
+                assets,
+                perf_counter(),
+            )
+            history = event_history(database, auroras[0]["event_id"])
+            assert history is not None
+            self.assertIsNone(history["samples"][0]["feature"])
+            with sqlite3.connect(database) as connection:
+                self.assertEqual(
+                    connection.execute(
+                        "SELECT COUNT(*) FROM aurora_metrics"
+                    ).fetchone()[0],
+                    1,
+                )
 
     def test_existing_database_adds_run_duration(self) -> None:
         with TemporaryDirectory() as directory:
@@ -269,7 +292,7 @@ class WeatherDatabaseTests(unittest.TestCase):
             (assets / "quality-old.png").write_bytes(b"quality")
             at = datetime(2026, 9, 26, 10, 0, tzinfo=UTC)
             run_id = save_run(
-                database, sample_data(at, "old"), None, None, assets, {}, perf_counter()
+                database, sample_data(at, "old"), None, None, assets, perf_counter()
             )
             with sqlite3.connect(database) as connection:
                 connection.execute("ALTER TABLE runs DROP COLUMN duration_seconds")

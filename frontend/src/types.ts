@@ -84,6 +84,7 @@ export type RunMap = {
     map_at_utc: string;
     camera_count: number;
     duration_seconds: number | null;
+    forecast_geojson_available: boolean;
     metadata: Record<string, string>;
     sunset: { band_url: string; quality_url: string; forecast_time: string; source_url: string };
     aurora: { observation_time: string; forecast_time: string; cloud_time: string } | null;
@@ -108,7 +109,7 @@ export type EventHistory = {
     run_id: number;
     valid_at_utc: string;
     interestingness: number;
-    feature: Feature<Geometry, EventProperties>;
+    feature: Feature<Geometry, EventProperties> | null;
   }[];
 };
 

@@ -1,5 +1,4 @@
 import hashlib
-import json
 import sqlite3
 import zlib
 from contextlib import closing
@@ -8,144 +7,13 @@ from pathlib import Path
 from time import perf_counter
 from typing import Any
 
+from backend.cloud_forecasts import save_cloud_forecast
 from backend.phenomena.aurora.aurora import OVATION_URL
+from backend.weather_migrations import migrate_forecast_storage
+from backend.weather_retention import expire_history
+from backend.weather_schema import SCHEMA, SCHEMA_VERSION
 from backend.weather_source import parse_utc_time
-
-SCHEMA = """
-PRAGMA foreign_keys = ON;
-CREATE TABLE IF NOT EXISTS camera_catalogs (
-    id INTEGER PRIMARY KEY,
-    digest TEXT NOT NULL UNIQUE,
-    camera_keys BLOB NOT NULL
-);
-CREATE TABLE IF NOT EXISTS runs (
-    id INTEGER PRIMARY KEY,
-    slot_utc TEXT UNIQUE,
-    requested_at_utc TEXT,
-    generated_at_utc TEXT NOT NULL,
-    map_at_utc TEXT NOT NULL,
-    pipeline_version TEXT NOT NULL,
-    catalog_id INTEGER NOT NULL REFERENCES camera_catalogs(id),
-    camera_count INTEGER NOT NULL,
-    metadata_json TEXT NOT NULL,
-    sunset_json TEXT NOT NULL,
-    aurora_json TEXT,
-    clouds_json TEXT NOT NULL,
-    duration_seconds REAL CHECK (duration_seconds >= 0)
-);
-CREATE INDEX IF NOT EXISTS runs_generated_idx ON runs(generated_at_utc DESC);
-CREATE TABLE IF NOT EXISTS run_sources (
-    run_id INTEGER NOT NULL REFERENCES runs(id),
-    source TEXT NOT NULL,
-    source_url TEXT NOT NULL,
-    observed_at_utc TEXT,
-    forecast_valid_at_utc TEXT,
-    PRIMARY KEY (run_id, source)
-);
-CREATE TABLE IF NOT EXISTS events (
-    id INTEGER PRIMARY KEY,
-    kind TEXT NOT NULL,
-    source TEXT NOT NULL,
-    source_id TEXT NOT NULL,
-    first_seen_at_utc TEXT NOT NULL,
-    last_seen_at_utc TEXT NOT NULL,
-    UNIQUE (kind, source, source_id, first_seen_at_utc)
-);
-CREATE INDEX IF NOT EXISTS events_identity_idx
-    ON events(kind, source, source_id, last_seen_at_utc DESC);
-CREATE TABLE IF NOT EXISTS event_samples (
-    id INTEGER PRIMARY KEY,
-    event_id INTEGER NOT NULL REFERENCES events(id),
-    run_id INTEGER NOT NULL REFERENCES runs(id),
-    valid_at_utc TEXT NOT NULL,
-    center_lat REAL,
-    center_lon REAL,
-    core_radius_km REAL,
-    view_radius_km REAL,
-    interestingness REAL NOT NULL,
-    feature_json TEXT NOT NULL,
-    UNIQUE (event_id, run_id)
-);
-CREATE INDEX IF NOT EXISTS event_samples_run_idx
-    ON event_samples(run_id, interestingness DESC);
-CREATE INDEX IF NOT EXISTS event_samples_event_time_idx
-    ON event_samples(event_id, valid_at_utc);
-CREATE TABLE IF NOT EXISTS storm_metrics (
-    sample_id INTEGER PRIMARY KEY REFERENCES event_samples(id),
-    severe_probability REAL NOT NULL,
-    hail_probability REAL NOT NULL,
-    wind_probability REAL NOT NULL,
-    tornado_probability REAL NOT NULL,
-    flashes_5min INTEGER NOT NULL,
-    reflectivity_dbz REAL NOT NULL,
-    outline_complexity REAL NOT NULL,
-    jaggedness REAL NOT NULL,
-    nonconvexity REAL NOT NULL,
-    fragmentation REAL NOT NULL,
-    component_count INTEGER NOT NULL
-);
-CREATE TABLE IF NOT EXISTS aurora_metrics (
-    sample_id INTEGER PRIMARY KEY REFERENCES event_samples(id),
-    aurora_percent REAL NOT NULL,
-    cloud_cover_percent REAL NOT NULL
-);
-CREATE TABLE IF NOT EXISTS cloud_patch_metrics (
-    sample_id INTEGER PRIMARY KEY REFERENCES event_samples(id),
-    horizontal_variation REAL NOT NULL,
-    vertical_variation REAL NOT NULL,
-    peak_cloud_fraction REAL NOT NULL
-);
-CREATE TABLE IF NOT EXISTS cameras (
-    network TEXT NOT NULL,
-    provider_id TEXT NOT NULL,
-    catalog_json TEXT NOT NULL,
-    PRIMARY KEY (network, provider_id)
-);
-CREATE TABLE IF NOT EXISTS camera_samples (
-    id INTEGER PRIMARY KEY,
-    run_id INTEGER NOT NULL REFERENCES runs(id),
-    network TEXT NOT NULL,
-    provider_id TEXT NOT NULL,
-    camera_json TEXT NOT NULL,
-    captured_at_utc TEXT,
-    frame_url TEXT,
-    archived_url TEXT,
-    UNIQUE (run_id, network, provider_id),
-    FOREIGN KEY (network, provider_id) REFERENCES cameras(network, provider_id)
-);
-CREATE INDEX IF NOT EXISTS camera_samples_history_idx
-    ON camera_samples(network, provider_id, run_id DESC);
-CREATE TABLE IF NOT EXISTS camera_event_matches (
-    camera_sample_id INTEGER NOT NULL REFERENCES camera_samples(id),
-    event_sample_id INTEGER NOT NULL REFERENCES event_samples(id),
-    PRIMARY KEY (camera_sample_id, event_sample_id)
-);
-CREATE INDEX IF NOT EXISTS camera_event_matches_event_idx
-    ON camera_event_matches(event_sample_id, camera_sample_id);
-CREATE TABLE IF NOT EXISTS camera_view_scores (
-    id INTEGER PRIMARY KEY,
-    camera_sample_id INTEGER NOT NULL REFERENCES camera_samples(id),
-    scorer_key TEXT NOT NULL,
-    scorer_version TEXT NOT NULL,
-    value REAL NOT NULL,
-    threshold REAL,
-    passed INTEGER CHECK (passed IN (0, 1)),
-    UNIQUE (camera_sample_id, scorer_key)
-);
-CREATE TABLE IF NOT EXISTS camera_view_score_components (
-    score_id INTEGER NOT NULL REFERENCES camera_view_scores(id),
-    component_key TEXT NOT NULL,
-    value REAL NOT NULL,
-    PRIMARY KEY (score_id, component_key)
-);
-CREATE TABLE IF NOT EXISTS run_artifacts (
-    run_id INTEGER NOT NULL REFERENCES runs(id),
-    kind TEXT NOT NULL,
-    relative_path TEXT NOT NULL,
-    sha256 TEXT NOT NULL,
-    PRIMARY KEY (run_id, kind)
-);
-"""
+from backend.weather_storage import compact_json, connect, inserted_id, utc_text
 
 PIPELINE_VERSION = "1"
 EVENT_GAPS = {
@@ -160,41 +28,23 @@ SOURCE_NAMES = {
 }
 
 
-def compact_json(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
-
-
-def inserted_id(cursor: sqlite3.Cursor) -> int:
-    row_id = cursor.lastrowid
-    if row_id is None:
-        raise RuntimeError("SQLite insert returned no row ID")
-    return row_id
-
-
-def utc_text(value: str) -> str:
-    return parse_utc_time(value).isoformat(timespec="seconds")
-
-
-def connect(database_path: Path) -> sqlite3.Connection:
-    database_path.parent.mkdir(parents=True, exist_ok=True)
-    connection = sqlite3.connect(database_path)
-    connection.row_factory = sqlite3.Row
-    connection.execute("PRAGMA foreign_keys = ON")
-    connection.execute("PRAGMA journal_mode = WAL")
-    return connection
-
-
 def initialize(database_path: Path) -> None:
     with closing(connect(database_path)) as connection:
-        connection.executescript(SCHEMA)
+        version = connection.execute("PRAGMA user_version").fetchone()[0]
+        if version > SCHEMA_VERSION:
+            raise ValueError(f"Unsupported weather database version: {version}")
         run_columns = {
             row["name"] for row in connection.execute("PRAGMA table_info(runs)")
         }
-        if "duration_seconds" not in run_columns:
+        if run_columns and "duration_seconds" not in run_columns:
             connection.execute(
                 "ALTER TABLE runs ADD COLUMN duration_seconds REAL CHECK (duration_seconds >= 0)"
             )
             connection.commit()
+        if run_columns and "cloud_forecast_id" not in run_columns:
+            migrate_forecast_storage(connection)
+        connection.executescript(SCHEMA)
+        connection.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
 
 
 def existing_or_new_event(
@@ -257,7 +107,7 @@ def insert_event_sample(
             circle["radius_km"] if circle is not None else None,
             view_circle["radius_km"] if view_circle is not None else None,
             interestingness,
-            compact_json(feature),
+            compact_json(feature) if kind == "storm" else None,
         ),
     )
     sample_id = inserted_id(cursor)
@@ -287,16 +137,6 @@ def insert_event_sample(
                 sample_id,
                 properties["aurora_percent"],
                 properties["cloud_cover_percent"],
-            ),
-        )
-    else:
-        connection.execute(
-            "INSERT INTO cloud_patch_metrics VALUES (?, ?, ?, ?)",
-            (
-                sample_id,
-                properties["horizontal_variation"],
-                properties["vertical_variation"],
-                properties["peak_cloud_fraction"],
             ),
         )
     return sample_id
@@ -336,7 +176,6 @@ def insert_camera_sample(
     event_ids: dict[tuple[str, str], int],
     model_version: str,
     blur_threshold: float,
-    archived_url: str | None,
 ) -> None:
     frame = camera["frame"]
     camera_data = {
@@ -361,8 +200,8 @@ def insert_camera_sample(
     cursor = connection.execute(
         """INSERT INTO camera_samples
            (run_id, network, provider_id, camera_json, captured_at_utc,
-            frame_url, archived_url)
-           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            frame_url)
+           VALUES (?, ?, ?, ?, ?, ?)""",
         (
             run_id,
             camera["network"],
@@ -372,7 +211,6 @@ def insert_camera_sample(
             if frame is not None
             else None,
             frame["image_url"] if frame is not None else None,
-            archived_url,
         ),
     )
     sample_id = inserted_id(cursor)
@@ -522,7 +360,6 @@ def save_run(
     requested_at: datetime | None,
     slot_at: datetime | None,
     assets_dir: Path,
-    archived_frames: dict[tuple[str, str], str],
     started_at: float,
 ) -> int:
     camera_keys = []
@@ -580,12 +417,19 @@ def save_run(
                WHERE catalog_json <> excluded.catalog_json""",
             catalog_rows,
         )
+        cloud_forecast_id, cloud_sample_ids, cloud_features = save_cloud_forecast(
+            connection, data["clouds"]
+        )
+        event_count = len(data["storms"]["features"]) + len(cloud_features)
+        if data["auroras"] is not None:
+            event_count += len(data["auroras"]["features"]["features"])
         cursor = connection.execute(
             """INSERT INTO runs
                (slot_utc, requested_at_utc, generated_at_utc, map_at_utc,
-                pipeline_version, catalog_id, camera_count, metadata_json,
+                pipeline_version, catalog_id, camera_count, event_count,
+                cloud_forecast_id, metadata_json,
                 sunset_json, aurora_json, clouds_json)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (
                 slot_at.astimezone(UTC).isoformat(timespec="minutes")
                 if slot_at
@@ -598,6 +442,8 @@ def save_run(
                 PIPELINE_VERSION,
                 catalog_id,
                 len(camera_keys),
+                event_count,
+                cloud_forecast_id,
                 compact_json(data["metadata"]),
                 compact_json(
                     {
@@ -634,11 +480,6 @@ def save_run(
         event_ids = {}
         feature_groups = [
             ("storm", data["storms"]["features"], data["metadata"]["valid_time"]),
-            (
-                "cloud_patch",
-                data["clouds"]["features"]["features"],
-                data["clouds"]["forecast_time"],
-            ),
         ]
         if data["auroras"] is not None:
             feature_groups.append(
@@ -654,6 +495,23 @@ def save_run(
                 event_ids[(kind, str(feature["properties"]["id"]))] = (
                     insert_event_sample(connection, run_id, kind, feature, valid_at)
                 )
+        connection.execute("DELETE FROM latest_forecast_features")
+        cached_features = [
+            (cloud_sample_ids[source_id], run_id, feature_json)
+            for source_id, feature_json in cloud_features
+        ]
+        if data["auroras"] is not None:
+            cached_features.extend(
+                (
+                    event_ids[("aurora", str(feature["properties"]["id"]))],
+                    run_id,
+                    compact_json(feature),
+                )
+                for feature in data["auroras"]["features"]["features"]
+            )
+        connection.executemany(
+            "INSERT INTO latest_forecast_features VALUES (?, ?, ?)", cached_features
+        )
         for camera in data["cameras"]:
             candidate = (
                 camera["event_ids"]
@@ -668,7 +526,6 @@ def save_run(
                     event_ids,
                     model_version,
                     blur_threshold,
-                    archived_frames.get((camera["network"], camera["provider_id"])),
                 )
         for kind, asset_url in (
             ("sunset_band", data["sunset"]["band_url"]),
@@ -684,8 +541,13 @@ def save_run(
                     hashlib.sha256(asset_path.read_bytes()).hexdigest(),
                 ),
             )
+        expired_assets = expire_history(
+            connection, assets_dir, parse_utc_time(generated_at)
+        )
         connection.execute(
             "UPDATE runs SET duration_seconds = ? WHERE id = ?",
             (perf_counter() - started_at, run_id),
         )
+    for path in expired_assets:
+        path.unlink()
     return run_id

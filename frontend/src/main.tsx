@@ -82,6 +82,7 @@ function RunPage() {
         <button className="text-button" type="button" onClick={() => void loadOlder()}>Load older runs</button>
         <div className="small-meta">
           <div>Storm data {new Date(map.run.metadata.valid_time).toLocaleString()}</div>
+          {!map.run.forecast_geojson_available && <div>Forecast shapes are available on the latest map only.</div>}
           <div>{storms.length} storms · {map.run.camera_count} cameras · {map.cameras.filter((camera) => camera.sample).length} candidates</div>
           {navigation.state !== "idle" && <div>Loading run…</div>}
         </div>

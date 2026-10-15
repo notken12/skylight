@@ -23,10 +23,8 @@ def list_runs(
     with closing(connect(database_path)) as connection:
         rows = connection.execute(
             """SELECT r.id, r.generated_at_utc, r.map_at_utc, r.camera_count,
-                      r.duration_seconds,
-                      s.observed_at_utc AS storm_valid_at_utc,
-                      (SELECT COUNT(*) FROM event_samples es WHERE es.run_id = r.id)
-                      AS event_count
+                      r.duration_seconds, r.event_count,
+                      s.observed_at_utc AS storm_valid_at_utc
                FROM runs r
                JOIN run_sources s ON s.run_id = r.id AND s.source = 'probsevere'
                WHERE (? IS NULL OR r.id < ?)
@@ -38,16 +36,26 @@ def list_runs(
 
 def event_history(database_path: Path, event_id: int) -> dict[str, Any] | None:
     with closing(connect(database_path)) as connection:
+        connection.execute("BEGIN")
         event = connection.execute(
             "SELECT * FROM events WHERE id = ?", (event_id,)
         ).fetchone()
         if event is None:
             return None
         samples = connection.execute(
-            """SELECT es.id, es.run_id, es.valid_at_utc, es.interestingness,
+            """SELECT es.id,
+                      CASE WHEN es.cloud_forecast_id IS NULL THEN es.run_id
+                           ELSE (SELECT MAX(r.id) FROM runs r
+                                 WHERE r.cloud_forecast_id = es.cloud_forecast_id)
+                      END AS run_id,
+                      es.valid_at_utc, es.interestingness,
                       es.center_lat, es.center_lon, es.core_radius_km,
-                      es.view_radius_km, es.feature_json
-               FROM event_samples es WHERE es.event_id = ?
+                      es.view_radius_km,
+                      CASE WHEN e.kind = 'storm' THEN es.feature_json
+                           ELSE f.feature_json END AS feature_json
+               FROM event_samples es JOIN events e ON e.id = es.event_id
+               LEFT JOIN latest_forecast_features f ON f.sample_id = es.id
+               WHERE es.event_id = ?
                ORDER BY es.valid_at_utc""",
             (event_id,),
         ).fetchall()
@@ -55,7 +63,11 @@ def event_history(database_path: Path, event_id: int) -> dict[str, Any] | None:
         "event": dict(event),
         "samples": [
             {key: value for key, value in dict(sample).items() if key != "feature_json"}
-            | {"feature": json.loads(sample["feature_json"])}
+            | {
+                "feature": json.loads(sample["feature_json"])
+                if sample["feature_json"] is not None
+                else None
+            }
             for sample in samples
         ],
     }
@@ -126,8 +138,11 @@ def catalog_cameras(
 
 def read_run_map(database_path: Path, run_id: int) -> dict[str, Any] | None:
     with closing(connect(database_path)) as connection:
+        connection.execute("BEGIN")
         run = connection.execute(
-            "SELECT * FROM runs WHERE id = ?", (run_id,)
+            """SELECT *, id = (SELECT MAX(id) FROM runs) AS forecast_geojson_available
+               FROM runs WHERE id = ?""",
+            (run_id,),
         ).fetchone()
         if run is None:
             return None
@@ -138,11 +153,18 @@ def read_run_map(database_path: Path, run_id: int) -> dict[str, Any] | None:
         keys = json.loads(zlib.decompress(catalog_row["camera_keys"]))
         catalog = catalog_cameras(connection, keys)
         event_rows = connection.execute(
-            """SELECT es.id, es.event_id, es.valid_at_utc,
+            """SELECT es.id AS id, es.event_id, es.valid_at_utc,
                       e.kind, e.source_id, es.feature_json
                FROM event_samples es JOIN events e ON e.id = es.event_id
-               WHERE es.run_id = ? ORDER BY es.id""",
-            (run_id,),
+               WHERE es.run_id = ? AND e.kind = 'storm'
+               UNION ALL
+               SELECT es.id, es.event_id, es.valid_at_utc,
+                      e.kind, e.source_id, f.feature_json
+               FROM latest_forecast_features f
+               JOIN event_samples es ON es.id = f.sample_id
+               JOIN events e ON e.id = es.event_id
+               WHERE f.run_id = ? ORDER BY id""",
+            (run_id, run_id),
         ).fetchall()
         events = [
             {
@@ -234,6 +256,7 @@ def read_run_map(database_path: Path, run_id: int) -> dict[str, Any] | None:
             "map_at_utc": run["map_at_utc"],
             "camera_count": run["camera_count"],
             "duration_seconds": run["duration_seconds"],
+            "forecast_geojson_available": bool(run["forecast_geojson_available"]),
             "metadata": json.loads(run["metadata_json"]),
             "sunset": json.loads(run["sunset_json"]),
             "aurora": json.loads(run["aurora_json"]) if run["aurora_json"] else None,

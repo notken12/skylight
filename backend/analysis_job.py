@@ -9,7 +9,6 @@ from backend.camera.blur_filter import MIN_LAPLACIAN_VARIANCE
 from backend.camera.camera_matching import match_cameras
 from backend.camera.camera_snapshots import fetch_camera_snapshot, latest_camera_frame
 from backend.camera.cameras import load_cameras
-from backend.camera.frame_archive import FrameArchive
 from backend.camera.view_scoring import (
     MODEL_NAME,
     MODEL_WEIGHTS,
@@ -119,7 +118,6 @@ def main() -> None:
         fetch_faa_json=fetch_faa_json,
         fetch_bytes=fetch_bytes,
     )
-    frame_archive = FrameArchive(arguments.assets_dir, snapshot_fetcher)
     overlay_path = arguments.assets_dir / f"run-{snapshot_time:%Y%m%dT%H%M%S%fZ}.png"
     sunset = render_sunset_overlay(map_time, sunset_cloud, cameras, overlay_path)
     aurora_frame_indices = (
@@ -131,7 +129,7 @@ def main() -> None:
         matched_cameras,
         sunset.camera_scores,
         aurora_frame_indices,
-        frame_archive.fetch,
+        snapshot_fetcher,
         encoder.encode,
         storm_scorer.score,
         sunset_scorer.score,
@@ -182,7 +180,6 @@ def main() -> None:
         requested_time,
         slot_at,
         arguments.assets_dir,
-        frame_archive.urls,
         started_at,
     )
     print(
