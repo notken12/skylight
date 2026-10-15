@@ -12,7 +12,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /uvx /bin/
 
 ENV PYTHONUNBUFFERED=1 \
     UV_PYTHON_DOWNLOADS=0 \
-    UV_LINK_MODE=copy \
+    UV_LINK_MODE=hardlink \
     XDG_CACHE_HOME=/app/output/cache \
     HF_HOME=/app/output/cache/huggingface \
     TORCH_HOME=/app/output/cache/torch \

@@ -74,7 +74,7 @@ Deploy the repository as a Dockerfile application. Set the exposed port to `8765
 
 Add a Coolify Scheduled Task to the application with command `cd /app && /app/.venv/bin/python -m backend.analysis_job` and an initial frequency of `*/30 * * * *`. Choose a timeout based on an observed run rather than the five-minute default. Run the task once with **Execute Now** and verify the saved run appears on the map. The collector currently skips duplicate UTC-minute slots but does not prevent executions from overlapping across different minutes.
 
-The image retains its Python dependencies and reference images; `/app/output` retains the SQLite database, overlays, ICON cache, and model cache across deployments. New camera frames are not archived; existing archived frames remain available to historical records. Back up the database consistently along with the saved assets. The Linux PyTorch dependencies in the current lockfile include CUDA libraries, so allow substantial build disk space even on a CPU-only host.
+The image retains its Python dependencies and reference images; `/app/output` retains the SQLite database, overlays, ICON cache, and model cache across deployments. New camera frames are not archived; existing archived frames remain available to historical records. Back up the database consistently along with the saved assets. Linux installs use CPU-only PyTorch and torchvision packages. The Docker build hardlinks dependencies from its temporary package cache to avoid duplicating their contents during installation.
 
 The collector can be scheduled, for example every fifteen minutes:
 
