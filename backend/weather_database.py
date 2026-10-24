@@ -256,6 +256,17 @@ def insert_camera_sample(
             "warm-tone-1",
             camera["image_scores"]["warm_tone_strength"],
         )
+        insert_score(
+            connection,
+            sample_id,
+            "resolution",
+            "pixel-count-1",
+            camera["image_scores"]["width"] * camera["image_scores"]["height"],
+            components={
+                "width": camera["image_scores"]["width"],
+                "height": camera["image_scores"]["height"],
+            },
+        )
     storm = camera["view_score"]
     if storm is not None:
         insert_score(
@@ -294,6 +305,8 @@ def insert_camera_sample(
         components = {
             "sharpness_percentile": rank["sharpness_score"],
             "sharpness_contribution": rank["sharpness_contribution"],
+            "resolution_percentile": rank["resolution_score"],
+            "resolution_contribution": rank["resolution_contribution"],
         }
         for kind, part in rank["components"].items():
             components[f"{kind}_view_percentile"] = part["view_score"]
@@ -303,7 +316,7 @@ def insert_camera_sample(
             connection,
             sample_id,
             "overall_rank",
-            "rank-1",
+            "rank-2",
             rank["score"],
             components=components,
         )

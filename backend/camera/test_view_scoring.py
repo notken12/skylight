@@ -71,7 +71,8 @@ class ViewScoringTests(unittest.TestCase):
         )
 
         score = scorer.score(
-            torch.tensor([[0.6, 0.8]]), [CameraImageScores(warm_tone_strength=0.3)]
+            torch.tensor([[0.6, 0.8]]),
+            [CameraImageScores(warm_tone_strength=0.3, width=320, height=240)],
         )[0]
 
         self.assertAlmostEqual(score.clip_margin, -0.2)

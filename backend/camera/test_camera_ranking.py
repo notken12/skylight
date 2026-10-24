@@ -1,5 +1,6 @@
 import unittest
 
+from backend.camera.camera_image_scores import CameraImageScores
 from backend.camera.camera_ranking import rank_cameras
 from backend.camera.cameras import Camera
 from backend.camera.view_scoring import ScoredCamera, SunsetViewScore, ViewScore
@@ -17,7 +18,7 @@ class CameraRankingTests(unittest.TestCase):
                 SunsetViewScore(0, 0, 0, 0.3, 0.06, True),
                 None,
                 120,
-                None,
+                CameraImageScores(0, 1920, 1080),
             ),
             ScoredCamera(
                 Camera("Test", "Storm", 41, -101, "https://example.com/storm"),
@@ -26,7 +27,7 @@ class CameraRankingTests(unittest.TestCase):
                 None,
                 None,
                 60,
-                None,
+                CameraImageScores(0, 640, 480),
             ),
             ScoredCamera(
                 Camera("Test", "Aurora", 60, -150, "https://example.com/aurora"),
@@ -35,7 +36,7 @@ class CameraRankingTests(unittest.TestCase):
                 None,
                 None,
                 10,
-                None,
+                CameraImageScores(0, 1280, 720),
             ),
         ]
         storms = {
@@ -72,10 +73,13 @@ class CameraRankingTests(unittest.TestCase):
         self.assertEqual(both.score, 157.6)
         self.assertEqual(both.components["storm"].weighted_score, 64)
         self.assertEqual(both.components["sunset"].weighted_score, 73.6)
-        self.assertEqual(both.sharpness_contribution, 20)
-        self.assertEqual(storm.score, 43.6)
-        self.assertEqual(aurora.score, 60.8)
+        self.assertEqual(both.sharpness_contribution, 10)
+        self.assertEqual(both.resolution_contribution, 10)
+        self.assertEqual(storm.score, 41.9)
+        self.assertEqual(storm.resolution_contribution, 3.3)
+        self.assertEqual(aurora.score, 67.5)
         self.assertEqual(aurora.sharpness_contribution, 0)
+        self.assertEqual(aurora.resolution_contribution, 6.7)
 
 
 if __name__ == "__main__":

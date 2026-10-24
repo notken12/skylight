@@ -8,10 +8,17 @@ from PIL import Image
 @dataclass(frozen=True)
 class CameraImageScores:
     warm_tone_strength: float
+    width: int
+    height: int
+
+    @property
+    def pixel_count(self) -> int:
+        return self.width * self.height
 
 
 def score_camera_image(payload: bytes) -> CameraImageScores:
     with Image.open(BytesIO(payload)) as image:
+        width, height = image.size
         pixels = np.asarray(
             image.convert("RGB").resize((320, 240)).convert("HSV"), dtype=np.float32
         )
@@ -25,4 +32,8 @@ def score_camera_image(payload: bytes) -> CameraImageScores:
         (1, 1, 0.95, 0.7, 0, 0, 0.35, 0.9, 1),
     )
     warm_color = hue_weight * saturation**1.5 * brightness
-    return CameraImageScores(warm_tone_strength=float(np.sqrt(np.mean(warm_color**2))))
+    return CameraImageScores(
+        warm_tone_strength=float(np.sqrt(np.mean(warm_color**2))),
+        width=width,
+        height=height,
+    )

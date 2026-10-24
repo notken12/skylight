@@ -70,7 +70,7 @@ def sample_data(at: datetime, suffix: str) -> dict:
         "aurora_cloud_cover_percent": None,
         "aurora_dark": False,
         "sharpness": 40,
-        "image_scores": {"warm_tone_strength": 0.2},
+        "image_scores": {"warm_tone_strength": 0.2, "width": 1280, "height": 720},
         "view_score": {
             "margin": 0.1,
             "threshold": 0.06,
@@ -85,6 +85,8 @@ def sample_data(at: datetime, suffix: str) -> dict:
             "score": 40,
             "sharpness_score": 50,
             "sharpness_contribution": 10,
+            "resolution_score": 50,
+            "resolution_contribution": 5,
             "components": {},
         },
         "frame": {
@@ -170,6 +172,7 @@ class WeatherDatabaseTests(unittest.TestCase):
                 sample["captured_at_utc"], first.isoformat(timespec="microseconds")
             )
             self.assertEqual(sample["scores"]["sharpness"]["value"], 40)
+            self.assertEqual(sample["scores"]["resolution"]["value"], 921600)
             self.assertEqual(sample["scores"]["warm_tone"]["value"], 0.2)
             self.assertTrue(sample["scores"]["storm_view"]["passed"])
             self.assertEqual(len(sample["event_sample_ids"]), 1)

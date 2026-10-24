@@ -1,4 +1,5 @@
 from bisect import bisect_right
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -9,7 +10,8 @@ from backend.phenomena.sunset.sunset_overlay import SunsetOverlay
 
 VIEW_WEIGHT = 0.48
 EVENT_WEIGHT = 0.32
-SHARPNESS_WEIGHT = 0.2
+SHARPNESS_WEIGHT = 0.1
+RESOLUTION_WEIGHT = 0.1
 
 
 @dataclass(frozen=True)
@@ -24,6 +26,8 @@ class CameraRank:
     score: float
     sharpness_score: float
     sharpness_contribution: float
+    resolution_score: float
+    resolution_contribution: float
     components: dict[str, RankContribution]
 
 
@@ -35,7 +39,7 @@ def contribution(view_score: float, event_score: float) -> RankContribution:
     )
 
 
-def view_percentile(sorted_scores: list[float], score: float) -> float:
+def view_percentile(sorted_scores: Sequence[float], score: float) -> float:
     return 100 * bisect_right(sorted_scores, score) / len(sorted_scores)
 
 
@@ -73,6 +77,11 @@ def rank_cameras(
         camera.sharpness
         for camera in cameras
         if camera.sharpness is not None and camera.sharpness >= MIN_LAPLACIAN_VARIANCE
+    )
+    pixel_counts = sorted(
+        camera.image_scores.pixel_count
+        for camera in cameras
+        if camera.image_scores is not None
     )
     aurora_cameras = auroras.cameras if auroras is not None else (None for _ in cameras)
 
@@ -114,15 +123,24 @@ def rank_cameras(
             else 0
         )
         sharpness_contribution = round(SHARPNESS_WEIGHT * sharpness_score, 1)
+        if camera.image_scores is None:
+            raise ValueError("Ranked camera is missing image resolution")
+        resolution_score = view_percentile(
+            pixel_counts, camera.image_scores.pixel_count
+        )
+        resolution_contribution = round(RESOLUTION_WEIGHT * resolution_score, 1)
         ranks.append(
             CameraRank(
                 score=round(
                     sum(part.weighted_score for part in components.values())
-                    + sharpness_contribution,
+                    + sharpness_contribution
+                    + resolution_contribution,
                     1,
                 ),
                 sharpness_score=round(sharpness_score, 1),
                 sharpness_contribution=sharpness_contribution,
+                resolution_score=round(resolution_score, 1),
+                resolution_contribution=resolution_contribution,
                 components=components,
             )
         )
