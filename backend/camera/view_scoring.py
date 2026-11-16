@@ -194,10 +194,14 @@ class OpenClipImageEncoder:
         self.preprocess = preprocess
 
     def encode(self, images: list[bytes]) -> torch.Tensor:
-        prepared = []
+        decoded = []
         for payload in images:
             with Image.open(BytesIO(payload)) as image:
-                prepared.append(self.preprocess(image.convert("RGB")))
+                decoded.append(image.convert("RGB"))
+        return self.encode_images(decoded)
+
+    def encode_images(self, images: list[Image.Image]) -> torch.Tensor:
+        prepared = [self.preprocess(image) for image in images]
         with torch.inference_mode():
             return normalize(
                 self.model.encode_image(torch.stack(prepared)).float(), dim=-1

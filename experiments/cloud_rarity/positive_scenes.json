@@ -1,0 +1,515 @@
+[
+ {
+  "date": "2025-04-14",
+  "lat": 47.22,
+  "lon": 152.47,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/vortex-variety-hour-154293/",
+  "note": "Winds blowing across the Kuril Islands, between northern Japan and Russia's Kamchatka Peninsula, sent clouds spinning into compact coils."
+ },
+ {
+  "date": "2023-03-19",
+  "lat": 26.39,
+  "lon": -20.3,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "VIIRS Suomi NPP",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/swirly-clouds-in-the-canaries-151216",
+  "note": "Three trails of whirling clouds formed downwind of the Canary Islands in this image."
+ },
+ {
+  "date": "2020-01-29",
+  "lat": -22.32,
+  "lon": 100.12,
+  "phenomenon": "actinoform_clouds",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/cloud-rosettes-in-the-sky-146244",
+  "note": "The article places the actinoform clouds off the western coast of Australia."
+ },
+ {
+  "date": "2015-07-27",
+  "lat": 52.0,
+  "lon": 162.5,
+  "phenomenon": "ship_tracks",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/letter-a-ship-tracks-above-the-pacific-ocean-87223",
+  "note": "The image shows ship tracks off the Kamchatka Peninsula."
+ },
+ {
+  "date": "2003-10-29",
+  "lat": -38.9,
+  "lon": 80.6,
+  "phenomenon": "atmospheric_gravity_waves",
+  "instrument": "MISR Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/gravity-waves-ripple-over-marine-stratocumulus-clouds-4117/",
+  "note": "This image is centered over the Indian Ocean, covering about 245 km by 378 km."
+ },
+ {
+  "date": "2024-01-30",
+  "lat": 25.42,
+  "lon": -82.53,
+  "phenomenon": "fallstreak_holes",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/making-sense-of-holes-in-the-clouds-152486",
+  "note": "A cluster of cavum over the Gulf of Mexico off Florida's west coast."
+ },
+ {
+  "date": "2021-01-29",
+  "lat": 33.77,
+  "lon": -84.92,
+  "phenomenon": "fallstreak_holes",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/falling-for-fallstreaks-147886",
+  "note": "The page says the Georgia images show fallstreak holes west of Atlanta, Georgia."
+ },
+ {
+  "date": "2016-12-28",
+  "lat": 34.66,
+  "lon": 117.07,
+  "phenomenon": "fallstreak_holes",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/punching-through-89407",
+  "note": "A more recent display developed over eastern China, visible in this image acquired on December 28, 2016."
+ },
+ {
+  "date": "2011-04-29",
+  "lat": -33.68,
+  "lon": -79.86,
+  "phenomenon": "island_cloud_wake",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/cloud-wakes-from-juan-fernandez-islands-50718",
+  "note": "Acquired April 29, 2011, this natural-color image shows wakes created by the Juan Fernandez Islands off the coast of Chile."
+ },
+ {
+  "date": "2015-11-10",
+  "lat": -15.96,
+  "lon": -5.78,
+  "phenomenon": "island_cloud_wake",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/cloud-wakes-on-the-lee-side-of-st-helena-island-89056",
+  "note": "The remote island sits in the South Atlantic more than 1950 kilometers west of Africa."
+ },
+ {
+  "date": "2020-02-05",
+  "lat": -57.75,
+  "lon": -27.81,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/sandwiched-wave-clouds-146366",
+  "note": "The South Sandwich Islands are a string of small volcanic peaks in a remote part of the South Atlantic Ocean."
+ },
+ {
+  "date": "2015-11-05",
+  "lat": -46.91,
+  "lon": 37.73,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/wave-clouds-behind-the-prince-edward-islands-86978",
+  "note": "The Prince Edward Islands jut out of the southern Indian Ocean."
+ },
+ {
+  "date": "2017-04-07",
+  "lat": 0.75,
+  "lon": 173.5,
+  "phenomenon": "roll_clouds",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/clouds-roll-over-pacific-atolls-90035",
+  "note": "The remote island chain is part of the Republic of Kiribati, and straddles the equator in the central Pacific Ocean."
+ },
+ {
+  "date": "2020-10-04",
+  "lat": 28.97,
+  "lon": -118.26,
+  "phenomenon": "undular_bore",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/the-undulations-of-wave-clouds-147380",
+  "note": "An undular bore of cloud bands rippled over the Pacific Ocean near Baja California."
+ },
+ {
+  "date": "2010-04-17",
+  "lat": -27.37,
+  "lon": -86.13,
+  "phenomenon": "open_closed_cells",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/open-and-closed-cell-clouds-over-the-pacific-ocean-43795",
+  "note": "A network of open- and closed-cell clouds over the Pacific Ocean off the coast of Peru."
+ },
+ {
+  "date": "2016-02-01",
+  "lat": 17.98,
+  "lon": -134.3,
+  "phenomenon": "open_closed_cells",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/open-and-closed-cells-over-the-pacific-87456",
+  "note": "The page gives only the title 'Open- and Closed-Cells over the Pacific' as location detail."
+ },
+ {
+  "date": "2022-08-25",
+  "lat": -28.55,
+  "lon": -86.86,
+  "phenomenon": "open_closed_cells",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/ex-cell-ent-clouds-off-chiles-coast-150926",
+  "note": "The image shows open- and closed-cell clouds about 1,000 miles west of Chile's coast."
+ },
+ {
+  "date": "2004-01-27",
+  "lat": -58.1,
+  "lon": -25.0,
+  "phenomenon": "island_cloud_wake",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/south-sandwich-island-cloud-wakes-4174",
+  "note": "The islands lie in the Southern Atlantic, about 845 km east of South Georgia Island."
+ },
+ {
+  "date": "2017-11-17",
+  "lat": -50.7,
+  "lon": 166.09,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/waves-in-the-sky-behind-the-auckland-islands-91435",
+  "note": "The clouds flow on the lee side of the small archipelago about 450 km south of New Zealand's South Island."
+ },
+ {
+  "date": "2007-06-19",
+  "lat": 24.5,
+  "lon": -123.0,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/glory-vortex-street-off-baja-california-7795",
+  "note": "The image captured both a vortex street and a glory over the Pacific Ocean off Baja California."
+ },
+ {
+  "date": "2023-07-05",
+  "lat": -23.81,
+  "lon": 146.51,
+  "phenomenon": "atmospheric_gravity_waves",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/curious-waves-of-clouds-across-australia-151584",
+  "note": "An unusual collection of clouds appeared over the interior of Australia on the morning of July 5, 2023."
+ },
+ {
+  "date": "2021-12-07",
+  "lat": 47.64,
+  "lon": -140.06,
+  "phenomenon": "ship_tracks",
+  "instrument": "VIIRS Suomi NPP",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/pacific-tic-tac-toe-149260/",
+  "note": "The tracks revealed several shipping lanes intersecting in the waters off the Pacific coast of North America."
+ },
+ {
+  "date": "2012-02-21",
+  "lat": 35.0,
+  "lon": -131.4,
+  "phenomenon": "ship_tracks",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/ship-tracks-off-the-california-coast-77345/",
+  "note": "The criss-crossing clouds off the coast of California stretch many hundreds of kilometers from end to end."
+ },
+ {
+  "date": "2018-08-26",
+  "lat": 33.14,
+  "lon": -141.33,
+  "phenomenon": "ship_tracks",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/summer-ship-tracks-in-the-pacific-92686/",
+  "note": "The clouds were located about 1,000 kilometers west of the California-Oregon border."
+ },
+ {
+  "date": "2016-06-26",
+  "lat": -15.0,
+  "lon": 8.0,
+  "phenomenon": "atmospheric_gravity_waves",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/making-waves-in-the-sky-off-of-africa-88296/",
+  "note": "The image shows cloud gravity waves off the coast of Angola and Namibia."
+ },
+ {
+  "date": "2020-07-09",
+  "lat": 32.74,
+  "lon": -16.97,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/cloudy-curls-146971",
+  "note": "Vortices created by winds and air masses passing over Madeira Island, north of the Canary Islands."
+ },
+ {
+  "date": "2015-05-20",
+  "lat": 24.95,
+  "lon": -21.18,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/canary-islands-kick-up-von-karman-vortices-85989",
+  "note": "Several cloud vortices swirling downwind of the Canary Islands and Madeira."
+ },
+ {
+  "date": "2017-03-07",
+  "lat": 75.45,
+  "lon": 53.09,
+  "phenomenon": "cloud_streets",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/traffic-free-and-sky-high-89824",
+  "note": "Cloud streets over the Barents Sea and Mezhdusharsky Island."
+ },
+ {
+  "date": "2018-04-17",
+  "lat": 37.0,
+  "lon": -77.0,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/mountains-in-the-sky-92037/",
+  "note": "The image covers the Mid-Atlantic region over the Appalachian Mountains."
+ },
+ {
+  "date": "2009-02-24",
+  "lat": 69.55,
+  "lon": -9.05,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "MODIS Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/clouds-streets-and-von-karman-vortices-greenland-sea-37222",
+  "note": "The vortices form in the skies around the island of Jan Mayen in the Greenland Sea."
+ },
+ {
+  "date": "2007-10-09",
+  "lat": 23.5,
+  "lon": -22.5,
+  "phenomenon": "atmospheric_gravity_waves",
+  "instrument": "MODIS Terra and Aqua",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/wave-clouds-off-west-africa-8139/",
+  "note": "Wave clouds radiate out from the coast of West Africa."
+ },
+ {
+  "date": "2016-02-14",
+  "lat": 40.0,
+  "lon": -69.5,
+  "phenomenon": "cloud_streets",
+  "instrument": "MODIS Terra",
+  "source_url": "https://science.nasa.gov/earth/earth-observatory/cloud-streets-trace-cold-coastal-winds-87524/",
+  "note": "The image shows cloud streets spanning much of the East Coast of the United States."
+ },
+ {
+  "date": "2006-09-14",
+  "lat": 29.0,
+  "lon": -118.3,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "GOES-11 imager visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/113",
+  "note": "The vortex street is \"downwind of Guadalupe Island (located off the west coast of Baja California.\""
+ },
+ {
+  "date": "2010-09-17",
+  "lat": 29.0,
+  "lon": -118.3,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "GOES-11 imager visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/6873",
+  "note": "The von Karman vortices are described as extending downwind of \"Guadalupe Island off the coast of Baja California.\""
+ },
+ {
+  "date": "2012-06-20",
+  "lat": 29.0,
+  "lon": -118.3,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "GOES-15 imager visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/10656",
+  "note": "A von Karman vortex street was \"moving southeastward, downwind of Guadeloupe Island\" on 20 June 2012."
+ },
+ {
+  "date": "2014-02-24",
+  "lat": 29.0,
+  "lon": -118.3,
+  "phenomenon": "gravity_waves",
+  "instrument": "GOES-15 imager visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/15016",
+  "note": "The imagery is centered \"in the vicinity of Guadalupe Island\" during the morning hours."
+ },
+ {
+  "date": "2009-12-07",
+  "lat": 29.0,
+  "lon": -118.3,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "GOES-11 imager visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/4094",
+  "note": "The imagery \"showed a series of standing waves to the lee of Isla Guadalupe and also to the lee of Baja California.\""
+ },
+ {
+  "date": "2009-12-07",
+  "lat": 47.8,
+  "lon": -123.7,
+  "phenomenon": "lee_wave_clouds",
+  "instrument": "MODIS visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/4094",
+  "note": "The imagery \"revealed a long cloud plume that had formed downwind of Mount Olympus in far northwestern Washington.\""
+ },
+ {
+  "date": "2011-04-14",
+  "lat": 53.0,
+  "lon": -169.0,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "POES AVHRR 0.86 um visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/7830",
+  "note": "The post describes \"a pair of von Karman vortices streaming southward from the Aleutian Islands of Alaska on 14 April 2011.\""
+ },
+ {
+  "date": "2014-05-01",
+  "lat": 32.75,
+  "lon": -17.0,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "Meteosat-10 0.75 um visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/15503",
+  "note": "The post shows \"a von Karman vortex street downwind of Madeira Island on 01 May 2014.\""
+ },
+ {
+  "date": "2022-03-11",
+  "lat": -33.5,
+  "lon": -79.5,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "GOES-16 ABI visible (True Color RGB)",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/45132",
+  "note": "The vortex streets extend \"downwind (to the north) of Isla Alejandro Selkirk and Robinson Crusoe\" in the Juan Fernandez Islands."
+ },
+ {
+  "date": "2025-03-20",
+  "lat": 60.0,
+  "lon": -165.0,
+  "phenomenon": "karman_vortex_street",
+  "instrument": "GOES-18 ABI visible (True Color RGB) and Suomi-NPP VIIRS",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/63702",
+  "note": "The vortices formed as north-northwesterly winds were \"interacting with the western tip of Nelson Island, Alaska,\" and propagated south across the Bering Sea."
+ },
+ {
+  "date": "2020-06-30",
+  "lat": 23.5,
+  "lon": -153.8,
+  "phenomenon": "actinoform_cloud",
+  "instrument": "GOES-17 ABI red visible and NOAA-20 VIIRS true color",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/37380",
+  "note": "The actinoform clouds were \"moving west-southwestward toward the Hawaiian Islands,\" near \"Buoy 51000 (located 245 miles northeast of Honolulu).\""
+ },
+ {
+  "date": "2021-11-16",
+  "lat": 28.0,
+  "lon": -139.0,
+  "phenomenon": "actinoform_cloud",
+  "instrument": "GOES-17 ABI True Color and Day Cloud Phase RGB, NOAA-20 VIIRS",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/43346",
+  "note": "The feature was \"moving west-southwestward across the East Pacific Ocean (about midway between Hawai'i and California).\""
+ },
+ {
+  "date": "2013-02-17",
+  "lat": 32.9,
+  "lon": -118.5,
+  "phenomenon": "mesoscale_eddy",
+  "instrument": "GOES-15 imager visible and Suomi-NPP VIIRS visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/12390",
+  "note": "The eddy was \"immediately downwind of San Clemente Island off the coast of southern California.\""
+ },
+ {
+  "date": "2014-12-21",
+  "lat": 34.8,
+  "lon": -119.1,
+  "phenomenon": "mountain_wave_clouds",
+  "instrument": "Suomi-NPP VIIRS 0.64 um visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/17390",
+  "note": "The wave cloud was \"immediately downwind of the higher elevations of the western Transverse Ranges in southern California.\""
+ },
+ {
+  "date": "2019-03-07",
+  "lat": 36.8,
+  "lon": -80.9,
+  "phenomenon": "standing_wave_clouds",
+  "instrument": "GOES-16 ABI red visible and Terra MODIS visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/32267",
+  "note": "Standing wave clouds \"developed to the lee of the Appalachian Mountains on 07 March 2019.\""
+ },
+ {
+  "date": "2012-03-15",
+  "lat": 43.5,
+  "lon": -87.0,
+  "phenomenon": "undular_bore",
+  "instrument": "Terra/Aqua MODIS true color",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/9985",
+  "note": "The MODIS imagery \"revealed the presence of an undular bore along the leading edge of a southward-moving cold front\" over Lake Michigan."
+ },
+ {
+  "date": "2017-03-10",
+  "lat": 31.5,
+  "lon": -102.5,
+  "phenomenon": "undular_bore",
+  "instrument": "GOES-16 ABI visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/23381",
+  "note": "The GOES-16 visible images \"showed multiple undular bores over western Texas\" during the morning hours."
+ },
+ {
+  "date": "2017-04-27",
+  "lat": 43.3,
+  "lon": -68.5,
+  "phenomenon": "undular_bore",
+  "instrument": "GOES-16 ABI visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/23817",
+  "note": "The wave clouds were imaged \"over the Gulf of Maine on the morning of 27 April 2017.\""
+ },
+ {
+  "date": "2010-05-08",
+  "lat": 28.8,
+  "lon": -90.5,
+  "phenomenon": "gravity_waves",
+  "instrument": "GOES-13 imager visible and MODIS visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/5534",
+  "note": "The imagery \"revealed the formation of a packet of wave clouds over the northern Gulf of Mexico.\""
+ },
+ {
+  "date": "2012-07-06",
+  "lat": 43.8,
+  "lon": -96.5,
+  "phenomenon": "gravity_waves",
+  "instrument": "GOES-13 imager visible and Suomi-NPP VIIRS",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/10774",
+  "note": "Cloud-top gravity waves formed \"along the southern periphery of the storm over eastern South Dakota, southern Minnesota, and far northern Iowa.\""
+ },
+ {
+  "date": "2021-01-05",
+  "lat": 58.0,
+  "lon": -175.0,
+  "phenomenon": "cloud_streets",
+  "instrument": "GOES-17 ABI red visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/39552",
+  "note": "GOES-17 imagery \"displayed cloud streets across the Bering Sea.\""
+ },
+ {
+  "date": "2025-05-08",
+  "lat": 52.9,
+  "lon": -106.4,
+  "phenomenon": "pyrocumulonimbus",
+  "instrument": "GOES-19 ABI red visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/64719",
+  "note": "\"a wildfire in central Saskatchewan produced a pyrocumulonimbus\" cloud."
+ },
+ {
+  "date": "2025-05-13",
+  "lat": 50.1,
+  "lon": -95.8,
+  "phenomenon": "pyrocumulonimbus",
+  "instrument": "GOES-19 ABI red visible",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/64799",
+  "note": "The wildfire was \"in the Nopiming Provincial Park (located just west of the Manitoba/Ontario border)\" and produced multiple pyroCb clouds."
+ },
+ {
+  "date": "2023-09-22",
+  "lat": 58.5,
+  "lon": -119.4,
+  "phenomenon": "pyrocumulonimbus",
+  "instrument": "GOES-18 ABI red visible and Day Land Cloud Fire RGB",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/54729",
+  "note": "The post cites \"the large wildfire near Rainbow Lake AB (CWSH)\" as a prolific pyroCb producer."
+ },
+ {
+  "date": "2026-04-21",
+  "lat": 43.0,
+  "lon": -89.3,
+  "phenomenon": "altocumulus_castellanus",
+  "instrument": "GOES-19 ABI true color and GLM",
+  "source_url": "https://cimss.ssec.wisc.edu/satellite-blog/archives/70009",
+  "note": "\"ACCAS unexpectedly developed in southern Wisconsin yesterday morning.\""
+ }
+]
