@@ -14,6 +14,7 @@ from backend.phenomena.icon_weather import (
     GRID_SHAPE,
     GRID_STEP,
     ICON_BASE_URL,
+    ICON_CACHE_DIR,
     NORTH,
     WEST,
     icon_forecast_cycle,
@@ -101,7 +102,7 @@ WEATHER_COLUMNS = (
 
 
 def load_weather_grids(
-    at: datetime, fetch: Callable[[str], bytes], cache_dir: Path
+    at: datetime, fetch: Callable[[str], bytes], cache_dir: Path = ICON_CACHE_DIR
 ) -> WeatherGrids:
     cycle, forecast_hour = icon_forecast_cycle(at)
     indices = icon_source_indices(cache_dir, fetch)

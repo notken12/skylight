@@ -8,7 +8,6 @@ from pathlib import Path
 import numpy as np
 
 from backend.camera.cameras import Camera, load_cameras
-from backend.phenomena.icon_weather import ICON_CACHE_DIR
 from backend.phenomena.sunset.sunset_scoring import solar_geometry
 from backend.weather_source import (
     fetch_bytes,
@@ -97,7 +96,7 @@ def collect(rng: random.Random) -> None:
     snapshots = fetch_snapshots(
         rng.sample(eligible, min(CAMERAS_PER_RUN, len(eligible))), at
     )
-    weather_grids = load_weather_grids(at, fetch_bytes, ICON_CACHE_DIR)
+    weather_grids = load_weather_grids(at, fetch_bytes)
     storms = probsevere_storms(fetch_json(probsevere_source(None, fetch_text)))
     run_dir = LIVE_DIR / at.strftime("%Y%m%dT%H%MZ")
     (run_dir / "labels").mkdir(parents=True)
