@@ -1,5 +1,4 @@
 import argparse
-import csv
 import json
 import random
 from dataclasses import asdict, dataclass
@@ -9,9 +8,32 @@ from pathlib import Path
 import numpy as np
 
 from backend.camera.cameras import Camera, load_cameras
+from backend.phenomena.icon_weather import ICON_CACHE_DIR
 from backend.phenomena.sunset.sunset_scoring import solar_geometry
-from backend.weather_source import fetch_faa_json, fetch_headers, fetch_json
+from backend.weather_source import (
+    fetch_bytes,
+    fetch_faa_json,
+    fetch_headers,
+    fetch_json,
+    fetch_text,
+    probsevere_source,
+)
+from experiments.cloud_detector.followups import open_followups
+from experiments.cloud_detector.live_log import (
+    LIVE_DIR,
+    RARE_VISION_TYPES,
+    append_to_log,
+    read_label,
+    worth_reviewing,
+)
 from experiments.cloud_detector.photos import Photo
+from experiments.cloud_detector.weather_features import (
+    WeatherFeatures,
+    icon_features,
+    load_weather_grids,
+    nearest_storm_features,
+    probsevere_storms,
+)
 from experiments.cloud_detector.webcam_frames import (
     FRAMES_PER_NETWORK,
     LIVE_FRAME_LABEL,
@@ -19,24 +41,12 @@ from experiments.cloud_detector.webcam_frames import (
 )
 from experiments.cloud_detector.zero_shot import zero_shot_scores
 
-LIVE_DIR = Path("output/cloud_live")
 CALL_LOG = LIVE_DIR / "detector_calls.csv"
 CAMERAS_PER_RUN = 300
 MIN_DAYLIGHT_CAMERAS = 50
 MIN_SUN_ELEVATION_DEGREES = 3.0
 HIGHEST_SCORING_FOR_VISION = 20
 RANDOM_FOR_VISION = 20
-RARE_VISION_TYPES = frozenset(
-    {
-        "mammatus",
-        "lenticular",
-        "asperitas",
-        "kelvin_helmholtz",
-        "shelf_cloud",
-        "roll_cloud",
-        "noctilucent",
-    }
-)
 
 
 @dataclass(frozen=True)
@@ -44,6 +54,7 @@ class LiveFrame:
     network: str
     camera_name: str
     camera_url: str
+    camera_id: int | None
     latitude: float
     longitude: float
     image_url: str
@@ -52,6 +63,7 @@ class LiveFrame:
     predicted_type: str
     vision_frame: str | None
     vision_selection: str | None
+    weather: WeatherFeatures
 
 
 def daylight_cameras(cameras: list[Camera], at: datetime) -> list[Camera]:
@@ -85,6 +97,8 @@ def collect(rng: random.Random) -> None:
     snapshots = fetch_snapshots(
         rng.sample(eligible, min(CAMERAS_PER_RUN, len(eligible))), at
     )
+    weather_grids = load_weather_grids(at, fetch_bytes, ICON_CACHE_DIR)
+    storms = probsevere_storms(fetch_json(probsevere_source(None, fetch_text)))
     run_dir = LIVE_DIR / at.strftime("%Y%m%dT%H%MZ")
     (run_dir / "labels").mkdir(parents=True)
     all_frames = [run_dir / f"all_{index:03d}.jpg" for index in range(len(snapshots))]
@@ -121,6 +135,7 @@ def collect(rng: random.Random) -> None:
             network=snapshot.camera.network,
             camera_name=snapshot.camera.name,
             camera_url=snapshot.camera.url,
+            camera_id=snapshot.camera.camera_id,
             latitude=snapshot.camera.latitude,
             longitude=snapshot.camera.longitude,
             image_url=snapshot.image_url,
@@ -129,6 +144,12 @@ def collect(rng: random.Random) -> None:
             predicted_type=score.predicted_type,
             vision_frame=vision_names.get(index),
             vision_selection=selection.get(index),
+            weather=icon_features(
+                weather_grids, snapshot.camera.latitude, snapshot.camera.longitude
+            )
+            | nearest_storm_features(
+                storms, snapshot.camera.latitude, snapshot.camera.longitude
+            ),
         )
         for index, (snapshot, score) in enumerate(zip(snapshots, scores))
     ]
@@ -143,35 +164,29 @@ def record(run_dir: Path, vision_model: str) -> None:
     frames = json.loads((run_dir / "run.json").read_text())
     rows = []
     for frame in frames:
+        weather = frame.pop("weather")
         label = {"type": "", "confidence": "", "sky": ""}
         if frame["vision_frame"] is not None:
-            label_path = (
-                run_dir / "labels" / Path(frame["vision_frame"]).with_suffix(".json")
-            )
-            label = json.loads(label_path.read_text())
+            label = read_label(run_dir, frame["vision_frame"])
         rows.append(
             {
                 "run": run_dir.name,
                 **frame,
+                **weather,
                 "vision_model": vision_model if frame["vision_frame"] else "",
                 "vision_type": label["type"],
                 "vision_confidence": label["confidence"],
                 "vision_sky": label["sky"],
             }
         )
-    is_new_log = not CALL_LOG.exists()
-    with CALL_LOG.open("a", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=list(rows[0]))
-        if is_new_log:
-            writer.writeheader()
-        writer.writerows(rows)
+    append_to_log(CALL_LOG, rows)
     for row in rows:
-        worth_reviewing = (
-            row["vision_type"] in RARE_VISION_TYPES or row["vision_confidence"] == "low"
-        )
-        if row["vision_frame"] is not None and not worth_reviewing:
+        if row["vision_frame"] is not None and not worth_reviewing(
+            row["vision_type"], row["vision_confidence"]
+        ):
             (run_dir / row["vision_frame"]).unlink()
     flagged = [row for row in rows if row["vision_type"] in RARE_VISION_TYPES]
+    open_followups(flagged)
     print(f"logged {len(rows)} frames from {run_dir.name}; flagged: {len(flagged)}")
     for row in flagged:
         print(

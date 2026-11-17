@@ -11,11 +11,17 @@ from backend.weather_source import fetch_bytes, fetch_faa_json
 FAA_REFERER = "https://weathercams.faa.gov/"
 
 
+def fetch_recent_images(
+    camera_id: int, fetch_json: Callable[[str], Any]
+) -> list[dict[str, Any]]:
+    url = f"https://weathercams.faa.gov/api/cameras/{camera_id}/images/last/24"
+    return fetch_json(url)["payload"]
+
+
 def fetch_latest_image(
     camera_id: int, at: datetime, fetch_json: Callable[[str], Any]
 ) -> dict[str, Any]:
-    url = f"https://weathercams.faa.gov/api/cameras/{camera_id}/images/last/24"
-    image = latest_image_at(fetch_json(url)["payload"], at)
+    image = latest_image_at(fetch_recent_images(camera_id, fetch_json), at)
     if image is None:
         raise ValueError(f"No FAA camera image at or before {at.isoformat()}")
     return image
