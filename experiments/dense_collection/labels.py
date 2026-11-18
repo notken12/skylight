@@ -117,7 +117,8 @@ def main() -> None:
     if arguments.command == "prompt":
         print(LABELLING_PROMPT)
         return
-    print("\n".join(views_missing_labels(arguments.run_dir)))
+    for view_name in views_missing_labels(arguments.run_dir):
+        print(view_name)
 
 
 if __name__ == "__main__":
