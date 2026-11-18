@@ -7,8 +7,13 @@ from io import BytesIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import numpy as np
+# isort: off
+# On Linux, loading eccodes before pyproj aborts the interpreter at exit.
+import pyproj  # noqa: F401
 from eccodes import codes_get, codes_get_values, codes_grib_new_from_file, codes_release
+# isort: on
+
+import numpy as np
 from netCDF4 import Dataset
 from numpy.typing import NDArray
 
