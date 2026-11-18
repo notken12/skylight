@@ -25,7 +25,7 @@ from experiments.dense_collection.selection import sun_elevation_degrees
 from experiments.encoder_comparison.embed import ENCODER_LOADERS, embed_images
 
 PANEL_FILE = DENSE_DIR / "panel.json"
-PANEL_SIZE = 200
+PANEL_SIZE = 40
 MOUNTAIN_SHARE = 0.5
 MOUNTAIN_RELIEF_KM = 1.0
 RELIEF_RADIUS_CELLS = 2
