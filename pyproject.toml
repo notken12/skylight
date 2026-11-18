@@ -3,6 +3,7 @@ name = "skylight"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "boto3>=1.44.5",
     "eccodes>=2.48.0",
     "eccodeslib>=2.49.0.30",
     "fastapi>=0.141.1",
