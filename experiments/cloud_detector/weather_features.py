@@ -93,6 +93,8 @@ STORM_COLUMNS = (
     "nearest_storm_bearing_degrees",
     "nearest_storm_radius_km",
     "nearest_storm_severe_probability_percent",
+    "nearest_storm_motion_east",
+    "nearest_storm_motion_south",
 )
 WEATHER_COLUMNS = (
     *(field.column for field in ICON_FIELDS),
@@ -142,10 +144,33 @@ def icon_features(
     return {column: round(float(grid[cell]), 2) for column, grid in grids.items()}
 
 
+def terrain_relief_km(
+    terrain_km: NDArray[np.float32],
+    latitude: float,
+    longitude: float,
+    radius_cells: int,
+) -> float | None:
+    cell = grid_cell(latitude, longitude)
+    if cell is None:
+        return None
+    row, column = cell
+    window = terrain_km[
+        max(row - radius_cells, 0) : row + radius_cells + 1,
+        max(column - radius_cells, 0) : column + radius_cells + 1,
+    ]
+    return round(float(window.max() - window.min()), 2)
+
+
 @dataclass(frozen=True)
 class Storm:
     circle: EventCircle
     severe_probability_percent: int
+    motion_east: float | None
+    motion_south: float | None
+
+
+def optional_float(value: str | None) -> float | None:
+    return None if value is None else float(value)
 
 
 def probsevere_storms(probsevere: dict[str, Any]) -> list[Storm]:
@@ -153,6 +178,8 @@ def probsevere_storms(probsevere: dict[str, Any]) -> list[Storm]:
         Storm(
             circle=enclosing_circle(feature["geometry"]),
             severe_probability_percent=int(feature["models"]["probsevere"]["PROB"]),
+            motion_east=optional_float(feature["properties"].get("MOTION_EAST")),
+            motion_south=optional_float(feature["properties"].get("MOTION_SOUTH")),
         )
         for feature in probsevere["features"]
     ]
@@ -177,4 +204,6 @@ def nearest_storm_features(
         "nearest_storm_severe_probability_percent": storms[
             nearest
         ].severe_probability_percent,
+        "nearest_storm_motion_east": storms[nearest].motion_east,
+        "nearest_storm_motion_south": storms[nearest].motion_south,
     }
