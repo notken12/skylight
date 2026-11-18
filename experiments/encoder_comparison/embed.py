@@ -16,6 +16,7 @@ EMBEDDING_DIR = COMPARISON_DIR / "embeddings"
 SKY_HEIGHT_FRACTION = 0.7
 TILE_COLUMNS = 3
 TILE_ROWS = 2
+VIEWS_PER_FRAME = 1 + TILE_COLUMNS * TILE_ROWS
 FRAMES_PER_BATCH = 16
 
 type Preprocess = Callable[[Image.Image], torch.Tensor]
@@ -83,24 +84,27 @@ def frame_views(image: Image.Image) -> list[Image.Image]:
     return [image, *tiles]
 
 
+def embed_images(
+    encoder: Encoder, images: list[Image.Image], device: str
+) -> np.ndarray:
+    views = [
+        encoder.preprocess(view) for image in images for view in frame_views(image)
+    ]
+    with torch.inference_mode():
+        encoded = normalize(
+            encoder.encode(torch.stack(views).to(device)).float(), dim=-1
+        )
+    return encoded.cpu().numpy().reshape(len(images), VIEWS_PER_FRAME, -1)
+
+
 def embed_frames(encoder: Encoder, frames: list[Frame], device: str) -> np.ndarray:
-    views_per_frame = 1 + TILE_COLUMNS * TILE_ROWS
     embeddings = []
     for start in range(0, len(frames), FRAMES_PER_BATCH):
-        views = []
+        images = []
         for frame in frames[start : start + FRAMES_PER_BATCH]:
             with Image.open(frame.path) as image:
-                views += [
-                    encoder.preprocess(view)
-                    for view in frame_views(image.convert("RGB"))
-                ]
-        with torch.inference_mode():
-            encoded = normalize(
-                encoder.encode(torch.stack(views).to(device)).float(), dim=-1
-            )
-        embeddings.append(
-            encoded.cpu().numpy().reshape(-1, views_per_frame, encoded.shape[-1])
-        )
+                images.append(image.convert("RGB"))
+        embeddings.append(embed_images(encoder, images, device))
     return np.concatenate(embeddings)
 
 
