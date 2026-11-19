@@ -32,6 +32,7 @@ from experiments.cloud_detector.weather_features import (
 from experiments.dense_collection.frame_sources import (
     FetchHeaders,
     FetchJson,
+    FetchText,
     Frame,
     recent_frames,
 )
@@ -117,10 +118,11 @@ def fetch_camera_frames(
     frames_dir: Path,
     fetch_json: FetchJson,
     fetch_headers: FetchHeaders,
+    fetch_text: FetchText,
     fetch_image: Callable[[str, str | None], bytes],
 ) -> list[FetchedFrame]:
     wanted = new_daylit_frames(
-        recent_frames(camera, fetch_json, fetch_headers),
+        recent_frames(camera, fetch_json, fetch_headers, fetch_text),
         processed_keys,
         camera.latitude,
         camera.longitude,
@@ -220,6 +222,7 @@ def collect(at: datetime, rng: random.Random) -> None:
                 frames_dir,
                 fetch_faa_json,
                 fetch_headers,
+                fetch_text,
                 fetch_bytes,
             )
             for camera in candidates

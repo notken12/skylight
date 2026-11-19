@@ -9,6 +9,7 @@ from experiments.dense_collection.dense_pass import recent_processed_urls
 from experiments.dense_collection.frame_sources import (
     CameraSource,
     Frame,
+    dgac_chile_frames,
     still_frames,
 )
 from experiments.dense_collection.labels import is_valid_label
@@ -123,6 +124,41 @@ class StillFrameTests(unittest.TestCase):
             ],
         )
         self.assertEqual(frames[1].image_url, "https://x/copy.jpg")
+
+
+class DgacChileFrameTests(unittest.TestCase):
+    def test_reads_frame_urls_and_utc_capture_times_from_the_camera_page(self) -> None:
+        page = (
+            '<a href="https://x/ftp/SCQP/Sur/a.jpg" title="Imagen Aer&oacute;dromo '
+            'La Araucania Sur tomada el 19-11-2026 14:20:19 Hora UTC"  id="i_1">'
+            '<img src="https://x/ftp/SCQP/Sur/a.jpg" width="32"/></a>'
+            '<a href="https://x/ftp/SCQP/Sur/b.jpg" title="Imagen '
+            'tomada el 19-11-2026 14:30:19 Hora UTC"  id="i_2">'
+        )
+        requested = []
+
+        def fetch_text(url: str) -> str:
+            requested.append(url)
+            return page
+
+        camera = CameraSource("dgac_chile", "150", -38.93, -72.65, [])
+        frames = dgac_chile_frames(camera, fetch_text)
+        self.assertEqual(requested, ["https://aipchile.dgac.gob.cl/camara/show/id/150"])
+        self.assertEqual(
+            [(frame.key, frame.filename, frame.captured_at) for frame in frames],
+            [
+                (
+                    "https://x/ftp/SCQP/Sur/a.jpg",
+                    "20261119T142019Z.jpg",
+                    "2026-11-19T14:20:19+00:00",
+                ),
+                (
+                    "https://x/ftp/SCQP/Sur/b.jpg",
+                    "20261119T143019Z.jpg",
+                    "2026-11-19T14:30:19+00:00",
+                ),
+            ],
+        )
 
 
 class AuditChoiceTests(unittest.TestCase):

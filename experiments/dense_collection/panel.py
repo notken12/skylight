@@ -11,7 +11,12 @@ from pathlib import Path
 import numpy as np
 
 from backend.camera.cameras import Camera, faa_cameras
-from backend.weather_source import fetch_bytes, fetch_faa_json, fetch_headers
+from backend.weather_source import (
+    fetch_bytes,
+    fetch_faa_json,
+    fetch_headers,
+    fetch_text,
+)
 from experiments.cloud_detector.weather_features import (
     TERRAIN_COLUMN,
     load_weather_grids,
@@ -285,7 +290,7 @@ def main() -> None:
         at,
         probes.sky,
         lambda images: embed_images(encoder, images, DEVICE),
-        lambda camera: recent_frames(camera, fetch_faa_json, fetch_headers),
+        lambda camera: recent_frames(camera, fetch_faa_json, fetch_headers, fetch_text),
         fetch_bytes,
     )
     if action == "build":

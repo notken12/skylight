@@ -826,5 +826,515 @@
   "name": "Amundsen-Scott South Pole Station (ARO) camera",
   "site_url": "https://gml.noaa.gov/obop/spo/livecamera.html",
   "attribution": "NOAA Global Monitoring Laboratory (US public domain)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "150",
+  "latitude": -38.93,
+  "longitude": -72.65,
+  "still_image_urls": [],
+  "name": "La Araucania (PUB) (SCQP) - Freire - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/150",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "149",
+  "latitude": -38.93,
+  "longitude": -72.65,
+  "still_image_urls": [],
+  "name": "La Araucania (PUB) (SCQP) - Freire - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/149",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "160",
+  "latitude": -39.29,
+  "longitude": -71.92,
+  "still_image_urls": [],
+  "name": "Pucón (PUB) (SCPC) - Pucón - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/160",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "161",
+  "latitude": -39.29,
+  "longitude": -71.92,
+  "still_image_urls": [],
+  "name": "Pucón (PUB) (SCPC) - Pucón - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/161",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "117",
+  "latitude": -39.65,
+  "longitude": -73.09,
+  "still_image_urls": [],
+  "name": "Pichoy (PUB) (SCVD) - Valdivia - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/117",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "116",
+  "latitude": -39.65,
+  "longitude": -73.09,
+  "still_image_urls": [],
+  "name": "Pichoy (PUB) (SCVD) - Valdivia - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/116",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "55",
+  "latitude": -40.61,
+  "longitude": -73.06,
+  "still_image_urls": [],
+  "name": "Cañal Bajo - Carlos Hott Siebert (PUB) (SCJO) - Osorno - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/55",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "56",
+  "latitude": -40.61,
+  "longitude": -73.06,
+  "still_image_urls": [],
+  "name": "Cañal Bajo - Carlos Hott Siebert (PUB) (SCJO) - Osorno - N-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/56",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "57",
+  "latitude": -41.44,
+  "longitude": -73.09,
+  "still_image_urls": [],
+  "name": "El Tepual (PUB) (SCTE) - Puerto Montt - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/57",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "58",
+  "latitude": -41.44,
+  "longitude": -73.09,
+  "still_image_urls": [],
+  "name": "El Tepual (PUB) (SCTE) - Puerto Montt - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/58",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "60",
+  "latitude": -41.46,
+  "longitude": -72.92,
+  "still_image_urls": [],
+  "name": "Marcel Marchant B.(PUB) (SCPF) - Puerto Montt - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/60",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "59",
+  "latitude": -41.46,
+  "longitude": -72.92,
+  "still_image_urls": [],
+  "name": "Marcel Marchant B.(PUB) (SCPF) - Puerto Montt - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/59",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "137",
+  "latitude": -42.34,
+  "longitude": -73.72,
+  "still_image_urls": [],
+  "name": "Mocopulli (PUB) (SCPQ) - Dalcahue - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/137",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "138",
+  "latitude": -42.34,
+  "longitude": -73.72,
+  "still_image_urls": [],
+  "name": "Mocopulli (PUB) (SCPQ) - Dalcahue - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/138",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "14",
+  "latitude": -42.93,
+  "longitude": -72.7,
+  "still_image_urls": [],
+  "name": "Nuevo Chaitén (PUB) (SCTN) - Chaitén - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/14",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "15",
+  "latitude": -42.93,
+  "longitude": -72.7,
+  "still_image_urls": [],
+  "name": "Nuevo Chaitén (PUB) (SCTN) - Chaitén - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/15",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "64",
+  "latitude": -43.14,
+  "longitude": -73.63,
+  "still_image_urls": [],
+  "name": "Quellón (PUB) (SCON) - Chiloé - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/64",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "63",
+  "latitude": -43.14,
+  "longitude": -73.63,
+  "still_image_urls": [],
+  "name": "Quellón (PUB) (SCON) - Chiloé - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/63",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "77",
+  "latitude": -43.19,
+  "longitude": -71.85,
+  "still_image_urls": [],
+  "name": " Futaleufú (PUB) (SCFT) - Futaleufú - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/77",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "76",
+  "latitude": -43.19,
+  "longitude": -71.85,
+  "still_image_urls": [],
+  "name": " Futaleufú (PUB) (SCFT) - Futaleufú - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/76",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "79",
+  "latitude": -43.61,
+  "longitude": -71.81,
+  "still_image_urls": [],
+  "name": "Alto Palena (PUB) (SCAP) - Palena - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/79",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "78",
+  "latitude": -43.61,
+  "longitude": -71.81,
+  "still_image_urls": [],
+  "name": "Alto Palena (PUB) (SCAP) - Palena - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/78",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "158",
+  "latitude": -43.78,
+  "longitude": -72.95,
+  "still_image_urls": [],
+  "name": "Puerto Marín Balmaceda (PUB) (SCMA) - Puerto Marín Balmaceda - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/158",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "81",
+  "latitude": -43.89,
+  "longitude": -73.74,
+  "still_image_urls": [],
+  "name": "Melinka (PUB) (SCMK) - Melinka - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/81",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "80",
+  "latitude": -43.89,
+  "longitude": -73.74,
+  "still_image_urls": [],
+  "name": "Melinka (PUB) (SCMK) - Melinka - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/80",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "74",
+  "latitude": -43.97,
+  "longitude": -72.41,
+  "still_image_urls": [],
+  "name": "La Junta (PUB) (SCLJ) - Cisnes - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/74",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "75",
+  "latitude": -43.97,
+  "longitude": -72.41,
+  "still_image_urls": [],
+  "name": "La Junta (PUB) (SCLJ) - Cisnes - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/75",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "82",
+  "latitude": null,
+  "longitude": null,
+  "still_image_urls": [],
+  "name": "Caleta Andrade (PUB) (SCIH) - Aysén - Norte",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/82",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "83",
+  "latitude": null,
+  "longitude": null,
+  "still_image_urls": [],
+  "name": "Caleta Andrade (PUB) (SCIH) - Aysén - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/83",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "145",
+  "latitude": -45.4,
+  "longitude": -72.67,
+  "still_image_urls": [],
+  "name": "Cabo 1° Juan Román (PUB) (SCAS) - Puerto Aisén - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/145",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "146",
+  "latitude": -45.4,
+  "longitude": -72.67,
+  "still_image_urls": [],
+  "name": "Cabo 1° Juan Román (PUB) (SCAS) - Puerto Aisén - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/146",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "167",
+  "latitude": -45.59,
+  "longitude": -72.11,
+  "still_image_urls": [],
+  "name": "Teniente Vidal (PUB) (SCCY) - Coyhaique - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/167",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "86",
+  "latitude": -45.59,
+  "longitude": -72.11,
+  "still_image_urls": [],
+  "name": "Teniente Vidal (PUB) (SCCY) - Coyhaique - N-Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/86",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "89",
+  "latitude": -45.92,
+  "longitude": -71.69,
+  "still_image_urls": [],
+  "name": "Balmaceda (PUB) (SCBA) - Balmaceda - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/89",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "91",
+  "latitude": -46.58,
+  "longitude": -71.69,
+  "still_image_urls": [],
+  "name": "Chile Chico (PUB) (SCCC) - Chile Chico - S-Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/91",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "90",
+  "latitude": -46.58,
+  "longitude": -71.69,
+  "still_image_urls": [],
+  "name": "Chile Chico (PUB) (SCCC) - Chile Chico - N-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/90",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "92",
+  "latitude": -47.24,
+  "longitude": -72.59,
+  "still_image_urls": [],
+  "name": "Cochrane (PUB) (SCHR) - Cochrane - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/92",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "93",
+  "latitude": -47.24,
+  "longitude": -72.59,
+  "still_image_urls": [],
+  "name": "Cochrane (PUB) (SCHR) - Cochrane - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/93",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "134",
+  "latitude": -48.47,
+  "longitude": -72.56,
+  "still_image_urls": [],
+  "name": "Villa O'Higgins (PUB) (SCOH) - O'Higgins - N-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/134",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "133",
+  "latitude": -48.47,
+  "longitude": -72.56,
+  "still_image_urls": [],
+  "name": "Villa O'Higgins (PUB) (SCOH) - O'Higgins - S-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/133",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "94",
+  "latitude": -51.67,
+  "longitude": -72.53,
+  "still_image_urls": [],
+  "name": "Teniente  Julio Gallardo (PUB) (SCNT) - Natales - N-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/94",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "95",
+  "latitude": -51.67,
+  "longitude": -72.53,
+  "still_image_urls": [],
+  "name": "Teniente  Julio Gallardo (PUB) (SCNT) - Natales - S-Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/95",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "96",
+  "latitude": -53.0,
+  "longitude": -70.85,
+  "still_image_urls": [],
+  "name": "Pdte. Carlos Ibañez del Campo (PUB) (SCCI) - Punta Arenas - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/96",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "98",
+  "latitude": -53.0,
+  "longitude": -70.85,
+  "still_image_urls": [],
+  "name": "Pdte. Carlos Ibañez del Campo (PUB) (SCCI) - Punta Arenas - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/98",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "97",
+  "latitude": -53.0,
+  "longitude": -70.85,
+  "still_image_urls": [],
+  "name": "Pdte. Carlos Ibañez del Campo (PUB) (SCCI) - Punta Arenas - Sur",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/97",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "100",
+  "latitude": -53.25,
+  "longitude": -70.32,
+  "still_image_urls": [],
+  "name": "Capitán Fuentes Martinez (PUB) (SCFM) - Porvenir - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/100",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "99",
+  "latitude": -53.25,
+  "longitude": -70.32,
+  "still_image_urls": [],
+  "name": "Capitán Fuentes Martinez (PUB) (SCFM) - Porvenir - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/99",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "102",
+  "latitude": -54.93,
+  "longitude": -67.63,
+  "still_image_urls": [],
+  "name": "Guardiamarina Zañartu (PUB) (SCGZ) - Puerto Williams - Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/102",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "101",
+  "latitude": -54.93,
+  "longitude": -67.63,
+  "still_image_urls": [],
+  "name": "Guardiamarina Zañartu (PUB) (SCGZ) - Puerto Williams - Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/101",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "103",
+  "latitude": -62.19,
+  "longitude": -58.99,
+  "still_image_urls": [],
+  "name": "Teniente Rodolfo Marsh Martin/Antártica (PUB) (SCRM) - Antártica - N-Oeste",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/103",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "dgac_chile",
+  "camera_id": "104",
+  "latitude": -62.19,
+  "longitude": -58.99,
+  "still_image_urls": [],
+  "name": "Teniente Rodolfo Marsh Martin/Antártica (PUB) (SCRM) - Antártica - S-Este",
+  "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/104",
+  "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
  }
 ]
