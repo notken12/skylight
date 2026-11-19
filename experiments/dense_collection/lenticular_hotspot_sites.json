@@ -1,0 +1,567 @@
+[
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Fort Sage",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/921"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Leek Springs",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/938"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Queen Bee",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/854"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Eagle Peak",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/773"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Fairview Peak",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/867"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Bald Mtn",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/789"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Truckee Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/658"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Signal Peak Lookout",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1028"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Carson City",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/834"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Pilot Peak",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/780"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Merrell Rd",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/713"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Reno-Stead",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/829"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Mammoth Mtn",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/712"
+ },
+ {
+  "region": "Sierra Nevada lee (Owens Valley / Mono / Reno / Tahoe)",
+  "site_name": "Marzano Peak",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/858"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Antelope Mtn Yreka",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/666"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Sugarloaf Shasta",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/699"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Fort Jones",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/768"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Bunch Grass Lookout",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/923"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Girard Ridge",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/665"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Hornbrook",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/765"
+ },
+ {
+  "region": "Cascade volcanoes: Shasta area",
+  "site_name": "Weed",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/672"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Henkle Butte",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/890"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Deathball Mtn",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/819"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Smith Ridge",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/891"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Shaniko",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/952"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Pine Mtn",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/753"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Cline Butte",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/869"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Powell Butte",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/884"
+ },
+ {
+  "region": "Cascade volcanoes: Oregon (Hood/Jefferson/Sisters lee)",
+  "site_name": "Bend ODOT",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/883"
+ },
+ {
+  "region": "Cascade volcanoes: Rainier/Adams area",
+  "site_name": "Satus Peak Lookout",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/948"
+ },
+ {
+  "region": "Cascade volcanoes: Rainier/Adams area",
+  "site_name": "Pierce County",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/831"
+ },
+ {
+  "region": "Cascade volcanoes: Rainier/Adams area",
+  "site_name": "Auburn",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/946"
+ },
+ {
+  "region": "Cascade volcanoes: Rainier/Adams area",
+  "site_name": "Tacoma Narrows",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/832"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Silver West Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/585"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Copper Mountain",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/59"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Harriet Alexander Field",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/582"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Wilkerson Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/95"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Monument Hill/Kelly Air Park",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/80"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Granby County Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/577"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Walden/Jackson County",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/546"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "San Luis Valley Muni Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/580"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Pueblo Memorial",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/584"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Fremont County Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/994"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "La Veta Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/74"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Bald Mountain",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/50"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Northern Colorado Reg'l Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/581"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Colorado Air and Space Port",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/568"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Saguache Municipal Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/82"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Berthoud Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/54"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Colorado Springs Muni Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/587"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Dakota Hill",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/66"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Centennial Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/578"
+ },
+ {
+  "region": "Colorado Front Range",
+  "site_name": "Rocky Mountain Metro Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/569"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "South Rim",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1014"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "Hogsback",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/873"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "Jackson Hole",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/844"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "Red Lodge Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/843"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "White Pine",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/901"
+ },
+ {
+  "region": "Tetons / Wind Rivers / Absarokas",
+  "site_name": "West Yellowstone",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/566"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Black Rapids",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/57"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Tazlina-Tolsona",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/270"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "McKinley Park",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/35"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "McKinley South",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/150"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Gulkana",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/164"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "McKinley North",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/185"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Isabel Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/37"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Chistochina",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/218"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Talkeetna",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/160"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Honolulu",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/147"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Isabel Pass South",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/39"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Minchumina",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/76"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Delta Junction",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/154"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Puntilla Lake",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/81"
+ },
+ {
+  "region": "Alaska Range / Denali / Talkeetna",
+  "site_name": "Healy VWOS",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/535"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Choteau",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/716"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Helena Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/593"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Cut Bank",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1031"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "St Ignatius Airport ",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/805"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Lindey's West Seaport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1000"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Lincoln Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/536"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Missoula",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/557"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Seeley Lake Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/537"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Browning Starr School Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/685"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Ferndale Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/682"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "MacDonald Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1026"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Conrad Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/826"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Ronan Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/803"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Shelby Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/801"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Whitefish Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1105"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Glacier Park International Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/739"
+ },
+ {
+  "region": "Montana Rocky Mountain Front",
+  "site_name": "Polson Airport",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/806"
+ },
+ {
+  "region": "Alberta/BC chinook belt (NAV CANADA via FAA)",
+  "site_name": "Pincher Creek",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/328"
+ },
+ {
+  "region": "Alberta/BC chinook belt (NAV CANADA via FAA)",
+  "site_name": "Invermere",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/300"
+ },
+ {
+  "region": "Alberta/BC chinook belt (NAV CANADA via FAA)",
+  "site_name": "Crowsnest Pass",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/320"
+ },
+ {
+  "region": "Alberta/BC chinook belt (NAV CANADA via FAA)",
+  "site_name": "Calgary - Springbank",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/428"
+ },
+ {
+  "region": "Alberta/BC chinook belt (NAV CANADA via FAA)",
+  "site_name": "Banff",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/427"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "Heber Valley",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/556"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "Ogden",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/969"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "Intermountain Medical Center",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1073"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "Salt Lake City ATCT",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/992"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "Utah Valley Hospital",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1096"
+ },
+ {
+  "region": "Wasatch Front",
+  "site_name": "McKay-Dee Hospital",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1072"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Waimea",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/560"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Kamaoa",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/874"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Kona",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1127"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Waiopae",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/862"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Upolu",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/567"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Pahala",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/558"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Holei Pali",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/625"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Poopoomino",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/853"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Bradshaw",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/1038"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Kealia",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/860"
+ },
+ {
+  "region": "Hawaii Big Island (Mauna Kea / Mauna Loa)",
+  "site_name": "Laupahoehoe",
+  "site_url": "https://weathercams.faa.gov/cameras/cameraSite/590"
+ }
+]

@@ -1,9 +1,12 @@
+import argparse
 import json
 import random
+from collections import Counter
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
 from backend.camera.cameras import Camera, faa_cameras
@@ -25,6 +28,8 @@ from experiments.dense_collection.selection import sun_elevation_degrees
 from experiments.encoder_comparison.embed import ENCODER_LOADERS, embed_images
 
 PANEL_FILE = DENSE_DIR / "panel.json"
+LENTICULAR_HOTSPOT_SITES = Path(__file__).with_name("lenticular_hotspot_sites.json")
+LENTICULAR_HOTSPOT_GROUP = "lenticular_hotspot"
 PANEL_SIZE = 300
 MOUNTAIN_SHARE = 0.5
 MOUNTAIN_RELIEF_KM = 1.0
@@ -107,6 +112,27 @@ def sky_check(
     return check
 
 
+def panel_camera(
+    camera: Camera,
+    group: str,
+    relief: dict[int, float | None],
+    sky_probability: float,
+    checked_image_url: str,
+) -> PanelCamera:
+    assert camera.camera_id is not None
+    return PanelCamera(
+        camera_id=camera.camera_id,
+        name=camera.name,
+        site_url=camera_site(camera),
+        latitude=camera.latitude,
+        longitude=camera.longitude,
+        terrain_relief_km=relief[camera.camera_id],
+        group=group,
+        sky_probability=sky_probability,
+        checked_image_url=checked_image_url,
+    )
+
+
 def choose_cameras(
     candidates: list[Camera],
     quota: int,
@@ -127,21 +153,8 @@ def choose_cameras(
                 continue
             if probability < MIN_SKY_PROBABILITY:
                 continue
-            assert camera.camera_id is not None
             taken_sites.add(site)
-            chosen.append(
-                PanelCamera(
-                    camera_id=camera.camera_id,
-                    name=camera.name,
-                    site_url=site,
-                    latitude=camera.latitude,
-                    longitude=camera.longitude,
-                    terrain_relief_km=relief[camera.camera_id],
-                    group=group,
-                    sky_probability=probability,
-                    checked_image_url=image_url,
-                )
-            )
+            chosen.append(panel_camera(camera, group, relief, probability, image_url))
         unchecked = [
             camera for camera in unchecked if camera_site(camera) not in taken_sites
         ]
@@ -172,6 +185,31 @@ def build_panel(
     return mountain + rest
 
 
+def lenticular_hotspot_cameras(
+    cameras: list[Camera],
+    panel: list[PanelCamera],
+    relief: dict[int, float | None],
+    check: SkyCheck,
+) -> list[PanelCamera]:
+    hotspot_sites = {
+        site["site_url"] for site in json.loads(LENTICULAR_HOTSPOT_SITES.read_text())
+    }
+    in_panel = {camera.camera_id for camera in panel}
+    candidates = [
+        camera
+        for camera in cameras
+        if camera_site(camera) in hotspot_sites and camera.camera_id not in in_panel
+    ]
+    return [
+        panel_camera(camera, LENTICULAR_HOTSPOT_GROUP, relief, probability, image_url)
+        for start in range(0, len(candidates), CANDIDATE_BATCH)
+        for camera, probability, image_url in check(
+            candidates[start : start + CANDIDATE_BATCH]
+        )
+        if probability >= MIN_SKY_PROBABILITY
+    ]
+
+
 def read_panel() -> list[PanelCamera]:
     return [
         PanelCamera(**camera)
@@ -179,7 +217,30 @@ def read_panel() -> list[PanelCamera]:
     ]
 
 
+def write_panel(panel: list[PanelCamera], at: datetime, store: R2Store) -> None:
+    PANEL_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PANEL_FILE.write_text(
+        json.dumps(
+            {
+                "built_at": at.isoformat(timespec="seconds"),
+                "seed": PANEL_SEED,
+                "mountain_relief_km": MOUNTAIN_RELIEF_KM,
+                "relief_radius_cells": RELIEF_RADIUS_CELLS,
+                "min_sky_probability": MIN_SKY_PROBABILITY,
+                "cameras": [asdict(camera) for camera in panel],
+            },
+            indent=1,
+        )
+    )
+    store.upload("panel/panel.json", PANEL_FILE)
+    groups = Counter(camera.group for camera in panel)
+    print(f"panel: {len(panel)} cameras {dict(groups)}")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("action", choices=["build", "add_lenticular_hotspots"])
+    action = parser.parse_args().action
     at = datetime.now(UTC)
     store = R2Store.from_environment()
     probes = load_probes(store.etag, store.download)
@@ -203,26 +264,14 @@ def main() -> None:
         fetch_faa_json,
         fetch_bytes,
     )
-    panel = build_panel(cameras, relief, check, random.Random(PANEL_SEED))
-    PANEL_FILE.parent.mkdir(parents=True, exist_ok=True)
-    PANEL_FILE.write_text(
-        json.dumps(
-            {
-                "built_at": at.isoformat(timespec="seconds"),
-                "seed": PANEL_SEED,
-                "mountain_relief_km": MOUNTAIN_RELIEF_KM,
-                "relief_radius_cells": RELIEF_RADIUS_CELLS,
-                "min_sky_probability": MIN_SKY_PROBABILITY,
-                "cameras": [asdict(camera) for camera in panel],
-            },
-            indent=1,
+    if action == "build":
+        write_panel(
+            build_panel(cameras, relief, check, random.Random(PANEL_SEED)), at, store
         )
-    )
-    store.upload("panel/panel.json", PANEL_FILE)
-    groups = [camera.group for camera in panel]
-    print(
-        f"panel: {len(panel)} cameras ({groups.count('mountain')} mountain, "
-        f"{groups.count('random')} random) of {len(cameras)} FAA cameras"
+        return
+    panel = read_panel()
+    write_panel(
+        panel + lenticular_hotspot_cameras(cameras, panel, relief, check), at, store
     )
 
 
