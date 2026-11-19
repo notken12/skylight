@@ -1,0 +1,650 @@
+[
+ {
+  "provider": "caltrans",
+  "camera_id": "sr203mammothmountain",
+  "latitude": 37.64111,
+  "longitude": -118.91848,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/sr203mammothmountain.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/sr203mammothmountain/previous/sr203mammothmountain-12.jpg"
+  ],
+  "name": "SR-203 : Mammoth Mountain",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395conwaysummit",
+  "latitude": 38.08782,
+  "longitude": -119.181251,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/us395conwaysummit.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395conwaysummit/previous/us395conwaysummit-12.jpg"
+  ],
+  "name": "US-395 : Conway Summit",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395cosorestarea",
+  "latitude": 36.04605,
+  "longitude": -117.946836,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/us395cosorestarea.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395cosorestarea/previous/us395cosorestarea-12.jpg"
+  ],
+  "name": "US-395 : Coso Rest Area",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us6stateline",
+  "latitude": 37.84225,
+  "longitude": -118.47842,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/us6stateline.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us6stateline/previous/us6stateline-12.jpg"
+  ],
+  "name": "US-6 : State Line",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395lonepine1",
+  "latitude": 36.61399,
+  "longitude": -118.06649,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/us395lonepine1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395lonepine1/previous/us395lonepine1-12.jpg"
+  ],
+  "name": "US-395 : Lone Pine 1",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395northofsr141",
+  "latitude": 35.72336,
+  "longitude": -117.86918,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/us395northofsr141.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr141/previous/us395northofsr141-12.jpg"
+  ],
+  "name": "US-395 : North of SR-14 1",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395northofsr142",
+  "latitude": 35.72336,
+  "longitude": -117.86918,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/us395northofsr142.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr142/previous/us395northofsr142-12.jpg"
+  ],
+  "name": "US-395 : North of SR-14 2",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395northofsr144",
+  "latitude": 35.72336,
+  "longitude": -117.86918,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/us395northofsr144.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr144/previous/us395northofsr144-12.jpg"
+  ],
+  "name": "US-395 : North of SR-14 4",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "us395northofsr143",
+  "latitude": 35.72336,
+  "longitude": -117.86918,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/us395northofsr143.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d9/cctv/image/us395northofsr143/previous/us395northofsr143-12.jpg"
+  ],
+  "name": "US-395 : North of SR-14 3",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "abramslakenb",
+  "latitude": 41.34496,
+  "longitude": -122.34276,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/abramslakenb.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/abramslakenb/previous/abramslakenb-12.jpg"
+  ],
+  "name": "Abrams Lake NB",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "andersongrade",
+  "latitude": 41.79255,
+  "longitude": -122.58937,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/andersongrade.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/andersongrade/previous/andersongrade-12.jpg"
+  ],
+  "name": "Anderson Grade",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "blackbutte",
+  "latitude": 41.35411,
+  "longitude": -122.3559,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/blackbutte.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d2/cctv/image/blackbutte/previous/blackbutte-12.jpg"
+  ],
+  "name": "Black Butte",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "hwy50atmeyers",
+  "latitude": 38.850899,
+  "longitude": -120.022959,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/hwy50atmeyers.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atmeyers/previous/hwy50atmeyers-12.jpg"
+  ],
+  "name": "Hwy 50 at Meyers",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "hwy50athwy89",
+  "latitude": 38.913277,
+  "longitude": -120.00461,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/hwy50athwy89.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50athwy89/previous/hwy50athwy89-12.jpg"
+  ],
+  "name": "Hwy 50 at Hwy 89",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "caltrans",
+  "camera_id": "hwy50atskirun",
+  "latitude": 38.948564,
+  "longitude": -119.95724,
+  "still_image_urls": [
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/hwy50atskirun.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-1.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-2.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-3.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-4.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-5.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-6.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-7.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-8.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-9.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-10.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-11.jpg",
+   "https://cwwp2.dot.ca.gov/data/d3/cctv/image/hwy50atskirun/previous/hwy50atskirun-12.jpg"
+  ],
+  "name": "Hwy 50 at Ski Run",
+  "site_url": "https://cwwp2.dot.ca.gov/vm/iframemap.htm",
+  "attribution": "Caltrans (public domain)"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1450101",
+  "latitude": 67.612095,
+  "longitude": 24.138744,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1450101.jpg"
+  ],
+  "name": "st940_Kolari_Äkäslompolo preset C1450101",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14501",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1450401",
+  "latitude": 68.450884,
+  "longitude": 27.423716,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1450401.jpg"
+  ],
+  "name": "vt4_Inari_Saariselkä preset C1450401",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14504",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1450701",
+  "latitude": 67.734904,
+  "longitude": 26.757701,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1450701.jpg"
+  ],
+  "name": "vt4_Sodankylä_Postojoki preset C1450701",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14507",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1450801",
+  "latitude": 68.569653,
+  "longitude": 26.203267,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1450801.jpg"
+  ],
+  "name": "st955_Inari_Hirvaspää preset C1450801",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14508",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1451201",
+  "latitude": 68.675367,
+  "longitude": 21.592843,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1451201.jpg"
+  ],
+  "name": "vt21_Enontekiö_Ropinsalmi preset C1451201",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14512",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1451601",
+  "latitude": 69.66367,
+  "longitude": 29.100175,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1451601.jpg"
+  ],
+  "name": "kt92_Inari_Näätämö preset C1451601",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14516",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1452201",
+  "latitude": 69.355451,
+  "longitude": 26.466061,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1452201.jpg"
+  ],
+  "name": "kt92_Utsjoki_Kaamasmukka preset C1452201",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14522",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1452401",
+  "latitude": 68.385589,
+  "longitude": 24.208387,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1452401.jpg"
+  ],
+  "name": "st956_Enontekiö_Peltovuoma preset C1452401",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14524",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1453101",
+  "latitude": 68.284083,
+  "longitude": 23.080531,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1453101.jpg"
+  ],
+  "name": "vt21_Enontekiö_Palojoensuu preset C1453101",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14531",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "fintraffic",
+  "camera_id": "C1453301",
+  "latitude": 70.088512,
+  "longitude": 27.941064,
+  "still_image_urls": [
+   "https://weathercam.digitraffic.fi/C1453301.jpg"
+  ],
+  "name": "st970_Utsjoki_Nuorgam preset C1453301",
+  "site_url": "https://liikennetilanne.fintraffic.fi/kelikamerat/?cameraId=C14533",
+  "attribution": "Fintraffic / digitraffic.fi, CC BY 4.0"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "grtelarge",
+  "latitude": 43.67,
+  "longitude": -110.6,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/grtelarge.jpg"
+  ],
+  "name": "Grand Teton NP - Teton Range air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=grte",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "denalarge",
+  "latitude": 63.45,
+  "longitude": -150.87,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/denalarge.jpg"
+  ],
+  "name": "Denali NP - Wonder Lake/Alaska Range air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=dena",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "moralarge",
+  "latitude": 46.786,
+  "longitude": -121.735,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/moralarge.jpg"
+  ],
+  "name": "Mount Rainier NP - Paradise air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=mora",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "yoselarge",
+  "latitude": 37.713,
+  "longitude": -119.706,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/yoselarge.jpg"
+  ],
+  "name": "Yosemite NP - Turtleback Dome air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=yose",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "nocalarge",
+  "latitude": 48.67,
+  "longitude": -121.24,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/nocalarge.jpg"
+  ],
+  "name": "North Cascades NP - air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=noca",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "olymlarge",
+  "latitude": 47.97,
+  "longitude": -123.5,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/olymlarge.jpg"
+  ],
+  "name": "Olympic NP - Hurricane Ridge air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=olym",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "havolarge",
+  "latitude": 19.42,
+  "longitude": -155.29,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/havolarge.jpg"
+  ],
+  "name": "Hawaii Volcanoes NP - air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=havo",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "sekilarge",
+  "latitude": 36.57,
+  "longitude": -118.78,
+  "still_image_urls": [
+   "https://www.nps.gov/featurecontent/ard/webcams/images/sekilarge.jpg"
+  ],
+  "name": "Sequoia & Kings Canyon NP - air-quality webcam",
+  "site_url": "https://www.nps.gov/subjects/air/webcams.htm?site=seki",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "webcams-mora-mountain",
+  "latitude": 46.786,
+  "longitude": -121.735,
+  "still_image_urls": [
+   "https://www.nps.gov/webcams-mora/mountain.jpg"
+  ],
+  "name": "Mount Rainier NP - Paradise \"Mountain\" webcam",
+  "site_url": "https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "nps",
+  "camera_id": "webcams-romo-longs_peak",
+  "latitude": 40.28,
+  "longitude": -105.56,
+  "still_image_urls": [
+   "https://www.nps.gov/webcams-romo/longs_peak.jpg"
+  ],
+  "name": "Rocky Mountain NP - Longs Peak webcam",
+  "site_url": "https://www.nps.gov/romo/learn/photosmultimedia/webcams.htm",
+  "attribution": "National Park Service (US public domain)"
+ },
+ {
+  "provider": "usgs",
+  "camera_id": "MLcam",
+  "latitude": 19.48,
+  "longitude": -155.6,
+  "still_image_urls": [
+   "https://volcanoes.usgs.gov/observatories/hvo/cams/MLcam/images/M.jpg"
+  ],
+  "name": "MLcam - Mauna Loa summit area",
+  "site_url": "https://www.usgs.gov/volcanoes/mauna-loa/webcams",
+  "attribution": "USGS (US public domain)"
+ },
+ {
+  "provider": "usgs",
+  "camera_id": "MKcam",
+  "latitude": 19.82,
+  "longitude": -155.47,
+  "still_image_urls": [
+   "https://volcanoes.usgs.gov/observatories/hvo/cams/MKcam/images/M.jpg"
+  ],
+  "name": "MKcam - Mauna Loa north flank seen from Mauna Kea",
+  "site_url": "https://www.usgs.gov/volcanoes/mauna-loa/webcams",
+  "attribution": "USGS (US public domain)"
+ },
+ {
+  "provider": "noaa",
+  "camera_id": "mkcam",
+  "latitude": 19.536,
+  "longitude": -155.576,
+  "still_image_urls": [
+   "https://gml.noaa.gov/webdata/mlo/webcam/mkcam.jpg"
+  ],
+  "name": "MLO mkcam",
+  "site_url": "https://gml.noaa.gov/obop/mlo/livecam/livecam.html",
+  "attribution": "NOAA Global Monitoring Laboratory (US public domain)"
+ },
+ {
+  "provider": "noaa",
+  "camera_id": "northcam",
+  "latitude": 19.536,
+  "longitude": -155.576,
+  "still_image_urls": [
+   "https://gml.noaa.gov/webdata/mlo/webcam/northcam.jpg"
+  ],
+  "name": "MLO northcam",
+  "site_url": "https://gml.noaa.gov/obop/mlo/livecam/livecam.html",
+  "attribution": "NOAA Global Monitoring Laboratory (US public domain)"
+ }
+]

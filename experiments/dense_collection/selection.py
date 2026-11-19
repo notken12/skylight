@@ -2,11 +2,11 @@ import random
 from collections.abc import Collection, Sequence
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import Any
 
 import numpy as np
 
 from backend.phenomena.sunset.sunset_scoring import solar_geometry
+from experiments.dense_collection.frame_sources import Frame
 
 GATE_SHARE = 0.85
 FAA_HISTORY_SPAN = timedelta(hours=3, minutes=15)
@@ -35,25 +35,25 @@ def may_have_daylit_frames(at: datetime, latitude: float, longitude: float) -> b
     )
 
 
-def new_daylit_images(
-    images: list[dict[str, Any]],
-    processed_urls: Collection[str],
+def new_daylit_frames(
+    frames: list[Frame],
+    processed_keys: Collection[str],
     latitude: float,
     longitude: float,
-) -> list[tuple[dict[str, Any], float]]:
-    fresh = [image for image in images if image["imageUri"] not in processed_urls]
+) -> list[tuple[Frame, float]]:
     with_elevation = [
         (
-            image,
+            frame,
             sun_elevation_degrees(
-                datetime.fromisoformat(image["imageDatetime"]), latitude, longitude
+                datetime.fromisoformat(frame.captured_at), latitude, longitude
             ),
         )
-        for image in fresh
+        for frame in frames
+        if frame.key not in processed_keys
     ]
     return sorted(
-        [(image, elevation) for image, elevation in with_elevation if elevation >= 0],
-        key=lambda pair: pair[0]["imageDatetime"],
+        [(frame, elevation) for frame, elevation in with_elevation if elevation >= 0],
+        key=lambda pair: datetime.fromisoformat(pair[0].captured_at),
     )
 
 

@@ -14,10 +14,10 @@ from typing import Any
 import numpy as np
 
 from backend.camera.blur_filter import laplacian_variance
-from backend.camera.faa_snapshots import FAA_REFERER, fetch_recent_images
 from backend.weather_source import (
     fetch_bytes,
     fetch_faa_json,
+    fetch_headers,
     fetch_json,
     fetch_text,
     probsevere_source,
@@ -28,6 +28,12 @@ from experiments.cloud_detector.weather_features import (
     load_weather_grids,
     nearest_storm_features,
     probsevere_storms,
+)
+from experiments.dense_collection.frame_sources import (
+    FetchHeaders,
+    FetchJson,
+    Frame,
+    recent_frames,
 )
 from experiments.dense_collection.images import (
     contact_sheet,
@@ -48,7 +54,7 @@ from experiments.dense_collection.selection import (
     audit_choices,
     label_selection,
     may_have_daylit_frames,
-    new_daylit_images,
+    new_daylit_frames,
 )
 from experiments.encoder_comparison.embed import ENCODER_LOADERS, embed_images
 
@@ -72,7 +78,7 @@ type Embed = Callable[[list], np.ndarray]
 
 @dataclass(frozen=True)
 class FetchedFrame:
-    image: dict[str, Any]
+    frame: Frame
     sun_elevation_degrees: float
     path: Path
 
@@ -101,28 +107,29 @@ def write_processed_urls(entries: dict[str, str]) -> None:
     )
 
 
-def frame_file(frames_dir: Path, camera_id: int, image_filename: str) -> Path:
+def frame_file(frames_dir: Path, camera_id: str, image_filename: str) -> Path:
     return frames_dir / f"{camera_id}_{image_filename}"
 
 
 def fetch_camera_frames(
     camera: PanelCamera,
-    processed_urls: Collection[str],
+    processed_keys: Collection[str],
     frames_dir: Path,
-    fetch_json: Callable[[str], Any],
-    fetch_image: Callable[[str, str], bytes],
+    fetch_json: FetchJson,
+    fetch_headers: FetchHeaders,
+    fetch_image: Callable[[str, str | None], bytes],
 ) -> list[FetchedFrame]:
-    wanted = new_daylit_images(
-        fetch_recent_images(camera.camera_id, fetch_json),
-        processed_urls,
+    wanted = new_daylit_frames(
+        recent_frames(camera, fetch_json, fetch_headers),
+        processed_keys,
         camera.latitude,
         camera.longitude,
     )
     fetched = []
-    for image, elevation in wanted:
-        path = frame_file(frames_dir, camera.camera_id, image["imageFilename"])
-        path.write_bytes(fetch_image(image["imageUri"], FAA_REFERER))
-        fetched.append(FetchedFrame(image, round(elevation, 2), path))
+    for frame, elevation in wanted:
+        path = frame_file(frames_dir, camera.camera_id, frame.filename)
+        path.write_bytes(fetch_image(frame.image_url, frame.referer))
+        fetched.append(FetchedFrame(frame, round(elevation, 2), path))
     return fetched
 
 
@@ -139,15 +146,17 @@ def camera_rows(
     return [
         {
             "pass_id": pass_id,
+            "provider": camera.provider,
             "camera_id": camera.camera_id,
             "camera_name": camera.name,
             "panel_group": camera.group,
             "latitude": camera.latitude,
             "longitude": camera.longitude,
             "terrain_relief_km": camera.terrain_relief_km,
-            "image_url": frame.image["imageUri"],
-            "image_filename": frame.image["imageFilename"],
-            "captured_at": frame.image["imageDatetime"],
+            "frame_key": frame.frame.key,
+            "image_url": frame.frame.image_url,
+            "image_filename": frame.frame.filename,
+            "captured_at": frame.frame.captured_at,
             "sun_elevation_degrees": frame.sun_elevation_degrees,
             "gate_score": round(float(gate_score), 5),
             "embedding_archive": f"embeddings/{pass_id}.npz",
@@ -210,6 +219,7 @@ def collect(at: datetime, rng: random.Random) -> None:
                 processed_urls,
                 frames_dir,
                 fetch_faa_json,
+                fetch_headers,
                 fetch_bytes,
             )
             for camera in candidates
@@ -262,7 +272,7 @@ def collect(at: datetime, rng: random.Random) -> None:
     store.upload(f"embeddings/{pass_id}.npz", embedding_file)
     embedding_file.unlink()
     write_processed_urls(
-        processed_urls | {row["image_url"]: row["captured_at"] for row in rows}
+        processed_urls | {row["frame_key"]: row["captured_at"] for row in rows}
     )
     clock.lap("upload")
 

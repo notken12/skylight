@@ -6,13 +6,18 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from experiments.dense_collection.dense_pass import recent_processed_urls
+from experiments.dense_collection.frame_sources import (
+    CameraSource,
+    Frame,
+    still_frames,
+)
 from experiments.dense_collection.labels import is_valid_label
 from experiments.dense_collection.r2 import TarShardWriter
 from experiments.dense_collection.selection import (
     audit_choices,
     label_selection,
     may_have_daylit_frames,
-    new_daylit_images,
+    new_daylit_frames,
 )
 
 DENVER = (39.74, -104.99)
@@ -36,8 +41,8 @@ COMPLETE_LABEL = {
 }
 
 
-def image(url: str, captured_at: str) -> dict[str, str]:
-    return {"imageUri": url, "imageDatetime": captured_at, "imageFilename": url}
+def frame(key: str, captured_at: str) -> Frame:
+    return Frame(key, key, key, captured_at, None)
 
 
 class LabelSelectionTests(unittest.TestCase):
@@ -71,14 +76,14 @@ class LabelSelectionTests(unittest.TestCase):
 
 class FrameFilterTests(unittest.TestCase):
     def test_skips_processed_urls_and_frames_without_sun(self) -> None:
-        images = [
-            image("night", MIDNIGHT_DENVER),
-            image("seen", NOON_DENVER),
-            image("later", "2026-06-21T19:10:00+00:00"),
-            image("new", NOON_DENVER),
+        frames = [
+            frame("night", MIDNIGHT_DENVER),
+            frame("seen", NOON_DENVER),
+            frame("later", "2026-06-21T19:10:00+00:00"),
+            frame("new", NOON_DENVER),
         ]
-        kept = new_daylit_images(images, {"seen"}, *DENVER)
-        self.assertEqual([frame["imageUri"] for frame, _ in kept], ["new", "later"])
+        kept = new_daylit_frames(frames, {"seen"}, *DENVER)
+        self.assertEqual([kept_frame.key for kept_frame, _ in kept], ["new", "later"])
         self.assertTrue(all(elevation > 60 for _, elevation in kept))
 
     def test_camera_without_sun_in_history_window_is_skipped(self) -> None:
@@ -94,6 +99,30 @@ class FrameFilterTests(unittest.TestCase):
         }
         at = datetime.fromisoformat("2026-06-21T12:00:00+00:00")
         self.assertEqual(list(recent_processed_urls(entries, at)), ["recent"])
+
+
+class StillFrameTests(unittest.TestCase):
+    def test_frames_are_keyed_by_capture_time_not_by_url(self) -> None:
+        camera = CameraSource(
+            "caltrans",
+            "mammoth",
+            *DENVER,
+            ["https://x/now.jpg", "https://x/previous-1.jpg", "https://x/copy.jpg"],
+        )
+        modified = {
+            "https://x/now.jpg": "Sun, 21 Jun 2026 19:00:00 GMT",
+            "https://x/previous-1.jpg": "Sun, 21 Jun 2026 18:00:00 GMT",
+            "https://x/copy.jpg": "Sun, 21 Jun 2026 18:00:00 GMT",
+        }
+        frames = still_frames(camera, lambda url: {"last-modified": modified[url]})
+        self.assertEqual(
+            [(frame.key, frame.filename) for frame in frames],
+            [
+                ("caltrans:mammoth@2026-06-21T19:00:00+00:00", "20260621T190000Z.jpg"),
+                ("caltrans:mammoth@2026-06-21T18:00:00+00:00", "20260621T180000Z.jpg"),
+            ],
+        )
+        self.assertEqual(frames[1].image_url, "https://x/copy.jpg")
 
 
 class AuditChoiceTests(unittest.TestCase):

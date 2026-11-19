@@ -7,19 +7,21 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+
+import numpy as np
 
 from backend.camera.cameras import Camera, faa_cameras
-from backend.camera.faa_snapshots import (
-    FAA_REFERER,
-    fetch_recent_images,
-    latest_image_at,
-)
-from backend.weather_source import fetch_bytes, fetch_faa_json
+from backend.weather_source import fetch_bytes, fetch_faa_json, fetch_headers
 from experiments.cloud_detector.weather_features import (
     TERRAIN_COLUMN,
     load_weather_grids,
     terrain_relief_km,
+)
+from experiments.dense_collection.frame_sources import (
+    FAA_PROVIDER,
+    CameraSource,
+    Frame,
+    recent_frames,
 )
 from experiments.dense_collection.images import decode
 from experiments.dense_collection.probes import DENSE_DIR, Probe, load_probes
@@ -29,7 +31,9 @@ from experiments.encoder_comparison.embed import ENCODER_LOADERS, embed_images
 
 PANEL_FILE = DENSE_DIR / "panel.json"
 LENTICULAR_HOTSPOT_SITES = Path(__file__).with_name("lenticular_hotspot_sites.json")
+OPEN_LICENCE_CAMERAS = Path(__file__).with_name("open_licence_cameras.json")
 LENTICULAR_HOTSPOT_GROUP = "lenticular_hotspot"
+FAA_ATTRIBUTION = "FAA WeatherCams (US public domain)"
 PANEL_SIZE = 300
 MOUNTAIN_SHARE = 0.5
 MOUNTAIN_RELIEF_KM = 1.0
@@ -41,56 +45,82 @@ MIN_SKY_PROBABILITY = 0.5
 FETCH_WORKERS = 4
 DEVICE = "cpu"
 
-type SkyCheck = Callable[[list[Camera]], list[tuple[Camera, float, str]]]
+type SkyCheck = Callable[[list[CatalogCamera]], list[tuple[CatalogCamera, float, str]]]
+type Relief = Callable[[float, float], float | None]
 
 
 @dataclass(frozen=True)
-class PanelCamera:
-    camera_id: int
+class CatalogCamera(CameraSource):
     name: str
     site_url: str
-    latitude: float
-    longitude: float
+    attribution: str
+
+
+@dataclass(frozen=True)
+class PanelCamera(CatalogCamera):
     terrain_relief_km: float | None
     group: str
     sky_probability: float
     checked_image_url: str
 
 
-def camera_site(camera: Camera) -> str:
-    return camera.url.split("/details/")[0]
+def faa_catalog_camera(camera: Camera) -> CatalogCamera:
+    return CatalogCamera(
+        provider=FAA_PROVIDER,
+        camera_id=str(camera.camera_id),
+        latitude=camera.latitude,
+        longitude=camera.longitude,
+        still_image_urls=[],
+        name=camera.name,
+        site_url=camera.url.split("/details/")[0],
+        attribution=FAA_ATTRIBUTION,
+    )
+
+
+def open_licence_cameras() -> list[CatalogCamera]:
+    return [
+        CatalogCamera(**camera)
+        for camera in json.loads(OPEN_LICENCE_CAMERAS.read_text())
+    ]
+
+
+def camera_key(camera: CameraSource) -> tuple[str, str]:
+    return camera.provider, camera.camera_id
 
 
 def latest_daylit_frame(
-    camera: Camera,
+    camera: CatalogCamera,
     at: datetime,
-    fetch_json: Callable[[str], Any],
-    fetch_image: Callable[[str, str], bytes],
+    frames_of: Callable[[CameraSource], list[Frame]],
+    fetch_image: Callable[[str, str | None], bytes],
 ) -> tuple[str, bytes] | None:
-    assert camera.camera_id is not None
-    image = latest_image_at(fetch_recent_images(camera.camera_id, fetch_json), at)
-    if image is None:
+    captured = [
+        (datetime.fromisoformat(frame.captured_at), frame)
+        for frame in frames_of(camera)
+    ]
+    past = [
+        (captured_at, frame) for captured_at, frame in captured if captured_at <= at
+    ]
+    if not past:
         return None
-    captured_at = datetime.fromisoformat(image["imageDatetime"])
+    captured_at, frame = max(past, key=lambda pair: pair[0])
     elevation = sun_elevation_degrees(captured_at, camera.latitude, camera.longitude)
     if elevation < MIN_CHECK_SUN_ELEVATION_DEGREES:
         return None
-    return image["imageUri"], fetch_image(image["imageUri"], FAA_REFERER)
+    return frame.image_url, fetch_image(frame.image_url, frame.referer)
 
 
 def sky_check(
     at: datetime,
     sky_probe: Probe,
-    embed: Callable[[list], Any],
-    fetch_json: Callable[[str], Any],
-    fetch_image: Callable[[str, str], bytes],
+    embed: Callable[[list], np.ndarray],
+    frames_of: Callable[[CameraSource], list[Frame]],
+    fetch_image: Callable[[str, str | None], bytes],
 ) -> SkyCheck:
-    def check(cameras: list[Camera]) -> list[tuple[Camera, float, str]]:
+    def check(cameras: list[CatalogCamera]) -> list[tuple[CatalogCamera, float, str]]:
         with ThreadPoolExecutor(max_workers=FETCH_WORKERS) as executor:
             fetches = [
-                executor.submit(
-                    latest_daylit_frame, camera, at, fetch_json, fetch_image
-                )
+                executor.submit(latest_daylit_frame, camera, at, frames_of, fetch_image)
                 for camera in cameras
             ]
         results = [
@@ -113,20 +143,15 @@ def sky_check(
 
 
 def panel_camera(
-    camera: Camera,
+    camera: CatalogCamera,
     group: str,
-    relief: dict[int, float | None],
+    relief: Relief,
     sky_probability: float,
     checked_image_url: str,
 ) -> PanelCamera:
-    assert camera.camera_id is not None
     return PanelCamera(
-        camera_id=camera.camera_id,
-        name=camera.name,
-        site_url=camera_site(camera),
-        latitude=camera.latitude,
-        longitude=camera.longitude,
-        terrain_relief_km=relief[camera.camera_id],
+        **asdict(camera),
+        terrain_relief_km=relief(camera.latitude, camera.longitude),
         group=group,
         sky_probability=sky_probability,
         checked_image_url=checked_image_url,
@@ -134,45 +159,42 @@ def panel_camera(
 
 
 def choose_cameras(
-    candidates: list[Camera],
+    candidates: list[CatalogCamera],
     quota: int,
     group: str,
     taken_sites: set[str],
-    relief: dict[int, float | None],
+    relief: Relief,
     check: SkyCheck,
 ) -> list[PanelCamera]:
     chosen: list[PanelCamera] = []
-    unchecked = [
-        camera for camera in candidates if camera_site(camera) not in taken_sites
-    ]
+    unchecked = [camera for camera in candidates if camera.site_url not in taken_sites]
     while unchecked and len(chosen) < quota:
         batch, unchecked = unchecked[:CANDIDATE_BATCH], unchecked[CANDIDATE_BATCH:]
         for camera, probability, image_url in check(batch):
-            site = camera_site(camera)
-            if len(chosen) == quota or site in taken_sites:
+            if len(chosen) == quota or camera.site_url in taken_sites:
                 continue
             if probability < MIN_SKY_PROBABILITY:
                 continue
-            taken_sites.add(site)
+            taken_sites.add(camera.site_url)
             chosen.append(panel_camera(camera, group, relief, probability, image_url))
         unchecked = [
-            camera for camera in unchecked if camera_site(camera) not in taken_sites
+            camera for camera in unchecked if camera.site_url not in taken_sites
         ]
     return chosen
 
 
 def build_panel(
-    cameras: list[Camera],
-    relief: dict[int, float | None],
+    cameras: list[CatalogCamera],
+    relief: Relief,
     check: SkyCheck,
     rng: random.Random,
 ) -> list[PanelCamera]:
-    shuffled = sorted(cameras, key=lambda camera: camera.camera_id or 0)
+    shuffled = sorted(cameras, key=lambda camera: int(camera.camera_id))
     rng.shuffle(shuffled)
     mountainous = [
         camera
         for camera in shuffled
-        if (relief[camera.camera_id or 0] or 0) >= MOUNTAIN_RELIEF_KM
+        if (relief(camera.latitude, camera.longitude) or 0) >= MOUNTAIN_RELIEF_KM
     ]
     taken_sites: set[str] = set()
     mountain_quota = round(PANEL_SIZE * MOUNTAIN_SHARE)
@@ -186,19 +208,23 @@ def build_panel(
 
 
 def lenticular_hotspot_cameras(
-    cameras: list[Camera],
+    faa: list[CatalogCamera],
+    open_licence: list[CatalogCamera],
     panel: list[PanelCamera],
-    relief: dict[int, float | None],
+    relief: Relief,
     check: SkyCheck,
 ) -> list[PanelCamera]:
     hotspot_sites = {
         site["site_url"] for site in json.loads(LENTICULAR_HOTSPOT_SITES.read_text())
     }
-    in_panel = {camera.camera_id for camera in panel}
+    in_panel = {camera_key(camera) for camera in panel}
     candidates = [
         camera
-        for camera in cameras
-        if camera_site(camera) in hotspot_sites and camera.camera_id not in in_panel
+        for camera in [
+            *(camera for camera in faa if camera.site_url in hotspot_sites),
+            *open_licence,
+        ]
+        if camera_key(camera) not in in_panel
     ]
     return [
         panel_camera(camera, LENTICULAR_HOTSPOT_GROUP, relief, probability, image_url)
@@ -233,7 +259,7 @@ def write_panel(panel: list[PanelCamera], at: datetime, store: R2Store) -> None:
         )
     )
     store.upload("panel/panel.json", PANEL_FILE)
-    groups = Counter(camera.group for camera in panel)
+    groups = Counter((camera.group, camera.provider) for camera in panel)
     print(f"panel: {len(panel)} cameras {dict(groups)}")
 
 
@@ -245,34 +271,33 @@ def main() -> None:
     store = R2Store.from_environment()
     probes = load_probes(store.etag, store.download)
     encoder = ENCODER_LOADERS["openclip_b32"](DEVICE)
-    cameras = [
-        camera
+    faa = [
+        faa_catalog_camera(camera)
         for camera in faa_cameras(fetch_faa_json)
         if camera.feed_verified and not camera.link_only and camera.camera_id
     ]
     terrain_km = load_weather_grids(at, fetch_bytes)[TERRAIN_COLUMN]
-    relief = {
-        camera.camera_id or 0: terrain_relief_km(
-            terrain_km, camera.latitude, camera.longitude, RELIEF_RADIUS_CELLS
-        )
-        for camera in cameras
-    }
+
+    def relief(latitude: float, longitude: float) -> float | None:
+        return terrain_relief_km(terrain_km, latitude, longitude, RELIEF_RADIUS_CELLS)
+
     check = sky_check(
         at,
         probes.sky,
         lambda images: embed_images(encoder, images, DEVICE),
-        fetch_faa_json,
+        lambda camera: recent_frames(camera, fetch_faa_json, fetch_headers),
         fetch_bytes,
     )
     if action == "build":
         write_panel(
-            build_panel(cameras, relief, check, random.Random(PANEL_SEED)), at, store
+            build_panel(faa, relief, check, random.Random(PANEL_SEED)), at, store
         )
         return
     panel = read_panel()
-    write_panel(
-        panel + lenticular_hotspot_cameras(cameras, panel, relief, check), at, store
+    added = lenticular_hotspot_cameras(
+        faa, open_licence_cameras(), panel, relief, check
     )
+    write_panel(panel + added, at, store)
 
 
 if __name__ == "__main__":
