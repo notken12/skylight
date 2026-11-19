@@ -1336,5 +1336,173 @@
   "name": "Teniente Rodolfo Marsh Martin/Antártica (PUB) (SCRM) - Antártica - S-Este",
   "site_url": "https://aipchile.dgac.gob.cl/camara/show/id/104",
   "attribution": "DGAC Chile (no licence stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "aemet",
+  "camera_id": "izana-aemet-es-norte-jpg",
+  "latitude": 28.30905,
+  "longitude": -16.49961,
+  "still_image_urls": [
+   "https://izana.aemet.es/wp-content/rtime/camaras/norte.jpg"
+  ],
+  "name": "La Orotava › North",
+  "site_url": "https://izana.aemet.es/",
+  "attribution": "© AEMET (reuse authorised with credit)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-327-jpg",
+  "latitude": 35.15097,
+  "longitude": 138.92919,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/327.jpg"
+  ],
+  "name": "Mishima: Izu Jukan Expressway",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-328-jpg",
+  "latitude": 35.14728,
+  "longitude": 138.93507,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/328.jpg"
+  ],
+  "name": "Mishima: Sawaji River - Izu Jukan Expressway",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-329-jpg",
+  "latitude": 35.13983,
+  "longitude": 138.93812,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/329.jpg"
+  ],
+  "name": "Mishima: Kamo",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-330-jpg",
+  "latitude": 35.13103,
+  "longitude": 138.94341,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/330.jpg"
+  ],
+  "name": "Mishima: 塚原バイパス",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-307-jpg",
+  "latitude": 35.17236,
+  "longitude": 139.00706,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/307.jpg"
+  ],
+  "name": "Mishima: Hakone Pass - National Route 1",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-332-jpg",
+  "latitude": 35.12509,
+  "longitude": 138.94712,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/332.jpg"
+  ],
+  "name": "Mishima: Tanita Ikeda Clinic - National Route 1",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-313-jpg",
+  "latitude": 35.15597,
+  "longitude": 138.99117,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/313.jpg"
+  ],
+  "name": "Mishima: 箱根峠",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-314-jpg",
+  "latitude": 35.15597,
+  "longitude": 138.99117,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/314.jpg"
+  ],
+  "name": "Mishima: 箱根峠 - National Route 1",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "www-cbr-mlit-go-jp-334-jpg",
+  "latitude": 35.10982,
+  "longitude": 138.94759,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/numazu/kanogawa/cctv/snapshot/334.jpg"
+  ],
+  "name": "Mishima: Izu Jukan Expressway",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "aemet",
+  "camera_id": "izana-orotava",
+  "latitude": 28.309,
+  "longitude": -16.499,
+  "still_image_urls": [
+   "https://izana.aemet.es/wp-content/rtime/camaras/orotava.jpg"
+  ],
+  "name": "Izaña observatory - orotava",
+  "site_url": "https://izana.aemet.es/",
+  "attribution": "© AEMET (reuse authorised with credit)"
+ },
+ {
+  "provider": "aemet",
+  "camera_id": "izana-anaga",
+  "latitude": 28.309,
+  "longitude": -16.499,
+  "still_image_urls": [
+   "https://izana.aemet.es/wp-content/rtime/camaras/anaga.jpg"
+  ],
+  "name": "Izaña observatory - anaga",
+  "site_url": "https://izana.aemet.es/",
+  "attribution": "© AEMET (reuse authorised with credit)"
+ },
+ {
+  "provider": "aemet",
+  "camera_id": "izana-guimar",
+  "latitude": 28.309,
+  "longitude": -16.499,
+  "still_image_urls": [
+   "https://izana.aemet.es/wp-content/rtime/camaras/guimar.jpg"
+  ],
+  "name": "Izaña observatory - guimar",
+  "site_url": "https://izana.aemet.es/",
+  "attribution": "© AEMET (reuse authorised with credit)"
+ },
+ {
+  "provider": "mlit",
+  "camera_id": "fujisabo-f23",
+  "latitude": 35.38819,
+  "longitude": 138.572,
+  "still_image_urls": [
+   "https://www.cbr.mlit.go.jp/fujisabo/camera/images/00023.jpg"
+  ],
+  "name": "Minobu › East: Fujisan Kengamine",
+  "site_url": "https://www.cbr.mlit.go.jp/",
+  "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
  }
 ]
