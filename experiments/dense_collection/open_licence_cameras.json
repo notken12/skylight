@@ -646,5 +646,185 @@
   "name": "MLO northcam",
   "site_url": "https://gml.noaa.gov/obop/mlo/livecam/livecam.html",
   "attribution": "NOAA Global Monitoring Laboratory (US public domain)"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "ngauruhoe",
+  "latitude": -39.17,
+  "longitude": 175.5,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/ngauruhoe.jpg"
+  ],
+  "name": "Ngauruhoe (from Whakapapa)",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "ngauruhoetongariro",
+  "latitude": -39.14,
+  "longitude": 175.58,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/ngauruhoetongariro.jpg"
+  ],
+  "name": "Ngauruhoe and Tongariro",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "raoulisland",
+  "latitude": -29.27,
+  "longitude": -177.92,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/raoulisland.jpg"
+  ],
+  "name": "Raoul Island (Kermadecs)",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "ruapehueast",
+  "latitude": -39.14,
+  "longitude": 175.58,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/ruapehueast.jpg"
+  ],
+  "name": "Ruapehu East",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "ruapehunorth",
+  "latitude": -39.17,
+  "longitude": 175.5,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/ruapehunorth.jpg"
+  ],
+  "name": "Ruapehu North",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "ruapehusouth",
+  "latitude": -39.38,
+  "longitude": 175.47,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/ruapehusouth.jpg"
+  ],
+  "name": "Ruapehu South",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "taranaki",
+  "latitude": -39.2,
+  "longitude": 174.27,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/taranaki.jpg"
+  ],
+  "name": "Taranaki",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "tekaha",
+  "latitude": -37.74,
+  "longitude": 177.68,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/tekaha.jpg"
+  ],
+  "name": "Whakaari/White Island from Te Kaha",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "tongariro",
+  "latitude": -39.04,
+  "longitude": 175.71,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/tongariro.jpg"
+  ],
+  "name": "Tongariro",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "tongarirotemaaricrater",
+  "latitude": -39.08,
+  "longitude": 175.72,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/tongarirotemaaricrater.jpg"
+  ],
+  "name": "Tongariro Te Maari crater",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "geonet",
+  "camera_id": "whakatane",
+  "latitude": -37.95,
+  "longitude": 177.0,
+  "still_image_urls": [
+   "https://images.geonet.org.nz/volcano/cameras/latest/whakatane.jpg"
+  ],
+  "name": "Whakaari/White Island from Whakatane",
+  "site_url": "https://www.geonet.org.nz/volcano/cameras",
+  "attribution": "New Zealand GeoNet programme and its sponsors NHC, Earth Sciences NZ, LINZ, NEMA and MBIE, CC BY 3.0 NZ"
+ },
+ {
+  "provider": "dwd",
+  "camera_id": "Hohenpeissenberg-S",
+  "latitude": 47.801,
+  "longitude": 11.01,
+  "still_image_urls": [
+   "https://opendata.dwd.de/weather/webcam/Hohenpeissenberg-S/Hohenpeissenberg-S_latest_full.jpg"
+  ],
+  "name": "Hohenpeissenberg-S",
+  "site_url": "https://opendata.dwd.de/weather/webcam/",
+  "attribution": "Deutscher Wetterdienst, CC BY 4.0"
+ },
+ {
+  "provider": "dwd",
+  "camera_id": "Wasserkuppe-SW",
+  "latitude": 50.497,
+  "longitude": 9.943,
+  "still_image_urls": [
+   "https://opendata.dwd.de/weather/webcam/Wasserkuppe-SW/Wasserkuppe-SW_latest_full.jpg"
+  ],
+  "name": "Wasserkuppe-SW",
+  "site_url": "https://opendata.dwd.de/weather/webcam/",
+  "attribution": "Deutscher Wetterdienst, CC BY 4.0"
+ },
+ {
+  "provider": "dwd",
+  "camera_id": "Schmuecke-SW",
+  "latitude": 50.654,
+  "longitude": 10.769,
+  "still_image_urls": [
+   "https://opendata.dwd.de/weather/webcam/Schmuecke-SW/Schmuecke-SW_latest_full.jpg"
+  ],
+  "name": "Schmuecke-SW",
+  "site_url": "https://opendata.dwd.de/weather/webcam/",
+  "attribution": "Deutscher Wetterdienst, CC BY 4.0"
+ },
+ {
+  "provider": "noaa",
+  "camera_id": "spo-cmdlfullsize",
+  "latitude": -89.98,
+  "longitude": -24.8,
+  "still_image_urls": [
+   "https://gml.noaa.gov/webdata/spo/webcam/cmdlfullsize.jpg"
+  ],
+  "name": "Amundsen-Scott South Pole Station (ARO) camera",
+  "site_url": "https://gml.noaa.gov/obop/spo/livecamera.html",
+  "attribution": "NOAA Global Monitoring Laboratory (US public domain)"
  }
 ]
