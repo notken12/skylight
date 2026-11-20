@@ -130,7 +130,9 @@ def fetch_camera_frames(
     fetched = []
     for frame, elevation in wanted:
         path = frame_file(frames_dir, camera.camera_id, frame.filename)
-        path.write_bytes(fetch_image(frame.image_url, frame.referer))
+        payload = fetch_image(frame.image_url, frame.referer)
+        decode(payload)  # an empty or corrupt image fails this camera, not the pass
+        path.write_bytes(payload)
         fetched.append(FetchedFrame(frame, round(elevation, 2), path))
     return fetched
 
