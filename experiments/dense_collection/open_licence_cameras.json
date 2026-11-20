@@ -1504,5 +1504,1061 @@
   "name": "Minobu › East: Fujisan Kengamine",
   "site_url": "https://www.cbr.mlit.go.jp/",
   "attribution": "Ministry of Land, Infrastructure, Transport and Tourism, Chubu Regional Development Bureau (Public Data License 1.0)"
+ },
+ {
+  "provider": "mtcheeseman_co_nz",
+  "camera_id": "www-mtcheeseman-co-nz-base-learners-jpg",
+  "latitude": -43.16215,
+  "longitude": 171.63074,
+  "still_image_urls": [
+   "https://www.mtcheeseman.co.nz/wp-content/webcam/base-learners.jpg"
+  ],
+  "name": "Selwyn District",
+  "site_url": "https://www.mtcheeseman.co.nz/",
+  "attribution": "www.mtcheeseman.co.nz (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "arthurspass_com",
+  "camera_id": "www-arthurspass-com-webcam6-php",
+  "latitude": -42.90515,
+  "longitude": 171.554,
+  "still_image_urls": [
+   "https://www.arthurspass.com/webcams/webcam6.php"
+  ],
+  "name": "Westland District › East",
+  "site_url": "https://www.arthurspass.com/",
+  "attribution": "www.arthurspass.com (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "shawnet_co_nz",
+  "camera_id": "shawnet-co-nz-image-jpg",
+  "latitude": -43.38754,
+  "longitude": 172.52552,
+  "still_image_urls": [
+   "http://shawnet.co.nz/weather/webcam/image.jpg"
+  ],
+  "name": "Fendalton-Waimari-Harewood Community › South: Mandeville North",
+  "site_url": "https://shawnet.co.nz/",
+  "attribution": "shawnet.co.nz (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-rangiora-west-jpg",
+  "latitude": -43.28811,
+  "longitude": 172.54037,
+  "still_image_urls": [
+   "https://public.aopa.nz/rangiora_west.jpg"
+  ],
+  "name": "Rangiora › West: Rangiora Airfield WMS",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "hyland_net_nz",
+  "camera_id": "www-hyland-net-nz-latestimage-unwyze-jpg",
+  "latitude": -44.9468,
+  "longitude": 168.836,
+  "still_image_urls": [
+   "https://www.hyland.net.nz/oldsite/latestimage_unwyze.jpg"
+  ],
+  "name": "Arrowtown › North-west",
+  "site_url": "https://www.hyland.net.nz/",
+  "attribution": "www.hyland.net.nz (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-danseys-jpg",
+  "latitude": -45.09308,
+  "longitude": 170.39617,
+  "still_image_urls": [
+   "https://public.aopa.nz/danseys.jpg"
+  ],
+  "name": "Maniototo Community › South-west: Danseys Pass",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "campingbielsa_com",
+  "camera_id": "www-campingbielsa-com-cam-1-jpg",
+  "latitude": 42.62891,
+  "longitude": 0.22755,
+  "still_image_urls": [
+   "https://www.campingbielsa.com/Imagenes/cam_1.jpg"
+  ],
+  "name": "Bielsa › East",
+  "site_url": "https://www.campingbielsa.com/",
+  "attribution": "www.campingbielsa.com (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "ayuntamientossobrarbe_com",
+  "camera_id": "www-ayuntamientossobrarbe-com-imagen-jpg",
+  "latitude": 42.54369,
+  "longitude": 0.19722,
+  "still_image_urls": [
+   "https://www.ayuntamientossobrarbe.com/webcam/tella/imagen.jpg"
+  ],
+  "name": "Tella-Sin",
+  "site_url": "https://www.ayuntamientossobrarbe.com/",
+  "attribution": "www.ayuntamientossobrarbe.com (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "alberguesyrefugios_com",
+  "camera_id": "alberguesyrefugios-com-goriz-jpg",
+  "latitude": 42.68478,
+  "longitude": 0.00602,
+  "still_image_urls": [
+   "https://alberguesyrefugios.com/img/webcams/goriz.jpg"
+  ],
+  "name": "Fanlo › South: Refugio de Góriz",
+  "site_url": "https://alberguesyrefugios.com/",
+  "attribution": "alberguesyrefugios.com (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "assets2_webcam_io",
+  "camera_id": "assets2-webcam-io-latest-hd-jpg",
+  "latitude": 43.07647,
+  "longitude": 0.48445,
+  "still_image_urls": [
+   "https://assets2.webcam.io/w/9RmgrM/latest_hd.jpg"
+  ],
+  "name": "Saint-Laurent-de-Neste",
+  "site_url": "https://assets2.webcam.io/",
+  "attribution": "assets2.webcam.io (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "assets2_webcam_io",
+  "camera_id": "assets2-webcam-io-latest-hd-jpg-x",
+  "latitude": 43.07802,
+  "longitude": 0.48311,
+  "still_image_urls": [
+   "https://assets2.webcam.io/w/9j6BX9/latest_hd.jpg"
+  ],
+  "name": "Saint-Laurent-de-Neste",
+  "site_url": "https://assets2.webcam.io/",
+  "attribution": "assets2.webcam.io (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "accomminges_fr_99",
+  "camera_id": "accomminges-fr-99-still-jpg",
+  "latitude": 43.10734,
+  "longitude": 0.62047,
+  "still_image_urls": [
+   "http://accomminges.fr:99/aeroclub/files/webcam/STILL.jpg"
+  ],
+  "name": "Clarac › South-west: Aéro-Club Du Comminges",
+  "site_url": "https://accomminges.fr:99/",
+  "attribution": "accomminges.fr:99 (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "media_turismefgc_cat",
+  "camera_id": "media-turismefgc-cat-espot-esqui-hd-jpg",
+  "latitude": 42.54973,
+  "longitude": 1.07855,
+  "still_image_urls": [
+   "https://media.turismefgc.cat/espot/espot-esqui-hd.jpg"
+  ],
+  "name": "Espot › South-west",
+  "site_url": "https://media.turismefgc.cat/",
+  "attribution": "media.turismefgc.cat (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "marcel_guwang_free_fr",
+  "camera_id": "marcel-guwang-free-fr-auto-jpg",
+  "latitude": 42.96047,
+  "longitude": 1.09243,
+  "still_image_urls": [
+   "http://marcel.guwang.free.fr/moulis/auto.jpg"
+  ],
+  "name": "Moulis",
+  "site_url": "https://marcel.guwang.free.fr/",
+  "attribution": "marcel.guwang.free.fr (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "webtvhotspot_feratel_com",
+  "camera_id": "webtvhotspot-feratel-com-1-jpeg",
+  "latitude": 42.76047,
+  "longitude": -0.23344,
+  "still_image_urls": [
+   "https://webtvhotspot.feratel.com/hotspot/35/15011/1.jpeg?design=v5&dcsdesign=WTP_infonieve.es"
+  ],
+  "name": "Panticosa › North-east",
+  "site_url": "https://webtvhotspot.feratel.com/",
+  "attribution": "feratel (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "recursos_sierranevada_es",
+  "camera_id": "recursos-sierranevada-es-snap-c1-jpg",
+  "latitude": 37.09307,
+  "longitude": -3.39936,
+  "still_image_urls": [
+   "https://recursos.sierranevada.es/_extras/fotos_camaras/pradollano/snap_c1.jpg?timestamp=639056602844810000&IPIGNORE=TRUE"
+  ],
+  "name": "Monachil › South: Telecabina Al-Andalus",
+  "site_url": "https://recursos.sierranevada.es/",
+  "attribution": "recursos.sierranevada.es (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "ihighway_jp",
+  "camera_id": "ihighway-jp-webcam952525600030-00-jpg",
+  "latitude": 35.60317,
+  "longitude": 138.89815,
+  "still_image_urls": [
+   "https://ihighway.jp/camera/webcam952525600030-00.jpg"
+  ],
+  "name": "Otsuki",
+  "site_url": "https://ihighway.jp/",
+  "attribution": "NEXCO expressway info (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "ihighway_jp",
+  "camera_id": "ihighway-jp-webcam952525600020-00-jpg",
+  "latitude": 35.63036,
+  "longitude": 139.09945,
+  "still_image_urls": [
+   "https://ihighway.jp/camera/webcam952525600020-00.jpg"
+  ],
+  "name": "Uenohara › South-east",
+  "site_url": "https://ihighway.jp/",
+  "attribution": "NEXCO expressway info (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-queenstown-coronet-jpg-queenstown",
+  "latitude": -45.02,
+  "longitude": 168.74,
+  "still_image_urls": [
+   "https://public.aopa.nz/queenstown-coronet.jpg"
+  ],
+  "name": "Queenstown - Coronet",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-queenstown-lake-jpg-queenstown",
+  "latitude": -45.02,
+  "longitude": 168.74,
+  "still_image_urls": [
+   "https://public.aopa.nz/queenstown-lake.jpg"
+  ],
+  "name": "Queenstown - Lake",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-queenstown-remarks-jpg-queenstown",
+  "latitude": -45.02,
+  "longitude": 168.74,
+  "still_image_urls": [
+   "https://public.aopa.nz/queenstown-remarks.jpg"
+  ],
+  "name": "Queenstown - Remarkables",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-wanaka-cardrona-jpg-wanaka-car",
+  "latitude": -44.72,
+  "longitude": 169.25,
+  "still_image_urls": [
+   "https://public.aopa.nz/wanaka-cardrona.jpg"
+  ],
+  "name": "Wanaka - Cardrona",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "public_aopa_nz",
+  "camera_id": "public-aopa-nz-wanaka-tarras-jpg-wanaka-tar",
+  "latitude": -44.72,
+  "longitude": 169.25,
+  "still_image_urls": [
+   "https://public.aopa.nz/wanaka-tarras.jpg"
+  ],
+  "name": "Wanaka - Tarras",
+  "site_url": "https://public.aopa.nz/",
+  "attribution": "AOPA NZ (Aircraft Owners and Pilots Association) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "castlehill_nz",
+  "camera_id": "www-castlehill-nz-webcam-jpg",
+  "latitude": -43.20903,
+  "longitude": 171.71385,
+  "still_image_urls": [
+   "https://www.castlehill.nz/Images/webcam.jpg"
+  ],
+  "name": "Castle Hill Village › South-east: Castle Hill Peak - Torlesse Range",
+  "site_url": "https://www.castlehill.nz/",
+  "attribution": "www.castlehill.nz (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "castlehill_nz",
+  "camera_id": "www-castlehill-nz-webcam-west-jpg",
+  "latitude": -43.20893,
+  "longitude": 171.71459,
+  "still_image_urls": [
+   "https://www.castlehill.nz/images2/webcam_west.jpg"
+  ],
+  "name": "Selwyn District › West: Mt Cloudesley",
+  "site_url": "https://www.castlehill.nz/",
+  "attribution": "www.castlehill.nz (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "fujilive_pref_shizuoka_jp",
+  "camera_id": "fujilive-01-nehara",
+  "latitude": 35.29847,
+  "longitude": 138.76408,
+  "still_image_urls": [
+   "http://fujilive.pref.shizuoka.jp/fuji/01_nehara/cam_nehara.jpg"
+  ],
+  "name": "Shizuoka Fuji civil-engineering camera 01_nehara",
+  "site_url": "https://fujilive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture, Fuji civil engineering office (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "fujilive_pref_shizuoka_jp",
+  "camera_id": "fujilive-02-mizugazuka",
+  "latitude": 35.29847,
+  "longitude": 138.76408,
+  "still_image_urls": [
+   "http://fujilive.pref.shizuoka.jp/fuji/02_mizugazuka/cam_mizugazuka.jpg"
+  ],
+  "name": "Shizuoka Fuji civil-engineering camera 02_mizugazuka",
+  "site_url": "https://fujilive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture, Fuji civil engineering office (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "fujilive_pref_shizuoka_jp",
+  "camera_id": "fujilive-03-fujinomiya",
+  "latitude": 35.29847,
+  "longitude": 138.76408,
+  "still_image_urls": [
+   "http://fujilive.pref.shizuoka.jp/fuji/03_fujinomiya/cam_fujinomiya.jpg"
+  ],
+  "name": "Shizuoka Fuji civil-engineering camera 03_fujinomiya",
+  "site_url": "https://fujilive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture, Fuji civil engineering office (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "fujilive_pref_shizuoka_jp",
+  "camera_id": "fujilive-04-kodomonokuni",
+  "latitude": 35.29847,
+  "longitude": 138.76408,
+  "still_image_urls": [
+   "http://fujilive.pref.shizuoka.jp/fuji/04_kodomonokuni/cam_kodomonokuni.jpg"
+  ],
+  "name": "Shizuoka Fuji civil-engineering camera 04_kodomonokuni",
+  "site_url": "https://fujilive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture, Fuji civil engineering office (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "fujilive_pref_shizuoka_jp",
+  "camera_id": "fujilive-08-hitoana",
+  "latitude": 35.29847,
+  "longitude": 138.76408,
+  "still_image_urls": [
+   "http://fujilive.pref.shizuoka.jp/fuji/08_hitoana/cam_hitoana.jpg"
+  ],
+  "name": "Shizuoka Fuji civil-engineering camera 08_hitoana",
+  "site_url": "https://fujilive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture, Fuji civil engineering office (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "snowlive_pref_shizuoka_jp",
+  "camera_id": "snowlive-pref-shizuoka-jp-cam-heda-jpg",
+  "latitude": 34.97136,
+  "longitude": 138.8368,
+  "still_image_urls": [
+   "http://snowlive.pref.shizuoka.jp/numadu/06_heda/cam_heda.jpg"
+  ],
+  "name": "Izu",
+  "site_url": "https://snowlive.pref.shizuoka.jp/",
+  "attribution": "Shizuoka Prefecture (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "town_fujikawaguchiko_lg_jp",
+  "camera_id": "www-town-fujikawaguchiko-lg-jp-fujigane-capt-jpg",
+  "latitude": 35.41312,
+  "longitude": 138.62931,
+  "still_image_urls": [
+   "https://www.lcnet.jp/~live-cam/fujigane/fujigane-capt.jpg"
+  ],
+  "name": "Fujikawaguchiko",
+  "site_url": "https://www.town.fujikawaguchiko.lg.jp/",
+  "attribution": "Fujikawaguchiko Town (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "snowgatecameras_co_uk",
+  "camera_id": "snowgate-glendye",
+  "latitude": 56.96278,
+  "longitude": -2.57569,
+  "still_image_urls": [
+   "http://www.snowgatecameras.co.uk/glendye/image.jpg"
+  ],
+  "name": "Cairn O'Mount / Glen Dye snow gate",
+  "site_url": "https://www.snowgatecameras.co.uk/",
+  "attribution": "www.snowgatecameras.co.uk (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cic_tenerife_es",
+  "camera_id": "cic-tenerife-es-camara-2701002-523-jpg",
+  "latitude": 28.48976,
+  "longitude": -16.33806,
+  "still_image_urls": [
+   "http://cic.tenerife.es/e-Traffic3/data/camara-2701002-523.jpg"
+  ],
+  "name": "San Cristobal de La Laguna",
+  "site_url": "https://cic.tenerife.es/",
+  "attribution": "Cabildo de Tenerife traffic centre (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vedetta_org",
+  "camera_id": "vedetta-org-image-jpg",
+  "latitude": 37.75196,
+  "longitude": 15.09701,
+  "still_image_urls": [
+   "https://vedetta.org/image-client/vulcano-etna-est/image.jpg"
+  ],
+  "name": "Milo › East: Mount Etna",
+  "site_url": "https://vedetta.org/",
+  "attribution": "vedetta.org (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "bielsa_aragnouet_org",
+  "camera_id": "www-bielsa-aragnouet-org-espana-jpg",
+  "latitude": 42.72025,
+  "longitude": 0.19793,
+  "still_image_urls": [
+   "http://bielsa-aragnouet.org/webcams/ESP/ESPANA.jpg"
+  ],
+  "name": "Bielsa › North: Túnel de Bielsa -Aragnouet ( Spain ) - Túnel de Bielsa-Aragnouet",
+  "site_url": "https://www.bielsa-aragnouet.org/",
+  "attribution": "www.bielsa-aragnouet.org (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "bielsa_aragnouet_org",
+  "camera_id": "www-bielsa-aragnouet-org-francia-jpg",
+  "latitude": 42.74873,
+  "longitude": 0.19105,
+  "still_image_urls": [
+   "http://bielsa-aragnouet.org/webcams/FR/FRANCIA.jpg"
+  ],
+  "name": "Aragnouet › South: Tunnel de Bielsa-Aragnouet",
+  "site_url": "https://www.bielsa-aragnouet.org/",
+  "attribution": "www.bielsa-aragnouet.org (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "app_projecte4estacions_com",
+  "camera_id": "p4e-bonaigua",
+  "latitude": 42.66393,
+  "longitude": 0.98041,
+  "still_image_urls": [
+   "https://app.projecte4estacions.com/snapshots/bonaigua-data.jpg"
+  ],
+  "name": "Alt Aneu: Port de la Bonaigua",
+  "site_url": "https://app.projecte4estacions.com/",
+  "attribution": "Projecte 4 Estacions (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "app_projecte4estacions_com",
+  "camera_id": "p4e-montgarri",
+  "latitude": 42.75917,
+  "longitude": 0.99455,
+  "still_image_urls": [
+   "https://app.projecte4estacions.com/snapshots/montgarri-data.jpg"
+  ],
+  "name": "Naut Aran: Montgarri",
+  "site_url": "https://app.projecte4estacions.com/",
+  "attribution": "Projecte 4 Estacions (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "whatsupcams_com",
+  "camera_id": "www-whatsupcams-com-es-tenerife01-jpg",
+  "latitude": 28.12162,
+  "longitude": -16.77683,
+  "still_image_urls": [
+   "https://cdn.whatsupcams.com/snapshot/es_tenerife01.jpg"
+  ],
+  "name": "Adeje › West: Paraiso Del Sur Apartments",
+  "site_url": "https://www.whatsupcams.com/",
+  "attribution": "www.whatsupcams.com (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vision_environnement_com",
+  "camera_id": "vision-env-stbeat",
+  "latitude": 42.9164,
+  "longitude": 0.69219,
+  "still_image_urls": [
+   "https://s1.vision-environnement.com/live/modules/timelapse/capture/stbeat.jpg"
+  ],
+  "name": "Saint-Beat-Lez › South: Saint-Béat-Lez Bridge",
+  "site_url": "https://www.vision-environnement.com/",
+  "attribution": "Vision-Environnement (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "hellisheidi-1",
+  "latitude": 64.018296,
+  "longitude": -21.342636,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/hellisheidi_1.jpg"
+  ],
+  "name": "Hellisheiði - Hellisheiði séð til vesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "holtavorduheidi-1",
+  "latitude": 64.989933,
+  "longitude": -21.057783,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/holtavorduheidi_1.jpg"
+  ],
+  "name": "Holtavörðuheiði - Holtavörðuheiði séð til norðurs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "oxnadalsheidi-1",
+  "latitude": 65.468017,
+  "longitude": -18.69385,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/oxnadalsheidi_1.jpg"
+  ],
+  "name": "Öxnadalsheiði - Öxnadalsheiði séð til vesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "vikurskard-1",
+  "latitude": 65.812633,
+  "longitude": -18.00925,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/vikurskard_1.jpg"
+  ],
+  "name": "Víkurskarð - Víkurskarð séð til vesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "fagridalur-1",
+  "latitude": 65.120933,
+  "longitude": -14.332117,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/fagridalur_1.jpg"
+  ],
+  "name": "Fagridalur - Fagridalur séð til norðurs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "ennishals-1",
+  "latitude": 65.572467,
+  "longitude": -21.32935,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/ennishals_1.jpg"
+  ],
+  "name": "Ennisháls - Ennisháls séð til norðvesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "fremri-hals-1",
+  "latitude": 66.252733,
+  "longitude": -15.816217,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/fremri-hals_1.jpg"
+  ],
+  "name": "Fremri-Háls - Fremri-Háls séð til norðurs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "vatnsskard-1",
+  "latitude": 65.509217,
+  "longitude": -19.691733,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/vatnsskard_1.jpg"
+  ],
+  "name": "Vatnsskarð - Vatnsskarð séð til vesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "modrudalsoraefi-1",
+  "latitude": 65.456933,
+  "longitude": -15.5879,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/modrudalsoraefi_1.jpg"
+  ],
+  "name": "Möðrudalsöræfi - Möðrudalsöræfi séð til norðvesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "sandvikurheidi-1",
+  "latitude": 65.8933,
+  "longitude": -14.82555,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/sandvikurheidi_1.jpg"
+  ],
+  "name": "Sandvíkurheiði - Sandvikurheiði séð til suðurs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "gemlufallsheidi-1",
+  "latitude": 65.940617,
+  "longitude": -23.4364,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/gemlufallsheidi_1.jpg"
+  ],
+  "name": "Gemlufallsheiði - Gemlufallsheiði séð til norðurs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "vegagerdin",
+  "camera_id": "lomagnupur-1",
+  "latitude": 63.95665,
+  "longitude": -17.499717,
+  "still_image_urls": [
+   "https://www.vegagerdin.is/vgdata/vefmyndavelar/lomagnupur_1.jpg"
+  ],
+  "name": "Lómagnúpur - Lómagnúpur séð til vesturs",
+  "site_url": "https://umferdin.is/",
+  "attribution": "Vegagerdin (Icelandic Road Administration) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "285n24555cam1rhs-n",
+  "latitude": 39.612,
+  "longitude": -105.230995,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Cellular/285N24555CAM1RHS-N.jpg"
+  ],
+  "name": "US 285 MP 245.55 NB at S Turkey Creek Rd at Indian Hills - Looking North",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "007n00645cam1rhs-n",
+  "latitude": 40.305862,
+  "longitude": -105.53808,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Cellular/007N00645CAM1RHS-N.jpg"
+  ],
+  "name": "CO 7 MP 006.45 NB at Lily Lake - Looking North",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "072w04475cam1rhs-w",
+  "latitude": 40.08263,
+  "longitude": -105.49643,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Cellular/072W04475CAM1RHS-W.jpg"
+  ],
+  "name": "CO 72 MP 044.75 WB : 0.7 miles W of Brainard Lake Rd in Ward - Looking West",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "040w25605cam1nwc-e",
+  "latitude": 39.76145207742737,
+  "longitude": -105.685411,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Cellular/040W25605CAM1NWC-E.jpg"
+  ],
+  "name": "US 40 MP 256.05 WB at S Gunella St in Empire - Looking East",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "074w00590cam1rhs-road",
+  "latitude": 39.647346,
+  "longitude": -105.33979,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Cellular/074W00590CAM1RHS-Road.jpg"
+  ],
+  "name": "CO 74 MP 005.90 WB at Palo Verde Rd in Evergreen - Looking at Road Surface",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "070w26165cam1med-flv",
+  "latitude": 39.731346,
+  "longitude": -105.170029,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Snapshots/070W26165CAM1MED.flv.png"
+  ],
+  "name": "I-70 MP 261.65 WB at W Colfax Ave - I-70 MP 261.65 WB at W Colfax Ave",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "036e04915cam1rhs-flv",
+  "latitude": 39.903504,
+  "longitude": -105.083559,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Snapshots/036E04915CAM1RHS.flv.png"
+  ],
+  "name": "US 36 MP 049.15 EB : 1.4 miles E of CO 121/Wadsworth Pkwy - US 36 MP 049.15 EB : 1.4 miles E of CO 121/Wadsworth Pkwy",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cotrip",
+  "camera_id": "006w26485cam1gp1-flv",
+  "latitude": 39.741322,
+  "longitude": -105.327,
+  "still_image_urls": [
+   "https://cocam.carsprogram.org/Snapshots/006W26485CAM1GP1.flv.png"
+  ],
+  "name": "US 6 MP 264.85 WB at Center of Tunnel 3 - US 6 MP 264.85 WB at Center of Tunnel 3",
+  "site_url": "https://maps.cotrip.org/",
+  "attribution": "COtrip (Colorado DOT) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "blymtn-pid606",
+  "latitude": 42.35376,
+  "longitude": -121.39835,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/BlyMtn_pid606.jpg"
+  ],
+  "name": "OR140 at Bly Mtn",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "cascadelockswb-pid620",
+  "latitude": 45.66931,
+  "longitude": -121.88484,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/CascadeLocksWB_pid620.jpg"
+  ],
+  "name": "I-84 at Cascade Locks",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "chemult-pid621",
+  "latitude": 43.2235,
+  "longitude": -121.78639,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/Chemult_pid621.jpg"
+  ],
+  "name": "US97 at Chemult",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "detroit1-pid622",
+  "latitude": 44.72616,
+  "longitude": -122.13563,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/Detroit1_pid622.jpg"
+  ],
+  "name": "OR22 at Detroit",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "governmentcamp-pid624",
+  "latitude": 45.30123,
+  "longitude": -121.74129,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/GovernmentCamp_pid624.jpg"
+  ],
+  "name": "US26 at Government Camp",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "lapine-pid630",
+  "latitude": 43.67448,
+  "longitude": -121.50037,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/LaPine_pid630.jpg"
+  ],
+  "name": "US97 at LaPine",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "lavabutte-pid631",
+  "latitude": 43.90677,
+  "longitude": -121.35743,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/LavaButte_pid631.jpg"
+  ],
+  "name": "US97 at Lava Butte",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "redmondairport-pid649",
+  "latitude": 44.25257,
+  "longitude": -121.16359,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/RedmondAirport_pid649.jpg"
+  ],
+  "name": "Redmond at Roberts Field",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "sisters-pid653",
+  "latitude": 44.29501,
+  "longitude": -121.55902,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/Sisters_pid653.jpg"
+  ],
+  "name": "US20 at Sisters",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "odot_tripcheck",
+  "camera_id": "willamettepass-pid658",
+  "latitude": 43.59702,
+  "longitude": -122.03383,
+  "still_image_urls": [
+   "https://tripcheck.com/RoadCams/cams/WillamettePass_pid658.jpg"
+  ],
+  "name": "OR58 at Willamette Pass",
+  "site_url": "https://tripcheck.com/",
+  "attribution": "ODOT TripCheck (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "pref_shizuoka_jp",
+  "camera_id": "live-gotenba-m",
+  "latitude": 35.31,
+  "longitude": 138.93,
+  "still_image_urls": [
+   "https://www.pref.shizuoka.jp/~live/gotenba/m.jpg"
+  ],
+  "name": "Gotemba camera",
+  "site_url": "https://www.pref.shizuoka.jp/~live/english/index.html",
+  "attribution": "Shizuoka Prefecture Mt. Fuji Live View (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "pref_shizuoka_jp",
+  "camera_id": "live-shimizu-m",
+  "latitude": 35.02,
+  "longitude": 138.49,
+  "still_image_urls": [
+   "https://www.pref.shizuoka.jp/~live/shimizu/m.jpg"
+  ],
+  "name": "Shimizu camera",
+  "site_url": "https://www.pref.shizuoka.jp/~live/english/index.html",
+  "attribution": "Shizuoka Prefecture Mt. Fuji Live View (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cerro_catedral",
+  "camera_id": "latest",
+  "latitude": -41.17,
+  "longitude": -71.44,
+  "still_image_urls": [
+   "https://varitech.ar/cameras/cam002/latest.jpg"
+  ],
+  "name": "Cerro Catedral cam002",
+  "site_url": "https://catedralaltapatagonia.com/webcams/",
+  "attribution": "Cerro Catedral (Varitech) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "cerro_catedral",
+  "camera_id": "latest-x",
+  "latitude": -41.17,
+  "longitude": -71.44,
+  "still_image_urls": [
+   "https://varitech.ar/cameras/cam008/latest.jpg"
+  ],
+  "name": "Cerro Catedral cam008",
+  "site_url": "https://catedralaltapatagonia.com/webcams/",
+  "attribution": "Cerro Catedral (Varitech) (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-40825740",
+  "latitude": 46.5275287,
+  "longitude": 12.0089548,
+  "still_image_urls": [
+   "https://www.montagnaitalia.it/webcam/original/TofanaRozes.jpg"
+  ],
+  "name": "Rifugio Lagazuoi con vista sulla Tofana di Rozes",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-1678722099",
+  "latitude": 46.691568115048334,
+  "longitude": 11.746568481159992,
+  "still_image_urls": [
+   "https://live-image.panomax.com/cams/9485/recent_reduced.jpg"
+  ],
+  "name": "Plose Pfannspitze",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-2804",
+  "latitude": 46.821375973795,
+  "longitude": 11.665345430374,
+  "still_image_urls": [
+   "https://www.gitschberg-jochtal.com/webcam/webcam8.jpg"
+  ],
+  "name": "Talstation Meransen",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-2807",
+  "latitude": 46.842346477463,
+  "longitude": 11.593451499939,
+  "still_image_urls": [
+   "https://www.gitschberg-jochtal.com/webcam/webcam1.jpg"
+  ],
+  "name": "Jochtal Hinterberg",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-2848",
+  "latitude": 46.436910495781,
+  "longitude": 11.764104366302,
+  "still_image_urls": [
+   "https://panodata.panomax.com/cams/1674/skiareaciampac.jpg"
+  ],
+  "name": "Alba - Ciampac panorama 360°",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-42750023",
+  "latitude": 46.739757663212,
+  "longitude": 11.959465742111,
+  "still_image_urls": [
+   "https://live-image.panomax.com/cams/2044/recent_optimized.jpg"
+  ],
+  "name": "Kronplatz 360° Panomax",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-14890845",
+  "latitude": 46.519478,
+  "longitude": 11.639128,
+  "still_image_urls": [
+   "https://live-image.panomax.com/cams/7293/preview_og.jpg"
+  ],
+  "name": "Seiser Alm - Goldknopf - Panorama 360°",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-1677509994",
+  "latitude": 46.35229898220197,
+  "longitude": 11.447588262655358,
+  "still_image_urls": [
+   "https://jochgrimm.com/webcam/webcam2.jpg"
+  ],
+  "name": "Oclini/Jochgrimm – Weißhorn",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-1675093409",
+  "latitude": 46.42351126814674,
+  "longitude": 12.047410011291506,
+  "still_image_urls": [
+   "https://panodata.panomax.com/cams/2411/preview_og.jpg"
+  ],
+  "name": "Cima Fertazza (2.101 m) – Dolomitenpanorama",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-185068",
+  "latitude": 46.517317902375936,
+  "longitude": 11.501795053481256,
+  "still_image_urls": [
+   "https://voels.it-wms.com/panorama1.jpg"
+  ],
+  "name": "Völs am Schlern - Panocam 360°",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-1734604936",
+  "latitude": 46.71657724681811,
+  "longitude": 12.374575138092041,
+  "still_image_urls": [
+   "https://dreizinnen.panocloud.webcam/panorama1.jpg"
+  ],
+  "name": "Bergstation Hasenköpfl",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "dss-7717904",
+  "latitude": 46.559557,
+  "longitude": 11.576506,
+  "still_image_urls": [
+   "https://kastelruth.it-wms.com/panorama1.jpg"
+  ],
+  "name": "Kastelruth - Panorama 360°",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
+ },
+ {
+  "provider": "opendatahub_south_tyrol",
+  "camera_id": "cfcb82bf-837d-bfb7-e975-df940663a332",
+  "latitude": 46.7718181,
+  "longitude": 0.0,
+  "still_image_urls": [
+   "https://webcams.kronplatz.com/webcam/kronplatz/10/webcam1.jpg"
+  ],
+  "name": "Gsieser Tal Welsberg Taisten",
+  "site_url": "https://opendatahub.com/",
+  "attribution": "Open Data Hub South Tyrol record, CC0; image rights not explicit (no reuse terms stated; added at the owner's decision 2026-11-19)"
  }
 ]
