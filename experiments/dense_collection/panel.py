@@ -112,7 +112,9 @@ def latest_daylit_frame(
     elevation = sun_elevation_degrees(captured_at, camera.latitude, camera.longitude)
     if elevation < MIN_CHECK_SUN_ELEVATION_DEGREES:
         return None
-    return frame.image_url, fetch_image(frame.image_url, frame.referer)
+    payload = fetch_image(frame.image_url, frame.referer)
+    decode(payload)  # an empty or corrupt image fails this camera, not the run
+    return frame.image_url, payload
 
 
 def sky_check(
